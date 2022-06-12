@@ -25,7 +25,7 @@ N/A
 </repository>
 
 <dependency>
-    <groupId>me.badbones69</groupId>
+    <groupId>com.badbones69</groupId>
     <artifactId>crazyenchantments-plugin</artifactId>
     <version>{Latest Version}</version>
 </dependency>
