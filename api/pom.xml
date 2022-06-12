@@ -5,7 +5,7 @@
 
     <parent>
         <artifactId>crazyenchantments</artifactId>
-        <groupId>me.badbones69</groupId>
+        <groupId>com.badbones69</groupId>
         <version>1.8-Dev-Build-v12</version>
     </parent>
 
