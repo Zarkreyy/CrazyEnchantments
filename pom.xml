@@ -22,14 +22,14 @@
 
     <distributionManagement>
         <repository>
-            <id>nexus</id>
-            <name>nexus releases</name>
-            <url>https://nexus.badbones69.com/repository/maven-releases/</url>
+            <id>crazycrew-repo</id>
+            <name>repo releases</name>
+            <url>https://repo.badbones69.com/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>nexus</id>
-            <name>nexus snapshots</name>
-            <url>https://nexus.badbones69.com/repository/maven-snapshots/</url>
+            <id>crazycrew-repo</id>
+            <name>repo snapshots</name>
+            <url>https://repo.badbones69.com/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
