@@ -1,6 +1,5 @@
 package com.badbones69.crazyenchantments.api;
 
-import de.tr7zw.changeme.nbtapi.NBTItem;
 import com.badbones69.crazyenchantments.Methods;
 import com.badbones69.crazyenchantments.api.FileManager.Files;
 import com.badbones69.crazyenchantments.api.currencyapi.Currency;
@@ -22,6 +21,7 @@ import com.badbones69.crazyenchantments.multisupport.worldguard.WorldGuardVersio
 import com.badbones69.crazyenchantments.multisupport.worldguard.WorldGuard_v6;
 import com.badbones69.crazyenchantments.multisupport.worldguard.WorldGuard_v7;
 import com.badbones69.premiumhooks.plotsquared.PlotSquaredLegacy;
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -249,6 +249,7 @@ public class CrazyEnchantments {
     /**
      * Only needs used when the player joins the server.
      * This plugin does it automatically, so there is no need to use it unless you have to.
+     *
      * @param player The player you wish to load.
      */
     public void loadCEPlayer(Player player) {
@@ -274,6 +275,7 @@ public class CrazyEnchantments {
     /**
      * Only needs used when the player leaves the server.
      * This plugin removes the player automatically, so don't use this method unless needed for some reason.
+     *
      * @param player Player you wish to remove.
      */
     public void unloadCEPlayer(Player player) {
@@ -296,6 +298,7 @@ public class CrazyEnchantments {
     
     /**
      * This backup all the players data stored by this plugin.
+     *
      * @param player The player you wish to backup.
      */
     public void backupCEPlayer(Player player) {
@@ -304,6 +307,7 @@ public class CrazyEnchantments {
     
     /**
      * This backup all the players data stored by this plugin.
+     *
      * @param player The player you wish to backup.
      */
     public void backupCEPlayer(CEPlayer player) {
@@ -322,6 +326,7 @@ public class CrazyEnchantments {
     
     /**
      * Gets the plugin.
+     *
      * @return The plugin as a Plugin object.
      */
     public Plugin getPlugin() {
@@ -330,6 +335,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the World Guard support class.
+     *
      * @return World Guard support class.
      */
     public WorldGuardVersion getWorldGuardSupport() {
@@ -338,6 +344,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the PlotSquared support class.
+     *
      * @return PlotSquared support class.
      */
     public PlotSquaredVersion getPlotSquaredSupport() {
@@ -346,6 +353,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the NMS support class.
+     *
      * @return NMS support class.
      */
     public NMSSupport getNMSSupport() {
@@ -354,6 +362,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the blacksmith manager.
+     *
      * @return The instance of the blacksmith manager.
      */
     public BlackSmithManager getBlackSmithManager() {
@@ -362,6 +371,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the info menu manager.
+     *
      * @return The instance of the info menu manager.
      */
     public InfoMenuManager getInfoMenuManager() {
@@ -370,6 +380,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the wings enchantment manager.
+     *
      * @return The instance of the wings manager.
      */
     public WingsManager getWingsManager() {
@@ -378,6 +389,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the bow enchantments manager.
+     *
      * @return The instance of the bow manager.
      */
     public BowEnchantmentManager getBowManager() {
@@ -386,6 +398,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the armor enchantments manager.
+     *
      * @return The instance of the armor manager.
      */
     public ArmorEnchantmentManager getArmorManager() {
@@ -394,6 +407,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the ally enchantments manager.
+     *
      * @return The instance of the ally manager.
      */
     public AllyManager getAllyManager() {
@@ -402,6 +416,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the shop manager.
+     *
      * @return The instance of the shop manager.
      */
     public ShopManager getShopManager() {
@@ -410,6 +425,7 @@ public class CrazyEnchantments {
     
     /**
      * Check if the config has unsafe enchantments enabled.
+     *
      * @return True if enabled and false if not.
      */
     public boolean useUnsafeEnchantments() {
@@ -440,6 +456,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the correct sound for the version of minecraft.
+     *
      * @param newSound The sound from 1.9+
      * @param oldSound The sound from 1.8.8-
      * @return The Sound object of the current minecraft version.
@@ -450,6 +467,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the correct material for the version of minecraft.
+     *
      * @param newMaterial The material from 1.13+
      * @param oldMaterial The material from 1.12.2-
      * @return The Material object of the current minecraft version.
@@ -460,6 +478,7 @@ public class CrazyEnchantments {
     
     /**
      * Check if the gkitz option is enabled.
+     *
      * @return True if it is on and false if it is off.
      */
     public boolean isGkitzEnabled() {
@@ -468,6 +487,7 @@ public class CrazyEnchantments {
     
     /**
      * Get a GKit from its name.
+     *
      * @param kitName The kit you wish to get.
      * @return The kit as a GKitz object.
      */
@@ -482,6 +502,7 @@ public class CrazyEnchantments {
     
     /**
      * Get all loaded gkitz.
+     *
      * @return All of the loaded gkitz.
      */
     public List<GKitz> getGKitz() {
@@ -490,6 +511,7 @@ public class CrazyEnchantments {
     
     /**
      * Add a new GKit to the plugin.
+     *
      * @param kit The kit you wish to add.
      */
     public void addGKit(GKitz kit) {
@@ -498,6 +520,7 @@ public class CrazyEnchantments {
     
     /**
      * Remove a kit that is in the plugin.
+     *
      * @param kit The kit you wish to remove.
      */
     public void removeGKit(GKitz kit) {
@@ -506,6 +529,7 @@ public class CrazyEnchantments {
     
     /**
      * This converts a normal Player into a CEPlayer that is loaded.
+     *
      * @param player The player you want to get as a CEPlayer.
      * @return The player but as a CEPlayer. Will return null if not found.
      */
@@ -520,6 +544,7 @@ public class CrazyEnchantments {
     
     /**
      * This gets all the CEPlayer's that are loaded.
+     *
      * @return All CEPlayer's that are loading and in a list.
      */
     public List<CEPlayer> getCEPlayers() {
@@ -585,6 +610,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the highest category rarity the enchantment is in.
+     *
      * @param enchantment The enchantment you are checking.
      * @return The highest category based on the rarities.
      */
@@ -602,6 +628,7 @@ public class CrazyEnchantments {
     
     /**
      * Get all the categories that can be used.
+     *
      * @return List of all the categories.
      */
     public List<Category> getCategories() {
@@ -623,6 +650,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the category of a lostbook from an itemstack.
+     *
      * @param item The itemstack you are checking.
      * @return The category it has or null if not found.
      */
@@ -765,6 +793,7 @@ public class CrazyEnchantments {
     
     /**
      * Get all the current registered enchantments.
+     *
      * @return A list of all the registered enchantments in the plugin.
      */
     public List<CEnchantment> getRegisteredEnchantments() {
@@ -773,6 +802,7 @@ public class CrazyEnchantments {
     
     /**
      * Get a CEnchantment enchantment from the name.
+     *
      * @param enchantmentString The name of the enchantment.
      * @return The enchantment as a CEnchantment but if not found will be null.
      */
@@ -789,6 +819,7 @@ public class CrazyEnchantments {
     
     /**
      * Register a new enchantment into the plugin.
+     *
      * @param enchantment The enchantment you wish to register.
      */
     public void registerEnchantment(CEnchantment enchantment) {
@@ -797,6 +828,7 @@ public class CrazyEnchantments {
     
     /**
      * Unregister an enchantment that is registered into plugin.
+     *
      * @param enchantment The enchantment you wish to unregister.
      */
     public void unregisterEnchantment(CEnchantment enchantment) {
@@ -876,6 +908,7 @@ public class CrazyEnchantments {
     
     /**
      * Note: If the enchantment is not active it will not be added to the list.
+     *
      * @param item Item you want to get the enchantments from.
      * @return A list of enchantments the item has.
      */
@@ -885,6 +918,7 @@ public class CrazyEnchantments {
     
     /**
      * Note: If the enchantment is not active it will not be added to the Map.
+     *
      * @param item Item you want to get the enchantments from.
      * @return A Map of all enchantments and their levels on the item.
      */
@@ -969,6 +1003,7 @@ public class CrazyEnchantments {
     
     /**
      * Force an update of a players armor potion effects.
+     *
      * @param player The player you are updating the effects of.
      */
     public void updatePlayerEffects(Player player) {
@@ -992,7 +1027,6 @@ public class CrazyEnchantments {
     }
     
     /**
-     *
      * @param player The player you are adding it to.
      * @param includedItem Include an item.
      * @param excludedItem Exclude an item.
@@ -1046,7 +1080,6 @@ public class CrazyEnchantments {
     }
     
     /**
-     *
      * @return All the effects for each enchantment that needs it.
      */
     public Map<CEnchantments, HashMap<PotionEffectType, Integer>> getEnchantmentPotions() {
@@ -1104,6 +1137,7 @@ public class CrazyEnchantments {
     
     /**
      * This method converts an ItemStack into a CEBook.
+     *
      * @param book The ItemStack you are converting.
      * @return If the book is a CEBook it will return the CEBook object and if not it will return null.
      */
@@ -1119,6 +1153,7 @@ public class CrazyEnchantments {
     
     /**
      * Check if an itemstack is an enchantment book.
+     *
      * @param book The item you are checking.
      * @return True if it is and false if not.
      */
@@ -1137,6 +1172,7 @@ public class CrazyEnchantments {
     
     /**
      * Get the enchantment from an enchantment book.
+     *
      * @param book The book you want the enchantment from.
      * @return The enchantment the book is.
      */
@@ -1155,6 +1191,7 @@ public class CrazyEnchantments {
     
     /**
      * Get a players max amount of enchantments.
+     *
      * @param player The player you are checking.
      * @return The max amount of enchantments a player can have on an item.
      */
@@ -1180,7 +1217,6 @@ public class CrazyEnchantments {
     }
     
     /**
-     *
      * @param book The book you are getting the level from.
      * @param enchant The enchantment you want the level from.
      * @return The level the enchantment has.
@@ -1190,7 +1226,6 @@ public class CrazyEnchantments {
     }
     
     /**
-     *
      * @param item Item you are getting the level from.
      * @param enchant The enchantment you want the level from.
      * @return The level the enchantment has.
@@ -1219,7 +1254,6 @@ public class CrazyEnchantments {
     }
     
     /**
-     *
      * @param item Item you are getting the level from.
      * @param enchant The enchantment you want the level from.
      * @return The level the enchantment has.
@@ -1266,7 +1300,6 @@ public class CrazyEnchantments {
     }
     
     /**
-     *
      * @return The block list for blast.
      */
     public List<Material> getBlockList() {
@@ -1310,7 +1343,6 @@ public class CrazyEnchantments {
     }
     
     /**
-     *
      * @return The max rage stack level.
      */
     public int getRageMaxLevel() {
@@ -1319,6 +1351,7 @@ public class CrazyEnchantments {
     
     /**
      * Set the max rage stack level.
+     *
      * @param level The new max stack level of the rage enchantment.
      */
     public void setRageMaxLevel(int level) {
@@ -1327,6 +1360,7 @@ public class CrazyEnchantments {
     
     /**
      * Set if a player takes damage the current rage stack on the player will be lost.
+     *
      * @param toggle True if they lose the rage stack on damage and false if not.
      */
     public void setBreakRageOnDamage(boolean toggle) {
@@ -1335,6 +1369,7 @@ public class CrazyEnchantments {
     
     /**
      * Check if players lose their current rage stack on damage.
+     *
      * @return True if they do and false if not.
      */
     public boolean isBreakRageOnDamageOn() {
@@ -1350,6 +1385,7 @@ public class CrazyEnchantments {
     
     /**
      * This converts an integer into a roman numeral if its between 1-10 other wise it will just be the number as a string.
+     *
      * @param i The integer you want to convert.
      * @return The integer as a roman numeral if between 1-10 other wise the number as a string.
      */
@@ -1384,6 +1420,7 @@ public class CrazyEnchantments {
     
     /**
      * This converts a String into a number if using a roman numeral from I-X.
+     *
      * @param i The string you want to convert.
      * @return The roman numeral as a number.
      */
