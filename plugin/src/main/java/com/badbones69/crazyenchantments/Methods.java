@@ -35,7 +35,7 @@ public class Methods {
     private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
     private static Support support = Support.getInstance();
     private static boolean isV1_13_Up = Version.isNewer(Version.v1_12_R1);
-    public final static Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F0-9]{6}");
+    public final static Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F\\d]{6}");
     
     public static String color(String message) {
         if (Version.isNewer(Version.v1_15_R1)) {
