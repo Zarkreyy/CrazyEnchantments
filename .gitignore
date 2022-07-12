@@ -18,3 +18,7 @@ api/target
 *.properties
 
 plugin/dependency-reduced-pom.xml
+
+*.ipr
+
+*.iws
