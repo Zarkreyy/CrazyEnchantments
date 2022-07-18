@@ -3,6 +3,7 @@ package com.badbones69.crazyenchantments.enchantments;
 import com.badbones69.crazyenchantments.Methods;
 import com.badbones69.crazyenchantments.api.CrazyEnchantments;
 import com.badbones69.crazyenchantments.api.FileManager.Files;
+import com.badbones69.crazyenchantments.api.enums.ArmorType;
 import com.badbones69.crazyenchantments.api.enums.CEnchantments;
 import com.badbones69.crazyenchantments.api.events.ArmorEquipEvent;
 import com.badbones69.crazyenchantments.api.events.AuraActiveEvent;
@@ -30,10 +31,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -113,6 +116,26 @@ public class Armor implements Listener {
                 }
             }
         }.runTaskAsynchronously(ce.getPlugin());
+    }
+
+    @EventHandler
+    public void onArmorRightClickEquip(PlayerInteractEvent event) {
+        if (!(event.getAction() == Action.RIGHT_CLICK_AIR)) return;
+
+        Player player = event.getPlayer();
+
+        ItemStack itemStack = player.getInventory().getItemInMainHand();
+
+        // String name = itemStack.getType().name();
+
+        // if (!name.endsWith("_BOOTS") || !name.endsWith("_HELMET") || !name.endsWith("_CHESTPLATE") || !name.endsWith("_LEGGINGS")) return;
+
+        runEquip(player, ArmorType.matchType(itemStack), new ItemStack(Material.AIR), itemStack);
+    }
+
+    private void runEquip(Player player, ArmorType armorType, ItemStack itemStack, ItemStack activeItem) {
+        ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, ArmorEquipEvent.EquipMethod.HOTBAR, armorType, itemStack, activeItem);
+        player.getServer().getPluginManager().callEvent(armorEquipEvent);
     }
     
     //todo Make INSOMNIA work correctly. It should double the damage a player with the armor enchantment on does.
