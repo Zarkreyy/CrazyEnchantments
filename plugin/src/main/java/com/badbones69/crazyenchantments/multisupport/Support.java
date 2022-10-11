@@ -9,6 +9,11 @@ import com.badbones69.crazyenchantments.multisupport.mobstackers.MobStacker2;
 import com.badbones69.crazyenchantments.multisupport.plotsquared.PlotSquaredVersion;
 import com.badbones69.crazyenchantments.multisupport.skyblocks.SuperiorSkyblockSupport;
 import com.badbones69.crazyenchantments.multisupport.worldguard.WorldGuardVersion;
+import com.badbones69.premiumhooks.FactionPlugin;
+import com.badbones69.premiumhooks.factions.FactionsUUID;
+import com.badbones69.premiumhooks.factions.GriefPreventionSupport;
+import com.badbones69.premiumhooks.factions.PreciousStonesSupport;
+import com.badbones69.premiumhooks.factions.TownySupport;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -16,7 +21,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +28,7 @@ import java.util.Map;
 public class Support {
     
     private static Support instance = new Support();
-    //private static FactionPlugin factionPlugin = null;
+    private static FactionPlugin factionPlugin = null;
     private CrazyEnchantments ce = CrazyEnchantments.getInstance();
     private WingsManager wingsManager;
     private WorldGuardVersion worldGuardVersion;
@@ -41,9 +45,9 @@ public class Support {
     }
     
     public boolean inTerritory(Player player) {
-        //if (factionPlugin != null && factionPlugin.inTerritory(player)) {
-        //    return true;
-        //}
+        if (factionPlugin != null && factionPlugin.inTerritory(player)) {
+            return true;
+        }
         return SupportedPlugins.SUPERIOR_SKYBLOCK.isPluginLoaded() && SuperiorSkyblockSupport.inTerritory(player);
     }
     
@@ -51,9 +55,9 @@ public class Support {
         if (pEntity instanceof Player && oEntity instanceof Player) {
             Player player = (Player) pEntity;
             Player other = (Player) oEntity;
-            //if (factionPlugin != null && factionPlugin.isFriendly(player, other)) {
-            //    return true;
-            //}
+            if (factionPlugin != null && factionPlugin.isFriendly(player, other)) {
+                return true;
+            }
 
             if (SupportedPlugins.SUPERIOR_SKYBLOCK.isPluginLoaded() && SuperiorSkyblockSupport.isFriendly(player, other)) {
                 return true;
@@ -73,19 +77,19 @@ public class Support {
     
     public boolean canBreakBlock(Player player, Block block) {
         if (player != null) {
-            //if (factionPlugin != null && !factionPlugin.canBreakBlock(player, block)) {
-            //    return false;
-            //}
-            //return !SupportedPlugins.PRECIOUS_STONES.isPluginLoaded() || PreciousStonesSupport.canBreakBlock(player, block);
+            if (factionPlugin != null && !factionPlugin.canBreakBlock(player, block)) {
+                return false;
+            }
+            return !SupportedPlugins.PRECIOUS_STONES.isPluginLoaded() || PreciousStonesSupport.canBreakBlock(player, block);
         }
 
         return true;
     }
     
     public boolean allowsPVP(Location location) {
-        //if (SupportedPlugins.TOWNY.isPluginLoaded() && !TownySupport.allowsPvP(location)) {
-        //    return false;
-        //}
+        if (SupportedPlugins.TOWNY.isPluginLoaded() && !TownySupport.allowsPvP(location)) {
+            return false;
+        }
 
         return !SupportedPlugins.WORLD_EDIT.isPluginLoaded() || !SupportedPlugins.WORLD_GUARD.isPluginLoaded() || worldGuardVersion.allowsPVP(location);
     }
@@ -222,13 +226,13 @@ public class Support {
                 if (supportedPlugin.isPluginLoaded()) {
                     switch (supportedPlugin) {
                         case GRIEF_PREVENTION:
-                            //factionPlugin = new GriefPreventionSupport();
+                            factionPlugin = new GriefPreventionSupport();
                             return;
                         case TOWNY:
-                            //factionPlugin = new TownySupport();
+                            factionPlugin = new TownySupport();
                             return;
                         case FACTIONS_UUID:
-                            //factionPlugin = new FactionsUUID();
+                            factionPlugin = new FactionsUUID();
                             return;
                     }
                 }

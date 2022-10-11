@@ -94,11 +94,11 @@ public class PickAxes implements Listener {
                             if (SupportedPlugins.NO_CHEAT_PLUS.isPluginLoaded()) {
                                 NoCheatPlusSupport.exemptPlayer(player);
                             }
-                            if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                            //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
                                 //SpartanSupport.cancelFastBreak(player);
                                 //SpartanSupport.cancelNoSwing(player);
                                 //SpartanSupport.cancelBlockReach(player);
-                            }
+                            //}
                             if (SupportedPlugins.AAC.isPluginLoaded()) {
                                 AACSupport.exemptPlayer(player);
                             }

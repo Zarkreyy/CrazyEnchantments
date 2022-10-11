@@ -125,9 +125,9 @@ public class Armor implements Listener {
 
         ItemStack itemStack = player.getInventory().getItemInMainHand();
 
-        // String name = itemStack.getType().name();
+        //String name = itemStack.getType().name();
 
-        // if (!name.endsWith("_BOOTS") || !name.endsWith("_HELMET") || !name.endsWith("_CHESTPLATE") || !name.endsWith("_LEGGINGS")) return;
+        //if (!name.endsWith("_BOOTS") || !name.endsWith("_HELMET") || !name.endsWith("_CHESTPLATE") || !name.endsWith("_LEGGINGS")) return;
 
         runEquip(player, ArmorType.matchType(itemStack), new ItemStack(Material.AIR), itemStack);
     }
@@ -286,9 +286,9 @@ public class Armor implements Listener {
                                             if (SupportedPlugins.NO_CHEAT_PLUS.isPluginLoaded()) {
                                                 NoCheatPlusSupport.exemptPlayer(player);
                                             }
-                                            if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                                            //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
                                                 //SpartanSupport.cancelNoSwing(player);
-                                            }
+                                            //}
                                             if (SupportedPlugins.AAC.isPluginLoaded()) {
                                                 AACSupport.exemptPlayer(player);
                                             }

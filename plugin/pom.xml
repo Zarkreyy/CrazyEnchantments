@@ -74,12 +74,12 @@
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
-        <!--<dependency>
+        <dependency>
             <groupId>com.badbones69</groupId>
             <artifactId>premiumhooks</artifactId>
-            <version>1.4.2-SNAPSHOT</version>
+            <version>1.4.3-SNAPSHOT</version>
             <scope>compile</scope>
-        </dependency>-->
+        </dependency>
         <dependency> <!-- Spigot-Api -->
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>

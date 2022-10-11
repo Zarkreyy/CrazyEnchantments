@@ -69,9 +69,9 @@ public class Boots implements Listener {
     public void onFly(PlayerToggleFlightEvent e) {
         Player player = e.getPlayer();
         if (manager.isWingsEnabled() && ce.hasEnchantment(player.getEquipment().getBoots(), CEnchantments.WINGS) && regionCheck(player) && !areEnemiesNearby(player)) {
-            if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+            //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
                 //SpartanSupport.cancelFly(player);
-            }
+            //}
             if (e.isFlying()) {
                 if (player.getAllowFlight()) {
                     e.setCancelled(true);
@@ -118,9 +118,9 @@ public class Boots implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
         if (manager.isWingsEnabled() && ce.hasEnchantment(player.getEquipment().getBoots(), CEnchantments.WINGS) && regionCheck(player) && !areEnemiesNearby(player)) {
-            if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+            //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
                 //SpartanSupport.cancelFly(player);
-            }
+            //}
             player.setAllowFlight(true);
             manager.addFlyingPlayer(player);
         }

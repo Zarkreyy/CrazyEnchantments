@@ -60,9 +60,9 @@ public class Axes implements Listener {
                         Bukkit.getPluginManager().callEvent(event);
                         if (!event.isCancelled()) {
                             int food = 2 * ce.getLevel(item, CEnchantments.FEEDME);
-                            if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                            //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
                                 //SpartanSupport.cancelFastEat(damager);
-                            }
+                            //}
                             if (damager.getFoodLevel() + food < 20) {
                                 damager.setFoodLevel((int) (damager.getSaturation() + food));
                             }

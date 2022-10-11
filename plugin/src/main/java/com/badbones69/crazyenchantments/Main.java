@@ -10,6 +10,7 @@ import com.badbones69.crazyenchantments.controllers.*;
 import com.badbones69.crazyenchantments.enchantments.*;
 import com.badbones69.crazyenchantments.multisupport.Support.SupportedPlugins;
 import com.badbones69.crazyenchantments.multisupport.anticheats.AACSupport;
+import com.badbones69.premiumhooks.spawners.SilkSpawnerSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -84,9 +85,7 @@ public class Main extends JavaPlugin implements Listener {
         pm.registerEvents(new Swords(), this);
         pm.registerEvents(new AllyEnchantments(), this);
         if (SupportedPlugins.AAC.isPluginLoaded()) pm.registerEvents(new AACSupport(), this);
-        //if (SupportedPlugins.SILK_SPAWNERS.isPluginLoaded()) pm.registerEvents(new SilkSpawnerSupport(), this);
-        //if (SupportedPlugins.SILK_SPAWNERS_CANDC.isPluginLoaded()) pm.registerEvents(new SilkSpawnersCandcSupport(), this);
-        //if (SupportedPlugins.DAKATA.isPluginLoaded()) pm.registerEvents(new DakataAntiCheatSupport(), this);
+        if (SupportedPlugins.SILK_SPAWNERS.isPluginLoaded()) pm.registerEvents(new SilkSpawnerSupport(), this);
         //==========================================================================\\
         new Metrics(this);// Starts up bStats
         new BukkitRunnable() {

@@ -225,9 +225,9 @@ public class Swords implements Listener {
                         EnchantmentUseEvent event = new EnchantmentUseEvent(damager, CEnchantments.NUTRITION, item);
                         Bukkit.getPluginManager().callEvent(event);
                         if (!event.isCancelled()) {
-                            if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                            //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
                                 //SpartanSupport.cancelFastEat(damager);
-                            }
+                            //}
                             if (damager.getSaturation() + (2 * ce.getLevel(item, CEnchantments.NUTRITION)) <= 20) {
                                 damager.setSaturation(damager.getSaturation() + (2 * ce.getLevel(item, CEnchantments.NUTRITION)));
                             }
@@ -296,14 +296,14 @@ public class Swords implements Listener {
                         EnchantmentUseEvent event = new EnchantmentUseEvent(damager, CEnchantments.OBLITERATE, item);
                         Bukkit.getPluginManager().callEvent(event);
                         if (!event.isCancelled()) {
-                            if (e.getEntity() instanceof Player && SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                            //if (e.getEntity() instanceof Player && SupportedPlugins.SPARTAN.isPluginLoaded()) {
                                 //SpartanSupport.cancelSpeed((Player) e.getEntity());
                                 //SpartanSupport.cancelFly((Player) e.getEntity());
                                 //SpartanSupport.cancelClip((Player) e.getEntity());
                                 //SpartanSupport.cancelNormalMovements((Player) e.getEntity());
                                 //SpartanSupport.cancelNoFall((Player) e.getEntity());
                                 //SpartanSupport.cancelJesus((Player) e.getEntity());
-                            }
+                            //}
                             e.getEntity().setVelocity(damager.getLocation().getDirection().multiply(2).setY(1.25));
                         }
                     }
@@ -321,9 +321,9 @@ public class Swords implements Listener {
                             if (SupportedPlugins.NO_CHEAT_PLUS.isPluginLoaded()) {
                                 NoCheatPlusSupport.exemptPlayer(damager);
                             }
-                            if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                            //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
                                 //SpartanSupport.cancelNoSwing(damager);
-                            }
+                            //}
                             if (SupportedPlugins.AAC.isPluginLoaded()) {
                                 AACSupport.exemptPlayer(damager);
                             }

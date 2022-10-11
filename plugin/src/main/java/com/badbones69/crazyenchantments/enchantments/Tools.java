@@ -8,7 +8,6 @@ import com.badbones69.crazyenchantments.api.objects.BlockProcessInfo;
 import com.badbones69.crazyenchantments.api.objects.CEnchantment;
 import com.badbones69.crazyenchantments.api.objects.ItemBuilder;
 import com.badbones69.crazyenchantments.api.objects.TelepathyDrop;
-import com.badbones69.crazyenchantments.multisupport.Support.SupportedPlugins;
 import com.badbones69.crazyenchantments.multisupport.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -68,6 +67,7 @@ public class Tools implements Listener {
                 //This checks if the block is a spawner and if so the spawner classes will take care of this.
                 //If Epic Spawners is enabled then telepathy will give the item from the API.
                 //Otherwise CE will ignore the spawner in this event.
+                // Epic Spawners removed for now.
                 (block.getType() == ce.getMaterial("SPAWNER", "MOB_SPAWNER"))) {
                     return;
                 }

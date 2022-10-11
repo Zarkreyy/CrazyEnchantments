@@ -179,9 +179,9 @@ public class Bows implements Listener {
                     if (SupportedPlugins.NO_CHEAT_PLUS.isPluginLoaded()) {
                         NoCheatPlusSupport.exemptPlayer(shooter);
                     }
-                    if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                    //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
                         //SpartanSupport.cancelNoSwing(shooter);
-                    }
+                    //}
                     if (SupportedPlugins.AAC.isPluginLoaded()) {
                         AACSupport.exemptPlayer(shooter);
                     }
@@ -278,14 +278,14 @@ public class Bows implements Listener {
                             Bukkit.getPluginManager().callEvent(event);
                             Player player = (Player) e.getEntity();
                             if (!event.isCancelled()) {
-                                if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                                //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
                                     //SpartanSupport.cancelSpeed(player);
                                     //SpartanSupport.cancelFly(player);
                                     //SpartanSupport.cancelClip(player);
                                     //SpartanSupport.cancelNormalMovements(player);
                                     //SpartanSupport.cancelNoFall(player);
                                     //SpartanSupport.cancelJesus(player);
-                                }
+                                //}
                                 if (SupportedPlugins.AAC.isPluginLoaded()) {
                                     AACSupport.exemptPlayerTime(player);
                                 }

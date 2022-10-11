@@ -74,12 +74,14 @@ public class ArmorMoveProcessor extends Processor<PlayerMoveEvent> {
                     Bukkit.getPluginManager().callEvent(event);
                     if (!event.isCancelled()) {
                         int foodIncress = 1;
-                        if (Support.SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                        //if (Support.SupportedPlugins.SPARTAN.isPluginLoaded()) {
                             //SpartanSupport.cancelFastEat(player);
-                        }
+                        //}
+
                         if (player.getFoodLevel() + foodIncress <= 20) {
                             player.setFoodLevel(player.getFoodLevel() + foodIncress);
                         }
+
                         if (player.getFoodLevel() + foodIncress >= 20) {
                             player.setFoodLevel(20);
                         }
@@ -127,7 +129,7 @@ public class ArmorMoveProcessor extends Processor<PlayerMoveEvent> {
                                 Damageable damageable = (Damageable) item.getItemMeta();
                                 if (damageable != null) {
                                     damageable.setDamage(Math.max(finalArmorDirability, 0));
-                                    item.setItemMeta((ItemMeta) damageable);
+                                    item.setItemMeta(damageable);
                                 }
                             } else {
                                 item.setDurability((short) Math.max(finalArmorDirability, 0));
