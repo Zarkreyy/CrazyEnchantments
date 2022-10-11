@@ -42,6 +42,27 @@
             <id>CodeMC</id>
             <url>https://repo.codemc.org/repository/maven-public</url>
         </repository>
+
+        <!-- FactionsUUID -->
+        <repository>
+            <id>enderzone-repo</id>
+            <url>https://ci.ender.zone/plugin/repository/everything/</url>
+        </repository>
+        <!-- Precious Stones -->
+        <repository>
+            <id>elMakers-repo</id>
+            <url>https://maven.elmakers.com/repository/</url>
+        </repository>
+        <!-- Towny -->
+        <repository>
+            <id>glaremasters repo</id>
+            <url>https://repo.glaremasters.me/repository/towny/</url>
+        </repository>
+        <!-- SilkSpawners -->
+        <repository>
+            <id>SilkSpawners-Repo</id>
+            <url>https://repo.dustplanet.de/artifactory/libs-release-local</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -69,11 +90,47 @@
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
+        <dependency> <!-- FactionsUUID -->
+            <groupId>com.massivecraft</groupId>
+            <artifactId>Factions</artifactId>
+            <version>1.6.9.5-U0.5.0</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>gson</artifactId>
+                    <groupId>com.google.code.gson</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
-            <groupId>com.badbones69</groupId>
-            <artifactId>premiumhooks</artifactId>
-            <version>1.4.3-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>com.github.TechFortress</groupId>
+            <artifactId>GriefPrevention</artifactId>
+            <version>16.13.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.palmergames.bukkit.towny</groupId>
+            <artifactId>towny</artifactId>
+            <version>0.97.5.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency><!-- PreciousStones -->
+            <groupId>net.sacredlabyrinth.Phaed</groupId>
+            <artifactId>PreciousStones</artifactId>
+            <version>15.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.dustplanet</groupId>
+            <artifactId>silkspawners</artifactId>
+            <version>7.2.0</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency> <!-- Spigot-Api -->
             <groupId>org.spigotmc</groupId>

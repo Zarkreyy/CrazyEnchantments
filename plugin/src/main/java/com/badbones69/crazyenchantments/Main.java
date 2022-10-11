@@ -10,7 +10,7 @@ import com.badbones69.crazyenchantments.controllers.*;
 import com.badbones69.crazyenchantments.enchantments.*;
 import com.badbones69.crazyenchantments.multisupport.Support.SupportedPlugins;
 import com.badbones69.crazyenchantments.multisupport.anticheats.AACSupport;
-import com.badbones69.premiumhooks.spawners.SilkSpawnerSupport;
+import com.badbones69.crazyenchantments.multisupport.spawners.SilkSpawnerSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
