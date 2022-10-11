@@ -20,12 +20,12 @@
         <!-- Vault repo -->
         <repository>
             <id>vault-repo</id>
-            <url>http://nexus.hc.to/content/repositories/pub_releases</url>
+            <url>https://nexus.hc.to/content/repositories/pub_releases</url>
         </repository>
         <repository>
             <id>bintray-tastybento-maven-repo</id>
             <name>bintray</name>
-            <url>http://dl.bintray.com/tastybento/maven-repo</url>
+            <url>https://dl.bintray.com/tastybento/maven-repo</url>
         </repository>
         <repository>
             <id>jitpack.io</id>
@@ -41,21 +41,11 @@
         </repository>
         <repository>
             <id>athion.net</id>
-            <url>http://ci.athion.net/job/PlotSquared-Legacy/ws/mvn/</url>
+            <url>https://ci.athion.net/job/PlotSquared-Legacy/ws/mvn/</url>
         </repository>
         <repository>
             <id>CodeMC</id>
             <url>https://repo.codemc.org/repository/maven-public</url>
-        </repository>
-        <!-- FactionsX -->
-        <repository>
-            <id>savagelabs</id>
-            <url>https://nexus.savagelabs.net/repository/maven-public/</url>
-        </repository>
-        <!-- Premium Hooks -->
-        <repository>
-            <id>crazycrew-repo</id>
-            <url>https://repo.badbones69.com/snapshots</url>
         </repository>
     </repositories>
 
@@ -84,12 +74,12 @@
             <scope>compile</scope>
             <optional>true</optional>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.badbones69</groupId>
             <artifactId>premiumhooks</artifactId>
             <version>1.4.2-SNAPSHOT</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency>-->
         <dependency> <!-- Spigot-Api -->
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -198,5 +188,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

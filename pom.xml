@@ -20,19 +20,6 @@
         <build.number/>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>crazycrew-repo</id>
-            <name>repo releases</name>
-            <url>https://repo.badbones69.com/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>crazycrew-repo</id>
-            <name>repo snapshots</name>
-            <url>https://repo.badbones69.com/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <build>
         <defaultGoal>clean package install</defaultGoal>
         <finalName>${project.name}</finalName>
@@ -49,5 +36,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

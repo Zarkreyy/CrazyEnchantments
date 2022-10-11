@@ -9,8 +9,6 @@ import com.badbones69.crazyenchantments.multisupport.mobstackers.MobStacker2;
 import com.badbones69.crazyenchantments.multisupport.plotsquared.PlotSquaredVersion;
 import com.badbones69.crazyenchantments.multisupport.skyblocks.SuperiorSkyblockSupport;
 import com.badbones69.crazyenchantments.multisupport.worldguard.WorldGuardVersion;
-import com.badbones69.premiumhooks.factions.*;
-import com.badbones69.premiumhooks.mobstacker.StackMobSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -26,7 +24,7 @@ import java.util.Map;
 public class Support {
     
     private static Support instance = new Support();
-    private static FactionPlugin factionPlugin = null;
+    //private static FactionPlugin factionPlugin = null;
     private CrazyEnchantments ce = CrazyEnchantments.getInstance();
     private WingsManager wingsManager;
     private WorldGuardVersion worldGuardVersion;
@@ -43,25 +41,24 @@ public class Support {
     }
     
     public boolean inTerritory(Player player) {
-        if (factionPlugin != null && factionPlugin.inTerritory(player)) {
-            return true;
-        }
-        if (SupportedPlugins.SUPERIOR_SKYBLOCK.isPluginLoaded() && SuperiorSkyblockSupport.inTerritory(player)) {
-            return true;
-        }
-        return SupportedPlugins.PLOT_SQUARED.isPluginLoaded() && plotSquaredVersion.inTerritory(player);
+        //if (factionPlugin != null && factionPlugin.inTerritory(player)) {
+        //    return true;
+        //}
+        return SupportedPlugins.SUPERIOR_SKYBLOCK.isPluginLoaded() && SuperiorSkyblockSupport.inTerritory(player);
     }
     
     public boolean isFriendly(Entity pEntity, Entity oEntity) {
         if (pEntity instanceof Player && oEntity instanceof Player) {
             Player player = (Player) pEntity;
             Player other = (Player) oEntity;
-            if (factionPlugin != null && factionPlugin.isFriendly(player, other)) {
-                return true;
-            }
+            //if (factionPlugin != null && factionPlugin.isFriendly(player, other)) {
+            //    return true;
+            //}
+
             if (SupportedPlugins.SUPERIOR_SKYBLOCK.isPluginLoaded() && SuperiorSkyblockSupport.isFriendly(player, other)) {
                 return true;
             }
+
             return SupportedPlugins.MCMMO.isPluginLoaded() && MCMMOParty.isFriendly(player, other);
         }
         return false;
@@ -76,18 +73,20 @@ public class Support {
     
     public boolean canBreakBlock(Player player, Block block) {
         if (player != null) {
-            if (factionPlugin != null && !factionPlugin.canBreakBlock(player, block)) {
-                return false;
-            }
-            return !SupportedPlugins.PRECIOUS_STONES.isPluginLoaded() || PreciousStonesSupport.canBreakBlock(player, block);
+            //if (factionPlugin != null && !factionPlugin.canBreakBlock(player, block)) {
+            //    return false;
+            //}
+            //return !SupportedPlugins.PRECIOUS_STONES.isPluginLoaded() || PreciousStonesSupport.canBreakBlock(player, block);
         }
+
         return true;
     }
     
     public boolean allowsPVP(Location location) {
-        if (SupportedPlugins.TOWNY.isPluginLoaded() && !TownySupport.allowsPvP(location)) {
-            return false;
-        }
+        //if (SupportedPlugins.TOWNY.isPluginLoaded() && !TownySupport.allowsPvP(location)) {
+        //    return false;
+        //}
+
         return !SupportedPlugins.WORLD_EDIT.isPluginLoaded() || !SupportedPlugins.WORLD_GUARD.isPluginLoaded() || worldGuardVersion.allowsPVP(location);
     }
     
@@ -125,7 +124,7 @@ public class Support {
             MobStacker2.noStack(entity);
         }
         if (SupportedPlugins.STACK_MOB.isPluginLoaded()) {
-            StackMobSupport.preventStacking(entity);
+            //StackMobSupport.preventStacking(entity);
         }
     }
     
@@ -133,34 +132,23 @@ public class Support {
         
         MCMMO("mcMMO"),
         GRIEF_PREVENTION("GriefPrevention"),
-        LEGACY_FACTIONS("LegacyFactions"),
         TOWNY("Towny"),
-        EPIC_SPAWNERS("EpicSpawners"),
         AAC("AAC"),
-        DAKATA("DakataAntiCheat"),
         NO_CHEAT_PLUS("NoCheatPlus"),
         VAULT("Vault"),
         WORLD_EDIT("WorldEdit"),
         WORLD_GUARD("WorldGuard"),
-        FACTIONS_MASSIVE_CRAFT("Factions"),
-        FACTIONS3("Factions"),
         FACTIONS_UUID("Factions"),
-        SABER_FACTIONS("Factions"),
-        FEUDAL("Feudal"),
         ACID_ISLAND("AcidIsland"),
         ASKYBLOCK("ASkyBlock"),
         SUPERIOR_SKYBLOCK("SuperiorSkyblock2"),
-        KINGDOMS("Kingdoms"),
         SILK_SPAWNERS("SilkSpawners"),
-        SILK_SPAWNERS_CANDC("SilkSpawners"),
         SPARTAN("Spartan"),
         MOB_STACKER("MobStacker"),
         MOB_STACKER_2("MobStacker2"),
         STACK_MOB("StackMob"),
         MEGA_SKILLS("MegaSkills"),
-        PRECIOUS_STONES("PreciousStones"),
-        PLOT_SQUARED("PlotSquared"),
-        FACTIONSX("FactionsX");
+        PRECIOUS_STONES("PreciousStones");
         
         private String name;
         private static Map<SupportedPlugins, Boolean> cachedPluginState = new HashMap<>();
@@ -196,20 +184,8 @@ public class Support {
                         case SILK_SPAWNERS:
                             cachedPluginState.put(supportedPlugin, authors.contains("xGhOsTkiLLeRx"));
                             break;
-                        case SILK_SPAWNERS_CANDC:
-                            cachedPluginState.put(supportedPlugin, authors.contains("CandC_9_12"));
-                            break;
-                        case FACTIONS_MASSIVE_CRAFT:
-                            cachedPluginState.put(supportedPlugin, website.equalsIgnoreCase("https://www.massivecraft.com/factions"));
-                            break;
                         case FACTIONS_UUID:
                             cachedPluginState.put(supportedPlugin, website.equalsIgnoreCase("https://www.spigotmc.org/resources/factionsuuid.1035/"));
-                            break;
-                        case FACTIONS3:
-                            cachedPluginState.put(supportedPlugin, authors.contains("Madus"));
-                            break;
-                        case SABER_FACTIONS:
-                            cachedPluginState.put(supportedPlugin, authors.contains("Driftay"));
                             break;
                         case STACK_MOB:
                             //CE does not support StackMob Legacy due to issues with package naming.
@@ -245,35 +221,14 @@ public class Support {
             for (SupportedPlugins supportedPlugin : values()) {
                 if (supportedPlugin.isPluginLoaded()) {
                     switch (supportedPlugin) {
-                        case LEGACY_FACTIONS:
-                            factionPlugin = new LegacyFactionsSupport();
-                            return;
-                        case KINGDOMS:
-                            factionPlugin = new KingdomSupport();
-                            return;
                         case GRIEF_PREVENTION:
-                            factionPlugin = new GriefPreventionSupport();
-                            return;
-                        case FEUDAL:
-                            factionPlugin = new FeudalSupport();
+                            //factionPlugin = new GriefPreventionSupport();
                             return;
                         case TOWNY:
-                            factionPlugin = new TownySupport();
-                            return;
-                        case FACTIONS3:
-                            factionPlugin = new Factions3Support();
-                            return;
-                        case FACTIONS_MASSIVE_CRAFT:
-                            factionPlugin = new FactionsSupport();
+                            //factionPlugin = new TownySupport();
                             return;
                         case FACTIONS_UUID:
-                            factionPlugin = new FactionsUUID();
-                            return;
-                        case SABER_FACTIONS:
-                            factionPlugin = new SaberFactionsSupport();
-                            return;
-                        case FACTIONSX:
-                            factionPlugin = new FactionsX();
+                            //factionPlugin = new FactionsUUID();
                             return;
                     }
                 }

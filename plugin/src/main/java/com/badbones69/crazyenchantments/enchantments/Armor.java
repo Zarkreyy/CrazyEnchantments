@@ -19,7 +19,6 @@ import com.badbones69.crazyenchantments.multisupport.anticheats.NoCheatPlusSuppo
 import com.badbones69.crazyenchantments.multisupport.particles.ParticleEffect;
 import com.badbones69.crazyenchantments.processors.ArmorMoveProcessor;
 import com.badbones69.crazyenchantments.processors.Processor;
-import com.badbones69.premiumhooks.anticheat.SpartanSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -288,7 +287,7 @@ public class Armor implements Listener {
                                                 NoCheatPlusSupport.exemptPlayer(player);
                                             }
                                             if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
-                                                SpartanSupport.cancelNoSwing(player);
+                                                //SpartanSupport.cancelNoSwing(player);
                                             }
                                             if (SupportedPlugins.AAC.isPluginLoaded()) {
                                                 AACSupport.exemptPlayer(player);
@@ -319,7 +318,7 @@ public class Armor implements Listener {
                     }
                     if (damager instanceof Player) {
                         for (ItemStack armor : Objects.requireNonNull(damager.getEquipment()).getArmorContents()) {
-                            if (ce.hasEnchantment(armor, CEnchantments.LEADERSHIP) && CEnchantments.LEADERSHIP.chanceSuccessful(armor) && (SupportedPlugins.FACTIONS_MASSIVE_CRAFT.isPluginLoaded() || SupportedPlugins.FACTIONS_UUID.isPluginLoaded())) {
+                            if (ce.hasEnchantment(armor, CEnchantments.LEADERSHIP) && CEnchantments.LEADERSHIP.chanceSuccessful(armor) || SupportedPlugins.FACTIONS_UUID.isPluginLoaded()) {
                                 int radius = 4 + ce.getLevel(armor, CEnchantments.LEADERSHIP);
                                 new BukkitRunnable() {
                                     @Override

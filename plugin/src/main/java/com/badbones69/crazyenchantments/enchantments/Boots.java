@@ -8,7 +8,6 @@ import com.badbones69.crazyenchantments.multisupport.Support;
 import com.badbones69.crazyenchantments.multisupport.Support.SupportedPlugins;
 import com.badbones69.crazyenchantments.multisupport.Version;
 import com.badbones69.crazyenchantments.multisupport.particles.ParticleEffect;
-import com.badbones69.premiumhooks.anticheat.SpartanSupport;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -71,7 +70,7 @@ public class Boots implements Listener {
         Player player = e.getPlayer();
         if (manager.isWingsEnabled() && ce.hasEnchantment(player.getEquipment().getBoots(), CEnchantments.WINGS) && regionCheck(player) && !areEnemiesNearby(player)) {
             if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
-                SpartanSupport.cancelFly(player);
+                //SpartanSupport.cancelFly(player);
             }
             if (e.isFlying()) {
                 if (player.getAllowFlight()) {
@@ -120,7 +119,7 @@ public class Boots implements Listener {
         Player player = e.getPlayer();
         if (manager.isWingsEnabled() && ce.hasEnchantment(player.getEquipment().getBoots(), CEnchantments.WINGS) && regionCheck(player) && !areEnemiesNearby(player)) {
             if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
-                SpartanSupport.cancelFly(player);
+                //SpartanSupport.cancelFly(player);
             }
             player.setAllowFlight(true);
             manager.addFlyingPlayer(player);

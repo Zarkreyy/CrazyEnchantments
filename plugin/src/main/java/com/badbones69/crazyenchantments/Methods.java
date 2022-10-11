@@ -11,7 +11,6 @@ import com.badbones69.crazyenchantments.multisupport.Support.SupportedPlugins;
 import com.badbones69.crazyenchantments.multisupport.Version;
 import com.badbones69.crazyenchantments.multisupport.anticheats.AACSupport;
 import com.badbones69.crazyenchantments.multisupport.particles.ParticleEffect;
-import com.badbones69.premiumhooks.anticheat.SpartanSupport;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -539,12 +538,12 @@ public class Methods {
                                 en.damage(5D);
                                 if (en instanceof Player) {
                                     if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
-                                        SpartanSupport.cancelSpeed((Player) player);
-                                        SpartanSupport.cancelFly((Player) player);
-                                        SpartanSupport.cancelClip((Player) player);
-                                        SpartanSupport.cancelNormalMovements((Player) player);
-                                        SpartanSupport.cancelNoFall((Player) player);
-                                        SpartanSupport.cancelJesus((Player) player);
+                                        //SpartanSupport.cancelSpeed((Player) player);
+                                        //SpartanSupport.cancelFly((Player) player);
+                                        //SpartanSupport.cancelClip((Player) player);
+                                        //SpartanSupport.cancelNormalMovements((Player) player);
+                                        //SpartanSupport.cancelNoFall((Player) player);
+                                        //SpartanSupport.cancelJesus((Player) player);
                                     }
                                     if (SupportedPlugins.AAC.isPluginLoaded()) {
                                         AACSupport.exemptPlayerTime((Player) player);
@@ -582,12 +581,12 @@ public class Methods {
                                 en.damage(5D);
                                 if (en instanceof Player) {
                                     if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
-                                        SpartanSupport.cancelSpeed((Player) player);
-                                        SpartanSupport.cancelFly((Player) player);
-                                        SpartanSupport.cancelClip((Player) player);
-                                        SpartanSupport.cancelNormalMovements((Player) player);
-                                        SpartanSupport.cancelNoFall((Player) player);
-                                        SpartanSupport.cancelJesus((Player) player);
+                                        //SpartanSupport.cancelSpeed((Player) player);
+                                        //SpartanSupport.cancelFly((Player) player);
+                                        //SpartanSupport.cancelClip((Player) player);
+                                        //SpartanSupport.cancelNormalMovements((Player) player);
+                                        //SpartanSupport.cancelNoFall((Player) player);
+                                        //SpartanSupport.cancelJesus((Player) player);
                                     }
                                     if (SupportedPlugins.AAC.isPluginLoaded()) {
                                         AACSupport.exemptPlayerTime((Player) player);

@@ -7,7 +7,6 @@ import com.badbones69.crazyenchantments.api.events.EnchantmentUseEvent;
 import com.badbones69.crazyenchantments.api.events.HellForgedUseEvent;
 import com.badbones69.crazyenchantments.multisupport.Support;
 import com.badbones69.crazyenchantments.multisupport.Version;
-import com.badbones69.premiumhooks.anticheat.SpartanSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
@@ -76,7 +75,7 @@ public class ArmorMoveProcessor extends Processor<PlayerMoveEvent> {
                     if (!event.isCancelled()) {
                         int foodIncress = 1;
                         if (Support.SupportedPlugins.SPARTAN.isPluginLoaded()) {
-                            SpartanSupport.cancelFastEat(player);
+                            //SpartanSupport.cancelFastEat(player);
                         }
                         if (player.getFoodLevel() + foodIncress <= 20) {
                             player.setFoodLevel(player.getFoodLevel() + foodIncress);
@@ -88,7 +87,7 @@ public class ArmorMoveProcessor extends Processor<PlayerMoveEvent> {
                 });
             }
             
-            if ((CEnchantments.ANGEL.isActivated() && ce.hasEnchantment(armor, CEnchantments.ANGEL) && Support.SupportedPlugins.FACTIONS_MASSIVE_CRAFT.isPluginLoaded()) || Support.SupportedPlugins.FACTIONS_UUID.isPluginLoaded()) {
+            if ((CEnchantments.ANGEL.isActivated() && ce.hasEnchantment(armor, CEnchantments.ANGEL) || Support.SupportedPlugins.FACTIONS_UUID.isPluginLoaded())) {
                 final int radius = 4 + ce.getLevel(armor, CEnchantments.ANGEL);
                 syncProcessor.add(() -> {
                     for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {

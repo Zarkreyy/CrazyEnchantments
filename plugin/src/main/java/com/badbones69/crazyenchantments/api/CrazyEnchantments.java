@@ -20,7 +20,6 @@ import com.badbones69.crazyenchantments.multisupport.plotsquared.PlotSquaredVers
 import com.badbones69.crazyenchantments.multisupport.worldguard.WorldGuardVersion;
 import com.badbones69.crazyenchantments.multisupport.worldguard.WorldGuard_v6;
 import com.badbones69.crazyenchantments.multisupport.worldguard.WorldGuard_v7;
-import com.badbones69.premiumhooks.plotsquared.PlotSquaredLegacy;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -237,12 +236,11 @@ public class CrazyEnchantments {
         allyManager.load();
         //Starts the wings task
         Boots.startWings();
+
         if (SupportedPlugins.WORLD_GUARD.isPluginLoaded() && SupportedPlugins.WORLD_EDIT.isPluginLoaded()) {
             worldGuardVersion = useNewMaterial ? new WorldGuard_v7() : new WorldGuard_v6();
         }
-        if (SupportedPlugins.PLOT_SQUARED.isPluginLoaded()) {
-            plotSquaredVersion = useNewMaterial ? new PlotSquared() : new PlotSquaredLegacy();
-        }
+
         Support.getInstance().load();
     }
     
