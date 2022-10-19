@@ -7,6 +7,7 @@ import com.badbones69.crazyenchantments.api.events.EnchantmentUseEvent;
 import com.badbones69.crazyenchantments.api.events.HellForgedUseEvent;
 import com.badbones69.crazyenchantments.multisupport.Support;
 import com.badbones69.crazyenchantments.multisupport.Version;
+import com.badbones69.crazyenchantments.multisupport.anticheats.SpartanSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
@@ -74,9 +75,9 @@ public class ArmorMoveProcessor extends Processor<PlayerMoveEvent> {
                     Bukkit.getPluginManager().callEvent(event);
                     if (!event.isCancelled()) {
                         int foodIncress = 1;
-                        //if (Support.SupportedPlugins.SPARTAN.isPluginLoaded()) {
-                            //SpartanSupport.cancelFastEat(player);
-                        //}
+                        if (Support.SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                            SpartanSupport.cancelFastEat(player);
+                        }
 
                         if (player.getFoodLevel() + foodIncress <= 20) {
                             player.setFoodLevel(player.getFoodLevel() + foodIncress);

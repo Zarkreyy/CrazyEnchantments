@@ -1,5 +1,5 @@
-package com.badbones69.crazyenchantments.multisupport.anticheat;
-/*
+package com.badbones69.crazyenchantments.multisupport.anticheats;
+
 import me.vagdedes.spartan.api.API;
 import me.vagdedes.spartan.system.Enums.HackType;
 import org.bukkit.entity.Player;
@@ -34,10 +34,6 @@ public class SpartanSupport {
         API.cancelCheck(player, HackType.IrregularMovements, 80);
     }
     
-    public static void cancelJesus(Player player) {
-        API.cancelCheck(player, HackType.Jesus, 80);
-    }
-    
     public static void cancelNoFall(Player player) {
         API.cancelCheck(player, HackType.NoFall, 80);
     }
@@ -46,4 +42,3 @@ public class SpartanSupport {
         API.cancelCheck(player, HackType.IrregularMovements, 80);
     }
 }
- */

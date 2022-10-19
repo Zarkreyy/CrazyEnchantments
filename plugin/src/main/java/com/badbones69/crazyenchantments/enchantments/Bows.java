@@ -12,6 +12,7 @@ import com.badbones69.crazyenchantments.multisupport.Support.SupportedPlugins;
 import com.badbones69.crazyenchantments.multisupport.Version;
 import com.badbones69.crazyenchantments.multisupport.anticheats.AACSupport;
 import com.badbones69.crazyenchantments.multisupport.anticheats.NoCheatPlusSupport;
+import com.badbones69.crazyenchantments.multisupport.anticheats.SpartanSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -179,9 +180,9 @@ public class Bows implements Listener {
                     if (SupportedPlugins.NO_CHEAT_PLUS.isPluginLoaded()) {
                         NoCheatPlusSupport.exemptPlayer(shooter);
                     }
-                    //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
-                        //SpartanSupport.cancelNoSwing(shooter);
-                    //}
+                    if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                        SpartanSupport.cancelNoSwing(shooter);
+                    }
                     if (SupportedPlugins.AAC.isPluginLoaded()) {
                         AACSupport.exemptPlayer(shooter);
                     }
@@ -278,14 +279,13 @@ public class Bows implements Listener {
                             Bukkit.getPluginManager().callEvent(event);
                             Player player = (Player) e.getEntity();
                             if (!event.isCancelled()) {
-                                //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
-                                    //SpartanSupport.cancelSpeed(player);
-                                    //SpartanSupport.cancelFly(player);
-                                    //SpartanSupport.cancelClip(player);
-                                    //SpartanSupport.cancelNormalMovements(player);
-                                    //SpartanSupport.cancelNoFall(player);
-                                    //SpartanSupport.cancelJesus(player);
-                                //}
+                                if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                                    SpartanSupport.cancelSpeed(player);
+                                    SpartanSupport.cancelFly(player);
+                                    SpartanSupport.cancelClip(player);
+                                    SpartanSupport.cancelNormalMovements(player);
+                                    SpartanSupport.cancelNoFall(player);
+                                }
                                 if (SupportedPlugins.AAC.isPluginLoaded()) {
                                     AACSupport.exemptPlayerTime(player);
                                 }

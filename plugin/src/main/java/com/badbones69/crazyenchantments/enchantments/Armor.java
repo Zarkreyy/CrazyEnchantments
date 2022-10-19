@@ -16,6 +16,7 @@ import com.badbones69.crazyenchantments.multisupport.Support.SupportedPlugins;
 import com.badbones69.crazyenchantments.multisupport.Version;
 import com.badbones69.crazyenchantments.multisupport.anticheats.AACSupport;
 import com.badbones69.crazyenchantments.multisupport.anticheats.NoCheatPlusSupport;
+import com.badbones69.crazyenchantments.multisupport.anticheats.SpartanSupport;
 import com.badbones69.crazyenchantments.multisupport.particles.ParticleEffect;
 import com.badbones69.crazyenchantments.processors.ArmorMoveProcessor;
 import com.badbones69.crazyenchantments.processors.Processor;
@@ -286,9 +287,9 @@ public class Armor implements Listener {
                                             if (SupportedPlugins.NO_CHEAT_PLUS.isPluginLoaded()) {
                                                 NoCheatPlusSupport.exemptPlayer(player);
                                             }
-                                            //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
-                                                //SpartanSupport.cancelNoSwing(player);
-                                            //}
+                                            if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                                                SpartanSupport.cancelNoSwing(player);
+                                            }
                                             if (SupportedPlugins.AAC.isPluginLoaded()) {
                                                 AACSupport.exemptPlayer(player);
                                             }

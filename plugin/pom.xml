@@ -63,6 +63,11 @@
             <id>SilkSpawners-Repo</id>
             <url>https://repo.dustplanet.de/artifactory/libs-release-local</url>
         </repository>
+        <repository>
+            <id>crazycrew-repo-plugins</id>
+            <name>CrazyCrew Repository</name>
+            <url>https://repo.badbones69.com/plugins</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -89,6 +94,12 @@
             <type>jar</type>
             <scope>compile</scope>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>me.vagdedes.spartan</groupId>
+            <artifactId>SpartanAPI</artifactId>
+            <version>9.1</version>
+            <scope>provided</scope>
         </dependency>
         <dependency> <!-- FactionsUUID -->
             <groupId>com.massivecraft</groupId>

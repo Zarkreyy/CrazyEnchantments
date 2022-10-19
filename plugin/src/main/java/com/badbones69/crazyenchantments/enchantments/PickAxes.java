@@ -14,6 +14,7 @@ import com.badbones69.crazyenchantments.multisupport.Support.SupportedPlugins;
 import com.badbones69.crazyenchantments.multisupport.Version;
 import com.badbones69.crazyenchantments.multisupport.anticheats.AACSupport;
 import com.badbones69.crazyenchantments.multisupport.anticheats.NoCheatPlusSupport;
+import com.badbones69.crazyenchantments.multisupport.anticheats.SpartanSupport;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -94,11 +95,11 @@ public class PickAxes implements Listener {
                             if (SupportedPlugins.NO_CHEAT_PLUS.isPluginLoaded()) {
                                 NoCheatPlusSupport.exemptPlayer(player);
                             }
-                            //if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
-                                //SpartanSupport.cancelFastBreak(player);
-                                //SpartanSupport.cancelNoSwing(player);
-                                //SpartanSupport.cancelBlockReach(player);
-                            //}
+                            if (SupportedPlugins.SPARTAN.isPluginLoaded()) {
+                                SpartanSupport.cancelFastBreak(player);
+                                SpartanSupport.cancelNoSwing(player);
+                                SpartanSupport.cancelBlockReach(player);
+                            }
                             if (SupportedPlugins.AAC.isPluginLoaded()) {
                                 AACSupport.exemptPlayer(player);
                             }
