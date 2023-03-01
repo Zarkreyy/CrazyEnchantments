@@ -1,32 +1,74 @@
 # Crazy Enchantments
-Source Code for Crazy Enchantments
+The legacy source for CrazyEnchantments ( 1.8 -> 1.16.5 )
 
-## Build Status:
-[![Build Status](https://jenkins.badbones69.com/view/Legacy/job/Crazy-Enchantments-Legacy/badge/icon)](https://jenkins.badbones69.com/view/Legacy/job/Crazy-Enchantments-Legacy/)
+## Download:
+All versions labeled "Alpha" are legacy versions.
+https://modrinth.com/plugin/crazycrates/versions
 
-## Latest Version:
-[![Latest Version](https://img.shields.io/badge/Latest%20Version-1.8--Dev--Build--v12-blue)](https://github.com/badbones69/Crazy-Enchantments/releases/latest)
+## Repository:
+https://repo.crazycrew.us/#/releases
 
-## Support:
-https://discord.com/invite/MCuz8JG/
+# Developer API
 
-## Jenkins: 
-[https://jenkins.badbones69.com/job/Crazy-Enchantments/](https://jenkins.badbones69.com/view/Legacy/job/Crazy-Enchantments-Legacy/)
+## Groovy
+<details>
+ <summary>
+   Gradle (Groovy)
+ </summary>
 
-## Repo:
-N/A
+```gradle
+repositories {
+    maven {
+        url = "https://repo.crazycrew.us/releases"
+    }
+}
+```
 
-## Maven:
+```gradle
+dependencies {
+    compileOnly "me.badbones69.crazyenchantments:crazyenchantments:1.8.1.0"
+}
+```
+</details>
+
+## Kotlin
+<details>
+ <summary>
+   Gradle (Kotlin)
+ </summary>
+
+```gradle
+repositories {
+    maven("https://repo.crazycrew.us/releases")
+}
+```
+
+```gradle
+dependencies {
+    compileOnly("me.badbones69.crazyenchantments", "crazyenchantments", "1.8.1.0")
+}
+```
+</details>
+
+## Maven
+<details>
+ <summary>
+   Maven
+ </summary>
+
 ```xml
 <repository>
-    <id>crazycrew-repo-legacy</id>
-    <name>CrazyCrew Team</name>
-    <url>https://repo.badbones69.com/legacy</url>
+  <id>crazycrew</id>
+  <url>https://repo.crazycrew.us/releases</url>
 </repository>
-
-<dependency>
-    <groupId>com.badbones69</groupId>
-    <artifactId>crazyenchantments-plugin</artifactId>
-    <version>{Latest Version}</version>
-</dependency>
 ```
+
+```xml
+<dependency>
+  <groupId>me.badbones69.crazycrates</groupId>
+  <artifactId>crazyenchantments</artifactId>
+  <version>1.8.1.0</version>
+  <scope>provided</scope>  
+ </dependency>
+```
+</details>

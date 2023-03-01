@@ -56,7 +56,7 @@ repositories {
 dependencies {
     implementation(project(":api"))
 
-    //implementation(project(":v1_12_2_down"))
+    implementation(project(":v1_12_2_down"))
     implementation(project(":v1_13_up"))
 
     implementation("de.tr7zw", "nbt-data-api", "2.11.1")
@@ -69,7 +69,7 @@ dependencies {
     compileOnly("com.bgsoftware", "SuperiorSkyblockAPI", "2022.8.1")
     compileOnly("com.bgsoftware", "WildStackerAPI", "2022.5")
 
-    //compileOnly("com.gmail.mossr50.mcMMO", "mcMMO", "2.1.107")
+    compileOnly("net.sacredlabyrinth.Phaed", "PreciousStones", "1.16.1.9")
 
     compileOnly("de.dustplanet", "silkspawners", "7.2.0") {
         exclude("org.bukkit", "bukkit")
@@ -97,7 +97,7 @@ dependencies {
 
 tasks {
     shadowJar {
-        archiveFileName.set("${project.name}-${project.version}.jar")
+        archiveFileName.set("${rootProject.name}-${project.version}.jar")
 
         listOf(
             "de.tr7zw",
@@ -110,9 +110,9 @@ tasks {
 
     modrinth {
         token.set(System.getenv("MODRINTH_TOKEN"))
-        projectId.set(project.name.toLowerCase())
+        projectId.set(rootProject.name.toLowerCase())
 
-        versionName.set("${project.name} ${project.version}")
+        versionName.set("${rootProject.name} ${project.version}")
         versionNumber.set("${project.version}")
 
         versionType.set("alpha")
@@ -136,11 +136,11 @@ tasks {
     processResources {
         filesMatching("plugin.yml") {
             expand(
-                "name" to project.name,
+                "name" to rootProject.name,
                 "group" to project.group,
                 "version" to project.version,
                 "description" to project.description,
-                "website" to "https://modrinth.com/plugin/${project.name.toLowerCase()}"
+                "website" to "https://modrinth.com/plugin/${rootProject.name.toLowerCase()}"
             )
         }
     }
@@ -150,7 +150,7 @@ publishing {
     repositories {
         maven("https://repo.crazycrew.us/releases") {
             name = "crazycrew"
-            //credentials(PasswordCredentials::class)
+            credentials(PasswordCredentials::class)
             credentials {
                 username = System.getenv("REPOSITORY_USERNAME")
                 password = System.getenv("REPOSITORY_PASSWORD")
@@ -161,7 +161,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "${project.group}"
-            artifactId = project.name.toLowerCase()
+            artifactId = rootProject.name.toLowerCase()
             version = "${project.version}"
             from(components["java"])
         }

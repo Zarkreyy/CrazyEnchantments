@@ -9,7 +9,5 @@ dependencies {
 
     compileOnly("com.sk89q.worldedit", "worldedit-bukkit", "7.2.9")
 
-    compileOnly("com.sk89q.worldguard", "worldguard-bukkit", "7.1.0-SNAPSHOT")
-
-    compileOnly("com.plotsquared", "PlotSquared-Core", "6.10.1")
+    compileOnly("com.sk89q.worldguard", "worldguard-legacy", "7.0.0-SNAPSHOT")
 }
