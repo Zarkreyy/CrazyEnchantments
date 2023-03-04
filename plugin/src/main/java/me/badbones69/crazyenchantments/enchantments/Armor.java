@@ -122,7 +122,7 @@ public class Armor implements Listener {
 
         Player player = event.getPlayer();
 
-        ItemStack itemStack = player.getInventory().getItemInMainHand();
+        ItemStack itemStack = Version.isLegacy() ? player.getItemInHand() : player.getInventory().getItemInMainHand();
 
         //String name = itemStack.getType().name();
 
@@ -135,8 +135,7 @@ public class Armor implements Listener {
         ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, ArmorEquipEvent.EquipMethod.HOTBAR, armorType, itemStack, activeItem);
         player.getServer().getPluginManager().callEvent(armorEquipEvent);
     }
-    
-    //todo Make INSOMNIA work correctly. It should double the damage a player with the armor enchantment on does.
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDamage(EntityDamageByEntityEvent e) {
         if (e.isCancelled() || ce.isIgnoredEvent(e) || ce.isIgnoredUUID(e.getDamager().getUniqueId())) return;

@@ -129,7 +129,7 @@ tasks {
                 <h4>Notice:</h4>
                  <p>This is only for Legacy ( 1.8 - 1.16.5 ) Support, No new features will be added.</p>
                 <h4>Bug Fixes:</h4>
-                 <p>N/a</p>
+                 <p>Fixed a bug potentially with using a method that doesn't exist on 1.8</p>
             """.trimIndent())
     }
 
