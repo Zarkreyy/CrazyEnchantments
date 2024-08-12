@@ -68,7 +68,7 @@ public class KitsMenu extends InventoryBuilder {
             List<Component> lore = new ArrayList<>();
             GkitCoolDown gkitCooldown = !cePlayer.canUseGKit(kit) && cePlayer.hasGkitPermission(kit) ? cePlayer.getCoolDown(kit) : new GkitCoolDown();
 
-            if (displayItem.lore() != null) {
+            if (displayItem.lore() != null) { //todo() store the countdown on the pdc maybe?, there has to be a better way then reading the lore
                 for (String line : kit.getDisplayLore()) { //todo() test this change
                     if (line.matches(".*%(day|hour|minute|second)%.*")) gkitCooldown.getCoolDownLeft(line);
 
