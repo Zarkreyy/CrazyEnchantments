@@ -78,60 +78,53 @@ public enum Scrolls {
     private static final NamespacedKey scroll = DataKeys.scroll.getNamespacedKey();
 
     public static Scrolls getFromPDC(ItemStack item) {
-        PersistentDataContainer data = item.getItemMeta().getPersistentDataContainer();
-        if (!item.hasItemMeta() || !data.has(scroll)) return null;
+        final PersistentDataContainerView container = item.getPersistentDataContainer();
 
-        return getFromName(data.get(scroll, PersistentDataType.STRING));
+        if (!container.has(scroll)) return null; //todo() debug to make sure this works, run a spark profile to see if it makes any item calls, doing this would mean we no longer need to read the ItemMeta to check pdc values.
+
+        return getFromName(container.get(scroll, PersistentDataType.STRING));
     }
 
     public ItemStack getScroll() {
-        ItemStack item = itemBuilderScrolls.get(this).build();
-        ItemMeta meta = item.getItemMeta();
-        meta.getPersistentDataContainer().set(scroll, PersistentDataType.STRING, this.configName);
-        item.setItemMeta(meta);
-        return item;
+        return itemBuilderScrolls.get(this).getStack(itemMeta -> {  //todo() debug this, it adds the pdc on getStack build through a consumer, so editMeta is only called once.
+            itemMeta.getPersistentDataContainer().set(scroll, PersistentDataType.STRING, this.configName);
+        });
     }
 
     public ItemStack getScroll(int amount) {
-        ItemStack item = itemBuilderScrolls.get(this).setAmount(amount).build();
-        ItemMeta meta = item.getItemMeta();
-        meta.getPersistentDataContainer().set(scroll, PersistentDataType.STRING, this.configName);
-        item.setItemMeta(meta);
-        return item;
+        return itemBuilderScrolls.get(this).setAmount(amount).getStack(itemMeta -> {  //todo() debug this, it adds the pdc on getStack build through a consumer, so editMeta is only called once.
+            itemMeta.getPersistentDataContainer().set(scroll, PersistentDataType.STRING, this.configName);
+        });
     }
 
     private static final NamespacedKey whiteScrollProtectionKey = DataKeys.white_scroll_protection.getNamespacedKey();
 
     public static String getWhiteScrollProtectionName() {
+        return getWhiteScrollProtectionName(true);
+    }
+
+    public static String getWhiteScrollProtectionName(final boolean isColored) {
         String protectNamed;
 
         FileConfiguration config = Files.CONFIG.getFile();
 
-        protectNamed = ColorUtils.color(config.getString("Settings.WhiteScroll.ProtectedName"));
+        protectNamed = isColored ? ColorUtils.color(config.getString("Settings.WhiteScroll.ProtectedName")) : config.getString("Settings.WhiteScroll.ProtectedName");
 
         return protectNamed;
     }
 
-    public static boolean hasWhiteScrollProtection(@NotNull ItemStack item) {
-        return item.hasItemMeta() && hasWhiteScrollProtection(item.getItemMeta());
-    }
-
-    public static boolean hasWhiteScrollProtection(@Nullable ItemMeta meta) {
-        return meta != null && hasWhiteScrollProtection(meta.getPersistentDataContainer());
-    }
-
-    public static boolean hasWhiteScrollProtection(@Nullable PersistentDataContainer data) {
+    public static boolean hasWhiteScrollProtection(@Nullable PersistentDataContainerView data) {
         return data != null && data.has(whiteScrollProtectionKey);
     }
 
     public static ItemStack addWhiteScrollProtection(@NotNull ItemStack item) {
-        assert item.hasItemMeta();
-        ItemMeta meta = item.getItemMeta();
-        List<Component> lore = item.lore() != null ? item.lore() : new ArrayList<>();
+        // creates a new itembuilder without creating a new itemstack!
+        final ItemBuilder itemBuilder = new ItemBuilder(item);
 
-        assert lore != null;
-        lore.add(ColorUtils.legacyTranslateColourCodes(getWhiteScrollProtectionName()));
-        meta.getPersistentDataContainer().set(whiteScrollProtectionKey, PersistentDataType.BOOLEAN, true);
+        final List<String> lore = itemBuilder.getStrippedLore(); // todo() test and run this through a spark profile
+        lore.add(getWhiteScrollProtectionName());
+
+        itemBuilder.setDisplayLore(lore);
 
         return itemBuilder.getStack(itemMeta -> { //todo() debug this, it adds the pdc on getStack build through a consumer, so editMeta is only called once.
             // adds the item protection key
@@ -148,20 +141,11 @@ public enum Scrolls {
         // removes the item protection key
         if (itemBuilder.hasKey(whiteScrollProtectionKey)) itemBuilder.removePersistentKey(whiteScrollProtectionKey);
 
-        if (item.lore() == null) {
-            item.setItemMeta(meta);
-            return item;
-        }
+        final List<String> lore = itemBuilder.getStrippedLore(); // todo() test and run this through a spark profile
+        lore.removeIf(line -> line.contains(getWhiteScrollProtectionName()));
 
-        List<Component> lore = item.lore();
+        itemBuilder.setDisplayLore(lore);
 
-        lore.removeIf(loreComponent -> ColorUtils.toPlainText(loreComponent)
-                .contains(ColorUtils.stripStringColour(getWhiteScrollProtectionName())));
-        meta.lore(lore);
-
-        meta.lore(lore);
-        item.setItemMeta(meta);
-
-        return item;
+        return itemBuilder.getStack();
     }
 }
