@@ -108,7 +108,7 @@ public class TinkererMenu extends InventoryBuilder {
                     ItemStack reward = inventory.getItem(slot.getValue());
 
                     if (reward != null) {
-                        if (Currency.getCurrency(this.configuration.getString("Settings.Currency")) == Currency.VAULT) {
+                        if (Currency.getCurrency(this.configuration.getString("Settings.Currency")) == Currency.VAULT && PluginSupport.SupportedPlugins.VAULT.isPluginEnabled()) { // check if vault is enabled, just in case.
                             total = TinkererManager.getTotalXP(inventory.getItem(slot.getKey()), this.configuration);
                         } else {
                             bottomInventory.addItem(reward).values().forEach(item -> player.getWorld().dropItem(player.getLocation(), item));
@@ -123,7 +123,9 @@ public class TinkererMenu extends InventoryBuilder {
 
                 player.closeInventory();
 
-                if (total != 0) this.plugin.getServer().dispatchCommand(this.plugin.getServer().getConsoleSender(), "eco give " + player.getName() + " " + total);
+                if (total != 0 && PluginSupport.SupportedPlugins.VAULT.isPluginEnabled()) { // this is to support vault
+                    this.plugin.getStarter().getVaultSupport().getVault().depositPlayer(player, total);
+                }
 
                 if (toggle) player.sendMessage(Messages.TINKER_SOLD_MESSAGE.getMessage());
 
