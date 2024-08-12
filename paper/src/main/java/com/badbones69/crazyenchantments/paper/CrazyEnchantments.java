@@ -31,17 +31,22 @@ import com.badbones69.crazyenchantments.paper.listeners.MiscListener;
 import com.badbones69.crazyenchantments.paper.listeners.ProtectionCrystalListener;
 import com.badbones69.crazyenchantments.paper.listeners.ShopListener;
 import com.badbones69.crazyenchantments.paper.listeners.server.WorldSwitchListener;
-import com.badbones69.crazyenchantments.paper.utils.Metrics;
+import com.ryderbelserion.vital.paper.api.bStats;
+import com.ryderbelserion.vital.paper.api.enums.Support;
+import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 public class CrazyEnchantments extends JavaPlugin {
 
     private Starter starter;
+
+    private HeadDatabaseAPI api;
 
     // Plugin Listeners.
     public final PluginManager pluginManager = getServer().getPluginManager();
@@ -53,6 +58,10 @@ public class CrazyEnchantments extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        if (Support.head_database.isEnabled()) {
+            this.api = new HeadDatabaseAPI();
+        }
+
         this.starter = new Starter();
         this.starter.run();
 
@@ -91,7 +100,7 @@ public class CrazyEnchantments extends JavaPlugin {
             Files.TINKER.saveFile();
         }
 
-        if (config.getBoolean("Settings.Toggle-Metrics")) new Metrics(this, 4494);
+        if (config.getBoolean("Settings.Toggle-Metrics", false)) new bStats(this, 4494);
 
         this.pluginManager.registerEvents(this.fireworkDamageListener = new FireworkDamageListener(), this);
         this.pluginManager.registerEvents(new ShopListener(), this);
@@ -162,6 +171,14 @@ public class CrazyEnchantments extends JavaPlugin {
 
             if (tabCompleter != null) pluginCommand.setTabCompleter(tabCompleter);
         }
+    }
+
+    public @Nullable final HeadDatabaseAPI getApi() {
+        if (this.api == null) {
+            return null;
+        }
+
+        return this.api;
     }
 
     public Starter getStarter() {
