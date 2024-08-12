@@ -6,12 +6,12 @@ plugins {
     `paper-plugin`
 }
 
-base {
-    archivesName.set(rootProject.name)
-}
-
 dependencies {
     paperweight.paperDevBundle(libs.versions.paper)
+
+    implementation(libs.vital.paper)
+
+    compileOnly(libs.bundles.plugins)
 
     compileOnly(libs.informative.annotations)
 
@@ -20,10 +20,6 @@ dependencies {
     }
 
     compileOnly(libs.griefprevention)
-
-    //compileOnly(libs.nocheatplus)
-
-    compileOnly(libs.oraxen)
 
     compileOnly(libs.worldguard)
     compileOnly(libs.worldedit)
@@ -99,7 +95,7 @@ tasks {
         archiveClassifier.set("")
 
         listOf(
-            "de.tr7zw.changeme.nbtapi"
+            "com.ryderbelserion.vital",
         ).forEach {
             relocate(it, "libs.$it")
         }
