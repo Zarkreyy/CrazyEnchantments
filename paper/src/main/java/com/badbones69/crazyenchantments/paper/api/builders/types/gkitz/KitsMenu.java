@@ -69,11 +69,10 @@ public class KitsMenu extends InventoryBuilder {
             GkitCoolDown gkitCooldown = !cePlayer.canUseGKit(kit) && cePlayer.hasGkitPermission(kit) ? cePlayer.getCoolDown(kit) : new GkitCoolDown();
 
             if (displayItem.lore() != null) {
-                for (Component line : displayItem.lore()) {
-                    String legacyLoreLine = ColorUtils.toLegacy(line);
-                    if (legacyLoreLine.toLowerCase().matches(".*%(day|hour|minute|second)%.*"))
-                        line = ColorUtils.legacyTranslateColourCodes(gkitCooldown.getCoolDownLeft(legacyLoreLine));
-                    lore.add(line);
+                for (String line : kit.getDisplayLore()) { //todo() test this change
+                    if (line.matches(".*%(day|hour|minute|second)%.*")) gkitCooldown.getCoolDownLeft(line);
+
+                    lore.add(AdvUtil.parse(line));
                 }
             }
 
