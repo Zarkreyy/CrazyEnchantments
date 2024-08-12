@@ -36,8 +36,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class Methods {
+public class Methods { //todo() purge this of hacky lore checks
 
     @NotNull
     private final CrazyEnchantments plugin = JavaPlugin.getPlugin(CrazyEnchantments.class);
@@ -197,9 +198,7 @@ public class Methods {
     public boolean randomPicker(int min, int max) {
         if (max <= min || max <= 0) return true;
 
-        Random random = new Random();
-
-        int chance = 1 + random.nextInt(max);
+        int chance = 1 + ThreadLocalRandom.current().nextInt(max);
         return chance <= min;
     }
 
@@ -207,9 +206,7 @@ public class Methods {
         if (max == min) {
             return max;
         } else {
-            Random random = new Random();
-
-            return min + random.nextInt(max - min);
+            return min + ThreadLocalRandom.current().nextInt(max - min);
         }
     }
 
@@ -274,7 +271,7 @@ public class Methods {
         this.plugin.getServer().getRegionScheduler().runDelayed(this.plugin, loc, task -> firework.detonate(), 2);
     }
 
-    public Enchantment getEnchantment(@NotNull String enchantmentName) {
+    public Enchantment getEnchantment(@NotNull String enchantmentName) { //todo() what the fuck?
         try {
             // HashMap<String, String> enchantments = getEnchantments();
             enchantmentName = enchantmentName.replaceAll("-|_| ", "");
