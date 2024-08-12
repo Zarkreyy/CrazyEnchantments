@@ -3,12 +3,12 @@ package com.badbones69.crazyenchantments.paper.api.builders.types.tinkerer;
 import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Methods;
 import com.badbones69.crazyenchantments.paper.Starter;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.economy.Currency;
 import com.badbones69.crazyenchantments.paper.api.economy.CurrencyAPI;
 import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
 import com.badbones69.crazyenchantments.paper.api.objects.CEBook;
 import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -74,17 +74,15 @@ public class TinkererManager {
      * @return XP Bottle with custom amount of xp stored in it.
      */
     public static ItemStack getXPBottle(String amount, FileConfiguration config) {
-        String id = config.getString("Settings.BottleOptions.Item");
-        String name = config.getString("Settings.BottleOptions.Name");
+        String id = config.getString("Settings.BottleOptions.Item", "experience_bottle").toLowerCase(); // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+        String name = config.getString("Settings.BottleOptions.Name", "");
         List<String> lore = new ArrayList<>();
 
         for (String l : config.getStringList("Settings.BottleOptions.Lore")) {
             lore.add(l.replace("%Total%", amount).replace("%total%", amount));
         }
 
-        assert id != null;
-
-        return new ItemBuilder().setMaterial(id).setName(name).setLore(lore).addStringPDC(DataKeys.experience.getNamespacedKey(), amount).build();
+        return new ItemBuilder().withType(id).setDisplayName(name).setDisplayLore(lore).addKey(DataKeys.experience.getNamespacedKey(), amount).getStack();
     }
 
     public static int getTotalXP(ItemStack item, FileConfiguration config) {
@@ -144,7 +142,6 @@ public class TinkererManager {
             case "luck" -> "luck_of_the_sea";
             default -> from;
         };
-
     }
 
     private static String convertToLegacy(String from) { // Stolen inverse of the above method. -TDL
@@ -175,7 +172,6 @@ public class TinkererManager {
             case  "luck_of_the_sea" -> "luck";
             default -> from;
         };
-
     }
 
     public static int getMaxDustLevelFromBook(CEBook book, FileConfiguration config) {

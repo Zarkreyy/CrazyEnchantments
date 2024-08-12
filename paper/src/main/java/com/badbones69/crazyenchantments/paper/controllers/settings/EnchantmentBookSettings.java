@@ -255,28 +255,28 @@ public class EnchantmentBookSettings {
                     config.getInt(path + ".LostBook.Slot"),
                     config.getBoolean(path + ".LostBook.InGUI"),
                     new ItemBuilder()
-                            .setMaterial(config.getString(path + ".LostBook.Item", "BOOK"))
-                            .setPlayerName(config.getString(path + ".LostBook.Player"))
-                            .setName(config.getString(path + ".LostBook.Name", "Error getting name."))
-                            .setLore(config.getStringList(path + ".LostBook.Lore"))
-                            .setGlow(config.getBoolean(path + ".LostBook.Glowing", true)),
+                            .withType(config.getString(path + ".LostBook.Item", "book").toLowerCase()) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+                            //.setSkull(config.getString(path + ".LostBook.Player"))
+                            .setDisplayName(config.getString(path + ".LostBook.Name", "Error getting name."))
+                            .setDisplayLore(config.getStringList(path + ".LostBook.Lore"))
+                            .setGlowing(config.getBoolean(path + ".LostBook.Glowing", true)),
                     config.getInt(path + ".LostBook.Cost"),
                     Currency.getCurrency(config.getString(path + ".LostBook.Currency")),
                     config.getBoolean(path + ".LostBook.FireworkToggle", false),
                     getColors(config.getString(path + ".LostBook.FireworkColors", "Red, White, Blue")),
                     config.getBoolean(path + ".LostBook.Sound-Toggle", false),
-                    config.getString(path + ".LostBook.Sound", "BLOCK_ANVIL_PLACE"));
+                    config.getString(path + ".LostBook.Sound", "BLOCK_ANVIL_PLACE")); //todo() switch to kyori api for sounds
 
             this.categories.add(new Category(
                     category,
                     config.getInt(path + ".Slot"),
                     config.getBoolean(path + ".InGUI", true),
                     new ItemBuilder()
-                            .setMaterial(config.getString(path + ".Item", ColorUtils.getRandomPaneColor().getName()))
-                            .setPlayerName(config.getString(path + ".Player"))
-                            .setName(config.getString(path + ".Name", "Error getting name."))
-                            .setLore(config.getStringList(path + ".Lore"))
-                            .setGlow(config.getBoolean(path + ".Glowing", false)),
+                            .withType(config.getString(path + ".Item", ColorUtils.getRandomPaneColor().getType().getKey().getKey().toLowerCase())) // use the correct getKey from random pane
+                            .setPlayer(config.getString(path + ".Player", ""))
+                            .setDisplayName(config.getString(path + ".Name", "Error getting name."))
+                            .setDisplayLore(config.getStringList(path + ".Lore"))
+                            .setGlowing(config.getBoolean(path + ".Glowing", false)),
                     config.getInt(path + ".Cost"),
                     Currency.getCurrency(config.getString(path + ".Currency")),
                     config.getInt(path + ".Rarity"),

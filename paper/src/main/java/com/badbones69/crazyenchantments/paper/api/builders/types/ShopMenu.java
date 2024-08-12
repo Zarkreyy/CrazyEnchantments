@@ -2,10 +2,10 @@ package com.badbones69.crazyenchantments.paper.api.builders.types;
 
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.builders.InventoryBuilder;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.economy.Currency;
 import com.badbones69.crazyenchantments.paper.api.economy.CurrencyAPI;
 import com.badbones69.crazyenchantments.paper.api.managers.ShopManager;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
@@ -35,10 +35,10 @@ public class ShopMenu extends InventoryBuilder {
 
         for (Map.Entry<ItemBuilder, Integer> itemBuilders : this.shopManager.getCustomizerItems().entrySet()) {
             itemBuilders.getKey().setNamePlaceholders(placeholders).setLorePlaceholders(placeholders);
-            getInventory().setItem(itemBuilders.getValue(), itemBuilders.getKey().build());
+            getInventory().setItem(itemBuilders.getValue(), itemBuilders.getKey().getStack());
         }
 
-        this.shopManager.getShopItems().keySet().forEach(itemBuilder -> getInventory().setItem(this.shopManager.getShopItems().get(itemBuilder), itemBuilder.build()));
+        this.shopManager.getShopItems().keySet().forEach(itemBuilder -> getInventory().setItem(this.shopManager.getShopItems().get(itemBuilder), itemBuilder.getStack()));
 
         return this;
     }

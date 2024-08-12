@@ -2,10 +2,10 @@ package com.badbones69.crazyenchantments.paper.api.builders.types;
 
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.builders.InventoryBuilder;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.builders.types.gkitz.KitsManager;
 import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
 import com.badbones69.crazyenchantments.paper.api.objects.enchants.EnchantmentType;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,11 +33,11 @@ public class BaseMenu extends InventoryBuilder {
         if (getEnchantmentType() != null) {
             List<CEnchantment> enchantments = getEnchantmentType().getEnchantments();
 
-            ItemBuilder book = this.bookSettings.getNormalBook().setGlow(true);
+            ItemBuilder book = this.bookSettings.getNormalBook().setGlowing(true);
 
             for (CEnchantment enchantment : enchantments) {
                 if (enchantment.isActivated()) {
-                    getInventory().addItem(book.setName(enchantment.getInfoName()).setLore(enchantment.getInfoDescription()).build());
+                    getInventory().addItem(book.setDisplayName(enchantment.getInfoName()).setDisplayLore(enchantment.getInfoDescription()).getStack());
                 }
             }
 

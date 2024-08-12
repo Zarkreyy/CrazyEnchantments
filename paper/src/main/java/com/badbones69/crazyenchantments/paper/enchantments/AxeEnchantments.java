@@ -4,9 +4,9 @@ import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Methods;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.CrazyManager;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.enums.CEnchantments;
 import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.utils.EnchantUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EntityUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EventUtils;
@@ -128,7 +128,7 @@ public class AxeEnchantments implements Listener {
         ItemStack item = this.methods.getItemInHand(damager);
 
         if (EnchantUtils.isEventActive(CEnchantments.DECAPITATION, damager, item, this.enchantmentBookSettings.getEnchantments(item))) {
-            event.getDrops().add(new ItemBuilder().setMaterial(Material.PLAYER_HEAD).setPlayerName(player.getName()).build());
+            event.getDrops().add(new ItemBuilder().withType(Material.PLAYER_HEAD).setPlayer(player.getName()).getStack());
         }
     }
 
@@ -146,7 +146,7 @@ public class AxeEnchantments implements Listener {
             double multiplier = this.crazyManager.getDecapitationHeadMap().getOrDefault(headMat, 0.0);
 
             if (multiplier != 0.0 && EnchantUtils.isEventActive(CEnchantments.DECAPITATION, killer, item, enchantments, multiplier)) {
-                ItemStack head = new ItemBuilder().setMaterial(headMat).build();
+                ItemStack head = new ItemBuilder().withType(headMat).getStack();
                 event.getDrops().add(head);
             }
         }

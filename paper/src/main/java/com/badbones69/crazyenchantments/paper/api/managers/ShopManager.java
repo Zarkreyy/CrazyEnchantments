@@ -3,12 +3,13 @@ package com.badbones69.crazyenchantments.paper.api.managers;
 import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.enums.ShopOption;
 import com.badbones69.crazyenchantments.paper.api.objects.Category;
 import com.badbones69.crazyenchantments.paper.api.objects.LostBook;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
+import com.badbones69.crazyenchantments.paper.utils.ItemUtils;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -56,7 +57,7 @@ public class ShopManager {
             if (slot > this.inventorySize || slot <= 0) continue;
 
             slot--;
-            this.customizerItems.put(ItemBuilder.convertString(customItemString), slot);
+            this.customizerItems.put(ItemUtils.convertString(customItemString), slot);
         }
 
         for (Category category : this.enchantmentBookSettings.getCategories()) {

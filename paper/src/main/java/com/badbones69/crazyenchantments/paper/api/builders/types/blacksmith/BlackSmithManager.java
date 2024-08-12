@@ -1,8 +1,8 @@
 package com.badbones69.crazyenchantments.paper.api.builders.types.blacksmith;
 
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
+import com.badbones69.crazyenchantments.paper.api.economy.Currency;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -26,9 +26,9 @@ public class BlackSmithManager {
      * Initially loads all things we need.
      */
     public static void load() {
-        redGlass = new ItemBuilder().setMaterial(Material.RED_STAINED_GLASS_PANE).setName(" ").build();
-        grayGlass = new ItemBuilder().setMaterial(Material.GRAY_STAINED_GLASS_PANE).setName(" ").build();
-        blueGlass = new ItemBuilder().setMaterial(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setName(" ").build();
+        redGlass = new ItemBuilder().withType(Material.RED_STAINED_GLASS_PANE).setDisplayName(" ").getStack();
+        grayGlass = new ItemBuilder().withType(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(" ").getStack();
+        blueGlass = new ItemBuilder().withType(Material.LIGHT_BLUE_STAINED_GLASS_PANE).setDisplayName(" ").getStack();
 
         get(Files.CONFIG.getFile());
     }
@@ -132,10 +132,10 @@ public class BlackSmithManager {
         if (section == null) return;
 
         exitButton = new ItemBuilder()
-                .setMaterial(Material.BARRIER)
-                .setName(section.getString("Results.None", "&c&lNo Results."))
-                .setLore(section.getStringList("Results.Not-Found-Lore"))
-                .build();
+                .withType(Material.BARRIER)
+                .setDisplayName(section.getString("Results.None", "&c&lNo Results."))
+                .setDisplayLore(section.getStringList("Results.Not-Found-Lore"))
+                .getStack();
 
         inventoryName = ColorUtils.color(section.getString("GUIName"));
         itemCost = section.getString("Results.Found", "&c&lCost: &6&l%cost% XP");

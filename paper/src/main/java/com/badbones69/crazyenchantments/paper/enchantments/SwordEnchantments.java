@@ -323,7 +323,7 @@ public class SwordEnchantments implements Listener {
         Map<CEnchantment, Integer> enchantments = this.enchantmentBookSettings.getEnchantments(item);
 
         if (EnchantUtils.isEventActive(CEnchantments.HEADLESS, damager, item, enchantments)) {
-            ItemStack head = new ItemBuilder().setMaterial("PLAYER_HEAD").setPlayerName(player.getName()).build();
+            ItemStack head = new ItemBuilder().withType(Material.PLAYER_HEAD).setPlayer(player.getName()).getStack();
             event.getDrops().add(head);
         }
 
@@ -354,7 +354,7 @@ public class SwordEnchantments implements Listener {
             if (headMat != null && !EventUtils.containsDrop(event, headMat)) {
                 double multiplier = this.crazyManager.getDecapitationHeadMap().getOrDefault(headMat, 0.0);
                 if (multiplier != 0.0 && EnchantUtils.isEventActive(CEnchantments.HEADLESS, damager, item, enchantments, multiplier)) {
-                    ItemStack head = new ItemBuilder().setMaterial(headMat).build();
+                    ItemStack head = new ItemBuilder().withType(headMat).getStack();
                     event.getDrops().add(head);
                 }
 			}

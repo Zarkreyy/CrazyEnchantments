@@ -4,12 +4,12 @@ import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Methods;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.enums.Messages;
 import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
-import com.badbones69.crazyenchantments.paper.scheduler.FoliaRunnable;
+import com.ryderbelserion.vital.paper.util.scheduler.FoliaRunnable;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -55,14 +55,14 @@ public class ScramblerListener implements Listener {
     public void loadScrambler() {
         FileConfiguration config = Files.CONFIG.getFile();
         this.scramblerItem = new ItemBuilder()
-        .setMaterial(config.getString("Settings.Scrambler.Item", "SUNFLOWER"))
-        .setName(config.getString("Settings.Scrambler.Name", "Error getting name."))
-        .setLore(config.getStringList("Settings.Scrambler.Lore"))
-        .setGlow(config.getBoolean("Settings.Scrambler.Glowing", false));
+        .withType(config.getString("Settings.Scrambler.Item", "sunflower")) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+        .setDisplayName(config.getString("Settings.Scrambler.Name", "Error getting name."))
+        .setDisplayLore(config.getStringList("Settings.Scrambler.Lore"))
+        .setGlowing(config.getBoolean("Settings.Scrambler.Glowing", false));
         this.pointer = new ItemBuilder()
-        .setMaterial(config.getString("Settings.Scrambler.GUI.Pointer.Item", "REDSTONE_TORCH"))
-        .setName(config.getString("Settings.Scrambler.GUI.Pointer.Name", "Error getting name."))
-        .setLore(config.getStringList("Settings.Scrambler.GUI.Pointer.Lore"));
+        .withType(config.getString("Settings.Scrambler.GUI.Pointer.Item", "redstone_torch")) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+        .setDisplayName(config.getString("Settings.Scrambler.GUI.Pointer.Name", "Error getting name."))
+        .setDisplayLore(config.getStringList("Settings.Scrambler.GUI.Pointer.Lore"));
         this.animationToggle = Files.CONFIG.getFile().getBoolean("Settings.Scrambler.GUI.Toggle", true);
         this.guiName = ColorUtils.color(Files.CONFIG.getFile().getString("Settings.Scrambler.GUI.Name", "Error getting name."));
     }
@@ -98,11 +98,11 @@ public class ScramblerListener implements Listener {
     private void setGlass(Inventory inv) {
         for (int slot = 0; slot < 9; slot++) {
             if (slot != 4) {
-                inv.setItem(slot, ColorUtils.getRandomPaneColor().setName(" ").build());
-                inv.setItem(slot + 18, ColorUtils.getRandomPaneColor().setName(" ").build());
+                inv.setItem(slot, ColorUtils.getRandomPaneColor().setDisplayName(" ").getStack());
+                inv.setItem(slot + 18, ColorUtils.getRandomPaneColor().setDisplayName(" ").getStack());
             } else {
-                inv.setItem(slot, this.pointer.build());
-                inv.setItem(slot + 18, this.pointer.build());
+                inv.setItem(slot, this.pointer.getStack());
+                inv.setItem(slot + 18, this.pointer.getStack());
             }
         }
     }
@@ -195,7 +195,9 @@ public class ScramblerListener implements Listener {
         }
 
         ItemStack newBook = this.enchantmentBookSettings.getNewScrambledBook(book);
-        newBook.setType(ColorUtils.getRandomPaneColor().getMaterial());
+        if (newBook != null) {
+            newBook = newBook.withType(ColorUtils.getRandomPaneColor().getType()); //todo() test this, withType basically is paper's more supported way of changing the material
+        }
         inv.setItem(9, newBook);
 
         for (int amount = 0; amount < 8; amount++) {

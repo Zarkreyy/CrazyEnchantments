@@ -4,9 +4,10 @@ import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Methods;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
-import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
+import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
+import io.papermc.paper.persistence.PersistentDataContainerView;
 import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -44,24 +45,18 @@ public class ProtectionCrystalSettings {
         FileConfiguration config = Files.CONFIG.getFile();
 
         this.crystal = new ItemBuilder()
-                .setMaterial(config.getString("Settings.ProtectionCrystal.Item", "EMERALD"))
-                .setName(config.getString("Settings.ProtectionCrystal.Name", "Error getting name."))
-                .setLore(config.getStringList("Settings.ProtectionCrystal.Lore"))
-                .setGlow(config.getBoolean("Settings.ProtectionCrystal.Glowing", false));
+                .withType(config.getString("Settings.ProtectionCrystal.Item", "emerald")) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+                .setDisplayName(config.getString("Settings.ProtectionCrystal.Name", "Error getting name."))
+                .setDisplayLore(config.getStringList("Settings.ProtectionCrystal.Lore"))
+                .setGlowing(config.getBoolean("Settings.ProtectionCrystal.Glowing", false));
     }
 
     public ItemStack getCrystals() {
         return getCrystals(1);
     }
 
-    public ItemStack getCrystals(int amount) {
-        ItemStack item = this.crystal.setAmount(amount).build();
-        ItemMeta meta = item.getItemMeta();
-        meta.getPersistentDataContainer().set(DataKeys.protection_crystal.getNamespacedKey(), PersistentDataType.BOOLEAN, true);
-
-        item.setItemMeta(meta);
-
-        return item;
+    public ItemStack getCrystals(int amount) { //todo() debug this, it adds the pdc on getStack build through a consumer, so editMeta is only called once.
+        return this.crystal.setAmount(amount).getStack(itemMeta -> itemMeta.getPersistentDataContainer().set(DataKeys.protection_crystal.getNamespacedKey(), PersistentDataType.BOOLEAN, true));
     }
 
     /**

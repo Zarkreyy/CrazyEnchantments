@@ -3,9 +3,9 @@ package com.badbones69.crazyenchantments.paper.listeners;
 import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.enums.Messages;
 import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -36,14 +36,15 @@ public class SlotCrystalListener implements Listener {
         FileConfiguration config = Files.CONFIG.getFile();
 
         slot_crystal = new ItemBuilder()
-                .setMaterial(config.getString("Settings.Slot_Crystal.Item", "RED_WOOL"))
-                .setName(config.getString("Settings.Slot_Crystal.Name", "Error getting name."))
-                .setLore(config.getStringList("Settings.Slot_Crystal.Lore"))
-                .setGlow(config.getBoolean("Settings.Slot_Crystal.Glowing", false)).build();
-        ItemMeta meta = slot_crystal.getItemMeta();
-        meta.getPersistentDataContainer().set(DataKeys.slot_crystal.getNamespacedKey(), PersistentDataType.BOOLEAN, true);
+                .withType(config.getString("Settings.Slot_Crystal.Item", "red_wool").toLowerCase()) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+                .setDisplayName(config.getString("Settings.Slot_Crystal.Name", "Error getting name."))
+                .setDisplayLore(config.getStringList("Settings.Slot_Crystal.Lore"))
+                .setGlowing(config.getBoolean("Settings.Slot_Crystal.Glowing", false)).getStack(itemMeta -> {
+                    //todo() this is applied when editMeta is called on build, therefor it only runs once. much more performant
+                    // debug with spark profiler
 
-        slot_crystal.setItemMeta(meta);
+                    itemMeta.getPersistentDataContainer().set(DataKeys.slot_crystal.getNamespacedKey(), PersistentDataType.BOOLEAN, true);
+                });
     }
 
     @EventHandler(ignoreCancelled = true)

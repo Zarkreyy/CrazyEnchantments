@@ -1,9 +1,10 @@
 package com.badbones69.crazyenchantments.paper.api.enums;
 
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
-import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
+import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
+import io.papermc.paper.persistence.PersistentDataContainerView;
 import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -43,10 +44,10 @@ public enum Scrolls {
         for (Scrolls scroll : values()) {
             String path = "Settings." + scroll.getConfigName() + ".";
             itemBuilderScrolls.put(scroll, new ItemBuilder()
-            .setName(config.getString(path + "Name", "Error getting name."))
-            .setLore(config.getStringList(path + "Item-Lore"))
-            .setMaterial(config.getString(path + "Item", "BOOK"))
-            .setGlow(config.getBoolean(path + "Glowing", false)));
+            .setDisplayName(config.getString(path + "Name", "Error getting name."))
+            .setDisplayLore(config.getStringList(path + "Item-Lore"))
+            .withType(config.getString(path + "Item", "book").toLowerCase())
+            .setGlowing(config.getBoolean(path + "Glowing", false)));
         }
     }
     

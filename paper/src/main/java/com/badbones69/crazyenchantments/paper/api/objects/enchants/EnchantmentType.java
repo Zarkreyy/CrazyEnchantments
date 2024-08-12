@@ -5,6 +5,7 @@ import com.badbones69.crazyenchantments.paper.Methods;
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
+import com.ryderbelserion.vital.paper.util.ItemUtil;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -33,12 +34,14 @@ public class EnchantmentType {
         this.displayName = name;
         this.slot = file.getInt(path + ".Display-Item.Slot", 1) - 1;
         this.displayItem = new ItemBuilder()
-        .setMaterial(file.getString(path + ".Display-Item.Item", "STONE"))
-        .setName(file.getString(path + ".Display-Item.Name", "Error getting name."))
-        .setLore(file.getStringList(path + ".Display-Item.Lore")).build();
+        .withType(file.getString(path + ".Display-Item.Item", "stone")) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+        .setDisplayName(file.getString(path + ".Display-Item.Name", "Error getting name."))
+        .setDisplayLore(file.getStringList(path + ".Display-Item.Lore")).getStack();
 
         for (String type : file.getStringList(path + ".Enchantable-Items")) {
-            Material material = new ItemBuilder().setMaterial(type).getMaterial();
+            // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+            // also why was I creating an entire itembuilder object into memory just for material
+            Material material = ItemUtil.getMaterial(type.toLowerCase());
 
             if (material != null) this.enchantableMaterials.add(material);
         }

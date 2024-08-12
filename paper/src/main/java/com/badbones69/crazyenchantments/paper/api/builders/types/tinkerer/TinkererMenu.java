@@ -3,12 +3,14 @@ package com.badbones69.crazyenchantments.paper.api.builders.types.tinkerer;
 import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
 import com.badbones69.crazyenchantments.paper.api.builders.InventoryBuilder;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.economy.Currency;
 import com.badbones69.crazyenchantments.paper.api.enums.Dust;
 import com.badbones69.crazyenchantments.paper.api.enums.Messages;
 import com.badbones69.crazyenchantments.paper.api.objects.CEBook;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
+import com.badbones69.crazyenchantments.paper.support.PluginSupport;
+import com.ryderbelserion.vital.paper.api.enums.Support;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -39,14 +41,14 @@ public class TinkererMenu extends InventoryBuilder {
     @Override
     public InventoryBuilder build() {
         ItemStack button = new ItemBuilder()
-                .setMaterial(Material.RED_STAINED_GLASS_PANE)
-                        .setName(this.configuration.getString("Settings.TradeButton"))
-                .setLore(this.configuration.getStringList("Settings.TradeButton-Lore")).build();
+                .withType(Material.RED_STAINED_GLASS_PANE)
+                .setDisplayName(this.configuration.getString("Settings.TradeButton", ""))
+                .setDisplayLore(this.configuration.getStringList("Settings.TradeButton-Lore")).getStack();
 
         getInventory().setItem(0, button);
         getInventory().setItem(8, button);
 
-        ItemStack divider = new ItemBuilder().setMaterial(Material.WHITE_STAINED_GLASS_PANE).setName(" ").build();
+        ItemStack divider = new ItemBuilder().withType(Material.WHITE_STAINED_GLASS_PANE).setDisplayName(" ").getStack();
 
         List.of(4, 13, 22, 31, 40, 49).forEach(slot -> getInventory().setItem(slot, divider));
 
@@ -89,9 +91,9 @@ public class TinkererMenu extends InventoryBuilder {
             if (current == null || current.isEmpty() || !current.hasItemMeta()) return;
 
             ItemStack button = new ItemBuilder()
-                    .setMaterial(Material.RED_STAINED_GLASS_PANE)
-                    .setName(this.configuration.getString("Settings.TradeButton"))
-                    .setLore(this.configuration.getStringList("Settings.TradeButton-Lore")).build();
+                    .withType(Material.RED_STAINED_GLASS_PANE)
+                    .setDisplayName(this.configuration.getString("Settings.TradeButton", ""))
+                    .setDisplayLore(this.configuration.getStringList("Settings.TradeButton-Lore")).getStack();
 
             Inventory inventory = holder.getInventory();
             Inventory topInventory = player.getOpenInventory().getTopInventory();

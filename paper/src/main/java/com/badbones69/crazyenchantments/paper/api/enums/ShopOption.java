@@ -2,13 +2,14 @@ package com.badbones69.crazyenchantments.paper.api.enums;
 
 import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
+import com.badbones69.crazyenchantments.paper.api.economy.Currency;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 public enum ShopOption {
@@ -28,7 +29,7 @@ public enum ShopOption {
     TRANSMOG_SCROLL("TransmogScroll", "TransmogScroll", "GUIName", "Lore", true),
     SLOT_CRYSTAL("Slot_Crystal", "Slot_Crystal", "GUIName", "GUILore", true);
     
-    private static final HashMap<ShopOption, Option> shopOptions = new HashMap<>();
+    private static final Map<ShopOption, Option> shopOptions = new HashMap<>();
     private final String optionPath;
     private final String path;
     private final String namePath;
@@ -57,15 +58,15 @@ public enum ShopOption {
 
             try {
                 shopOptions.put(shopOption, new Option(new ItemBuilder()
-                .setName(config.getString(itemPath + shopOption.getNamePath(), "Error getting name."))
-                .setLore(config.getStringList(itemPath + shopOption.getLorePath()))
-                .setMaterial(config.getString(itemPath + "Item", "CHEST"))
-                .setPlayerName(config.getString(itemPath + "Player"))
-                .setGlow(config.getBoolean(itemPath + "Glowing", false)),
+                .setDisplayName(config.getString(itemPath + shopOption.getNamePath(), "Error getting name."))
+                .setDisplayLore(config.getStringList(itemPath + shopOption.getLorePath()))
+                .withType(config.getString(itemPath + "Item", "chest").toLowerCase()) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+                .setPlayer(config.getString(itemPath + "Player", ""))
+                .setGlowing(config.getBoolean(itemPath + "Glowing", false)),
                 config.getInt(itemPath + "Slot", 1) - 1,
                 config.getBoolean(itemPath + "InGUI", true),
                 config.getInt(costPath + "Cost", 100),
-                Currency.getCurrency(config.getString(costPath + "Currency", "Vault"))));
+                Currency.getCurrency(config.getString(costPath + "Currency", "Vault").toLowerCase()))); // looks prettier when lowercased
             } catch (Exception exception) {
                 plugin.getLogger().log(Level.SEVERE, "The option " + shopOption.getOptionPath() + " has failed to load.", exception);
             }
@@ -73,7 +74,7 @@ public enum ShopOption {
     }
     
     public ItemStack getItem() {
-        return getItemBuilder().build();
+        return getItemBuilder().getStack();
     }
     
     public ItemBuilder getItemBuilder() {

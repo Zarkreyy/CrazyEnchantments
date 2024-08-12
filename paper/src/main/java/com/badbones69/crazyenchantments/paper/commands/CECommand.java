@@ -395,8 +395,8 @@ public class CECommand implements CommandExecutor {
                             }
                         }
 
-                        location.getWorld().dropItemNaturally(location, category == null ? new CEBook(enchantment, level).buildBook() : category.getLostBook().getLostBook(category).build());
-                        HashMap<String, String> placeholders = new HashMap<>();
+                        location.getWorld().dropItemNaturally(location, category == null ? new CEBook(enchantment, level).buildBook() : category.getLostBook().getLostBook(category).getStack());
+                        Map<String, String> placeholders = new HashMap<>();
 
                         placeholders.put("%World%", location.getWorld().getName());
                         placeholders.put("%X%", String.valueOf(location.getBlockX()));
@@ -434,7 +434,7 @@ public class CECommand implements CommandExecutor {
                     return true;
                 }
 
-                ItemStack item = ItemBuilder.convertString(sb.toString()).build();
+                ItemStack item = ItemUtils.convertString(sb.toString()).getStack();
 
                 if (item == null) {
                     sender.sendMessage(Messages.INVALID_ITEM_STRING.getMessage());
@@ -502,12 +502,12 @@ public class CECommand implements CommandExecutor {
 
                         if (category != null) {
 
-                            this.methods.addItemToInventory(player, category.getLostBook().getLostBook(category, amount).build());
+                            this.methods.addItemToInventory(player, category.getLostBook().getLostBook(category, amount).getStack());
 
                             return true;
                         }
 
-                        HashMap<String, String> placeholders = new HashMap<>();
+                        Map<String, String> placeholders = new HashMap<>();
                         placeholders.put("%Category%", args[1]);
                         sender.sendMessage(Messages.NOT_A_CATEGORY.getMessage(placeholders));
                         return true;

@@ -83,7 +83,7 @@ public class ShopListener implements Listener {
         if (event.getClickedInventory() != player.getOpenInventory().getTopInventory()) return;
 
         for (Category category : this.enchantmentBookSettings.getCategories()) {
-            if (category.isInGUI() && item.isSimilar(category.getDisplayItem().build())) {
+            if (category.isInGUI() && item.isSimilar(category.getDisplayItem().getStack())) { //todo() don't use isSimilar, switch to some pdc check for this, make the pdc check key lowercased
 
                 if (this.methods.isInventoryFull(player)) return;
 
@@ -111,7 +111,7 @@ public class ShopListener implements Listener {
             }
             LostBook lostBook = category.getLostBook();
 
-            if (lostBook.isInGUI() && item.isSimilar(lostBook.getDisplayItem().build())) {
+            if (lostBook.isInGUI() && item.isSimilar(lostBook.getDisplayItem().getStack())) { //todo() don't use isSimilar, switch to some pdc check for this, make the pdc check key lowercased
                 if (this.methods.isInventoryFull(player)) return;
 
                 if (lostBook.getCurrency() != null && player.getGameMode() != GameMode.CREATIVE) {
@@ -124,7 +124,7 @@ public class ShopListener implements Listener {
                     }
                 }
 
-                player.getInventory().addItem(lostBook.getLostBook(category).build());
+                player.getInventory().addItem(lostBook.getLostBook(category).getStack());
                 return;
             }
         }

@@ -23,18 +23,18 @@ public class KitsManager {
         inventorySize = file.getInt(path + ".Inventory.Size", 18);
 
         backRight = new ItemBuilder()
-                .setMaterial(file.getString(path + ".Back-Item.Right.Item", "NETHER_STAR"))
-                .setPlayerName(file.getString(path + ".Back-Item.Right.Player"))
-                .setName(file.getString(path + ".Back-Item.Right.Name", "&7&l<<&b&lBack"))
-                .setLore(file.getStringList(path + ".Back-Item.Right.Lore"))
-                .build();
+                .withType(file.getString(path + ".Back-Item.Right.Item", "nether_star").toLowerCase()) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+                .setPlayer(file.getString(path + ".Back-Item.Right.Player", ""))
+                .setDisplayName(file.getString(path + ".Back-Item.Right.Name", "&7&l<<&b&lBack"))
+                .setDisplayLore(file.getStringList(path + ".Back-Item.Right.Lore"))
+                .getStack();
 
         backLeft = new ItemBuilder()
-                .setMaterial(file.getString(path + ".Back-Item.Left.Item", "NETHER_STAR"))
-                .setPlayerName(file.getString(path + ".Back-Item.Left.Player"))
-                .setName(file.getString(path + ".Back-Item.Left.Name", "&b&lBack&7&l>>"))
-                .setLore(file.getStringList(path + ".Back-Item.Left.Lore"))
-                .build();
+                .withType(file.getString(path + ".Back-Item.Left.Item", "nether_star").toLowerCase()) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+                .setPlayer(file.getString(path + ".Back-Item.Left.Player", ""))
+                .setDisplayName(file.getString(path + ".Back-Item.Left.Name", "&b&lBack&7&l>>"))
+                .setDisplayLore(file.getStringList(path + ".Back-Item.Left.Lore"))
+                .getStack();
     }
 
     public static Component getInventoryName() {

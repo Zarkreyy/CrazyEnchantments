@@ -4,6 +4,7 @@ import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Methods;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.enums.CEnchantments;
 import com.badbones69.crazyenchantments.paper.api.enums.Dust;
 import com.badbones69.crazyenchantments.paper.api.enums.Scrolls;
@@ -21,7 +22,6 @@ import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
 import com.badbones69.crazyenchantments.paper.api.objects.Category;
 import com.badbones69.crazyenchantments.paper.api.objects.gkitz.GKitz;
 import com.badbones69.crazyenchantments.paper.api.objects.gkitz.GkitCoolDown;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.NumberUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.WingsUtils;
@@ -32,7 +32,11 @@ import com.badbones69.crazyenchantments.paper.listeners.ScrollListener;
 import com.badbones69.crazyenchantments.paper.listeners.SlotCrystalListener;
 import com.badbones69.crazyenchantments.paper.support.CropManager;
 import com.badbones69.crazyenchantments.paper.support.interfaces.CropManagerVersion;
+import com.badbones69.crazyenchantments.paper.utils.ItemUtils;
 import com.google.gson.Gson;
+import com.ryderbelserion.vital.paper.VitalPaper;
+import com.ryderbelserion.vital.paper.util.ItemUtil;
+import io.papermc.paper.persistence.PersistentDataContainerView;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -43,13 +47,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.permissions.PermissionAttachmentInfo;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -60,6 +62,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class CrazyManager {
@@ -260,13 +263,12 @@ public class CrazyManager {
                 String time = gkit.getString(path + "Cooldown");
                 boolean autoEquip = gkit.getBoolean(path + "Auto-Equip");
 
-                ItemStack displayItem = new ItemBuilder()
-                  .setMaterial(gkit.getString(path + "Display.Item", ColorUtils.getRandomPaneColor().getName()))
-                  .setName(gkit.getString(path + "Display.Name", "Error getting name."))
-                  .setLore(gkit.getStringList(path + "Display.Lore"))
-                  .setGlow(gkit.getBoolean(path + "Display.Glowing"))
-                  .addStringPDC(DataKeys.gkit_type.getNamespacedKey(), kit)
-                .build();
+                ItemBuilder displayItem = new ItemBuilder()
+                  .withType(gkit.getString(path + "Display.Item", ColorUtils.getRandomPaneColor().getType().getKey().getKey().toLowerCase())) // this is lowercased, because internally. the itembuilder uses mojang mapped ids. also fixed a bug, it was using display name for the default?
+                  .setDisplayName(gkit.getString(path + "Display.Name", "Error getting name."))
+                  .setDisplayLore(gkit.getStringList(path + "Display.Lore"))
+                  .setGlowing(gkit.getBoolean(path + "Display.Glowing", false))
+                  .addKey(DataKeys.gkit_type.getNamespacedKey(), kit);
 
                 List<String> commands = gkit.getStringList(path + "Commands");
                 List<String> itemStrings = gkit.getStringList(path + "Items");

@@ -57,9 +57,9 @@ public enum Dust {
         for (Dust dust : values()) {
             String path = "Settings.Dust." + dust.getConfigName() + ".";
             Dust.itemBuilderDust.put(dust, new ItemBuilder()
-            .setName(config.getString(path + "Name", "Error getting name."))
-            .setLore(config.getStringList(path + "Lore"))
-            .setMaterial(config.getString(path + "Item", "GLOWSTONE_DUST")));
+            .setDisplayName(config.getString(path + "Name", "Error getting name."))
+            .setDisplayLore(config.getStringList(path + "Lore"))
+            .withType(config.getString(path + "Item", "glowstone_dust"))); // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
         }
     }
     

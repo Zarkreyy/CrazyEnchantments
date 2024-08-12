@@ -11,8 +11,9 @@ import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
 import com.badbones69.crazyenchantments.paper.api.objects.CEPlayer;
 import com.badbones69.crazyenchantments.paper.api.objects.gkitz.GKitz;
 import com.badbones69.crazyenchantments.paper.api.objects.gkitz.GkitCoolDown;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
+import com.badbones69.crazyenchantments.paper.utils.ItemUtils;
+import com.ryderbelserion.vital.paper.util.AdvUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -56,7 +57,7 @@ public class KitsMenu extends InventoryBuilder {
 
             slot--;
 
-            getInventory().setItem(slot, ItemBuilder.convertString(value).build());
+            getInventory().setItem(slot, ItemUtils.convertString(value).getStack());
         }
 
         CEPlayer cePlayer = this.crazyManager.getCEPlayer(getPlayer().getUniqueId());
