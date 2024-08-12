@@ -65,7 +65,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-public class CrazyManager {
+public class CrazyManager extends VitalPaper {
 
     @NotNull
     private final CrazyEnchantments plugin = JavaPlugin.getPlugin(CrazyEnchantments.class);
@@ -134,6 +134,10 @@ public class CrazyManager {
 
     private int CESuccessOverride;
     private int CEFailureOverride;
+
+    public CrazyManager(@NotNull final JavaPlugin plugin) {
+        super(plugin);
+    }
 
     /**
      * Loads everything for the Crazy Enchantments plugin.
@@ -959,4 +963,13 @@ public class CrazyManager {
     /** Gets the failure override from the config. Default -1 means no override should be used */
     public int getCEFailureOverride() { return CEFailureOverride; }
 
+    @Override
+    public final boolean isLegacy() {
+        return true;
+    }
+
+    @Override
+    public final boolean isVerbose() {
+        return true;
+    }
 }
