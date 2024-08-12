@@ -10,7 +10,7 @@ Settings:
   Reset-Players-Max-Health: true #This is for some servers that get a health duplication glitch from plugins like CombatTagPlus(v1.2.3 down)
   Refresh-Potion-Effects-On-World-Change: false #In the odd chance potion effects disappear on world change.
   InvName: '&4&l&nCrazy Enchanter' #The name of the /CE inventory
-  Enchantment-Book-Item: 'BOOK' #The item that the enchantment book is.
+  Enchantment-Book-Item: 'book' #The item that the enchantment book is.
   Enchantment-Book-Glowing: true #Toggle on or off if the book will have an enchanted look.
   GUISize: 54 #The size of the GUI, must be a factor of 9
   CESuccessOverride: -1 #0-100, -1 for no override. Chance of success using a CE Book
@@ -24,7 +24,7 @@ Settings:
     - '&4%destroy_rate%% Destroy Chance'
     - '&a%success_rate%% Success Chance'
   LostBook: #Lost book options.
-    Item: 'BOOK' #The item the lost books are.
+    Item: 'book' #The item the lost books are.
     Name: '&8&l&nA Lost %category%&8&l&n Book' #The name of the lost books.
     Lore: #The lore of the lost books.
       - '&7This book has been lost for centuries'
@@ -32,7 +32,7 @@ Settings:
       - '&7But you must clean it off to find out what kind it is.'
       - '&7&l(&6&l!&7&l) &7Right Click to clean off.'
   Scrambler:
-    Item: 'SUNFLOWER' #The item it will be.
+    Item: 'sunflower' #The item it will be.
     Glowing: true #If it has a glowing effect.
     Name: '&e&lThe Grand Scrambler' #The name of the item.
     Lore: #The lore of the item.
@@ -62,7 +62,7 @@ Settings:
   Slot_Crystal:
     InGUI: false #If it's in the GUI.
     Slot: 14 #Slot it is in
-    Item: 'EMERALD' #Item it is
+    Item: 'emerald' #Item it is
     Glowing: true #If it has a glowing effect.
     Name: '&5&lSlot &b&lCrystal' #Name of the item
     Lore: #Lore of the item
@@ -82,7 +82,7 @@ Settings:
     InGUI: false #If you can open the GKitz GUI from the main /ce gui.
     Enabled: true #If the GKitz option is enabled on the server.
     Slot: 1 #The slot it will be in.
-    Item: 'DIAMOND_CHESTPLATE' #The item it is.
+    Item: 'diamond_chestplate' #The item it is.
     Glowing: true #If it has a glowing effect.
     Name: '&c&lGKitz' #The name of the item.
     Lore: #The lore of the item.
@@ -90,7 +90,7 @@ Settings:
   ProtectionCrystal:
     InGUI: false #If it's in the GUI.
     Slot: 1 #Slot it is in
-    Item: 'EMERALD' #Item it is
+    Item: 'emerald' #Item it is
     Glowing: true #If it has a glowing effect.
     Protected: '&6Ancient Protection' #The lore that goes on the item that is protected.
     Lose-Protection-On-Death: true #If true then when the player dies they get the item but it loses its protection.
@@ -114,7 +114,7 @@ Settings:
   BlackSmith: #Options for the Black Smith
     InGUI: true #In the GUI.
     Slot: 24 #Slot it is in.
-    Item: 'ANVIL' #Item that shows in the GUI
+    Item: 'anvil' #Item that shows in the GUI
     Glowing: false #If it has a glowing effect.
     Name: '&7&lThe &b&lBlack &9&lSmith' #Name of the Item in the GUI
     Lore: #Lore on the item.
@@ -130,7 +130,7 @@ Settings:
         - '&7the enchantments on them.'
       Found: '&c&lCost: &6&l%cost%XP' #The lore at the bottom of the item
     Transaction: #Options for the pricing
-      Currency: XP_Level
+      Currency: xp_level
       Costs: #Cost options
         Power-Up: 5 #When an enchantment levels up 1 on an item
         Add-Enchantment: 3 #When it adds an enchantment to the item from another item
@@ -138,7 +138,7 @@ Settings:
   Tinker: #Settings for Info item in the GUI
     InGUI: true #Toggle whether it is in the /CE GUI or not
     Slot: 22 #Slot it is in
-    Item: 'NETHER_STAR' #Item it is
+    Item: 'nether_star' #Item it is
     Glowing: false #If it has a glowing effect.
     Name: '&7&lThe &b&lCrazy &9&lTinkerer' #Name of the Item
     Lore: #Lore of the item
@@ -146,14 +146,14 @@ Settings:
   Info: #Settings for Info item in the GUI
     InGUI: true #Toggle whether it is in the /CE GUI or not
     Slot: 23 #Slot it is in
-    Item: 'COMPASS' #Item it is
+    Item: 'compass' #Item it is
     Glowing: true #If it has a glowing effect.
     Name: '&eInfo on the Enchantments' #Name of the Item
     Lore: #Lore of the item
       - '&b>>&7&nClick to view&b<<'
   Dust: #Settings for the Magical Dust
     MysteryDust:
-      Item: 'GUNPOWDER' #Item mystery dust is
+      Item: 'gunpowder' #Item mystery dust is
       Name: '&7Mystery Dust' #Name of the dust
       Lore: #Use %percent% to set the percent
         - '&a1-%percent%% &7will be on a'
@@ -177,7 +177,7 @@ Settings:
         - '&7Dust allows you to bring'
         - '&7up your &aSuccess Rate&7.'
       Slot: 25 #Slot number it is on
-      Item: 'SUGAR' #Item the dust is
+      Item: 'sugar' #Item the dust is
       Name: '&aMagical Angel Dust' #Name of the dust
       Lore: #Lore for the dust
         - '&a+%percent%% Success Rate'
@@ -194,7 +194,7 @@ Settings:
         - '&7Dust allows you to bring'
         - '&7down your &4Destroy Rate&7.'
       Slot: 34 #Slot number it is on
-      Item: 'REDSTONE' #Item the dust is
+      Item: 'redstone' #Item the dust is
       Name: '&eMagical Fixing Dust' #Name of the dust
       Lore: #Lore for the dust
         - '&c-%percent%% Destroy Rate'
@@ -204,14 +204,14 @@ Settings:
         Max: 10 #Max percent
         Min: 2 #Minimum percent
     FailedDust:
-      Item: 'GUNPOWDER' #Item the dust is
+      Item: 'gunpowder' #Item the dust is
       Name: '&7Failed Dust' #Name of the dust
       Lore: #Lore for the dust
         - '&7This dust has failed.'
         - '&7It is now useless unless you'
         - '&7needed to make TNT or a throwable potion.'
   BlackScroll: #Settings for the black scrolls
-    Item: 'INK_SAC' #The item the black scroll can be
+    Item: 'ink_sac' #The item the black scroll can be
     Name: '&8&l&nBlack Scroll' #The name of the black scroll
     Item-Lore: #The lore that will be on the black scroll.
       - '&7Have a custom enchantment you don''t want?'
@@ -235,7 +235,7 @@ Settings:
       Max: 25 #The Max percent
       Min: 5 #The Minimum percent
   WhiteScroll:
-    Item: 'PAPER' #The item the white scroll is.
+    Item: 'paper' #The item the white scroll is.
     Name: '&e&lWhite Scroll' #The name of the white scrolls.
     Item-Lore: #The lore that will be on the white scroll.
       - '&7Want to protect an item from a book''s destroy rate?'
@@ -251,7 +251,7 @@ Settings:
       - '&7protect items from breaking.'
     ProtectedName: '&b&lPROTECTED' #The lore that is added to protect an item.
   TransmogScroll:
-    Item: 'QUARTZ' #The item the scroll is.
+    Item: 'quartz' #The item the scroll is.
     Name: '&d&lTransmog Scroll' #The name of the scroll.
     Item-Lore: #The lore that will be on the scroll.
       - '&7This scroll allows you to organize'
@@ -405,50 +405,50 @@ Settings:
   #Placeholders: %vault% %xp_level% %xp_total%
   #####################
   GUICustomization: #This allows you to customize unclickable items into your GUI.
-    - 'Slot:1, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:2, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:3, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:4, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:5, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:6, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:7, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:8, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:9, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:10, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:18, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:19, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:27, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:28, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:36, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:37, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:45, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:46, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:47, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:48, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:49, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:50, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:51, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:52, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:53, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:54, Item:BLACK_STAINED_GLASS_PANE, Name: '
-    - 'Slot:11, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:12, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:13, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:14, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:15, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:16, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:17, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:20, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:26, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:29, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:35, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:38, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:39, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:40, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:41, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:42, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:43, Item:WHITE_STAINED_GLASS_PANE, Name: '
-    - 'Slot:44, Item:WHITE_STAINED_GLASS_PANE, Name: '
+    - 'Slot:1, Item:black_stained_glass_pane, Name: '
+    - 'Slot:2, Item:black_stained_glass_pane, Name: '
+    - 'Slot:3, Item:black_stained_glass_pane, Name: '
+    - 'Slot:4, Item:black_stained_glass_pane, Name: '
+    - 'Slot:5, Item:black_stained_glass_pane, Name: '
+    - 'Slot:6, Item:black_stained_glass_pane, Name: '
+    - 'Slot:7, Item:black_stained_glass_pane, Name: '
+    - 'Slot:8, Item:black_stained_glass_pane, Name: '
+    - 'Slot:9, Item:black_stained_glass_pane, Name: '
+    - 'Slot:10, Item:black_stained_glass_pane, Name: '
+    - 'Slot:18, Item:black_stained_glass_pane, Name: '
+    - 'Slot:19, Item:black_stained_glass_pane, Name: '
+    - 'Slot:27, Item:black_stained_glass_pane, Name: '
+    - 'Slot:28, Item:black_stained_glass_pane, Name: '
+    - 'Slot:36, Item:black_stained_glass_pane, Name: '
+    - 'Slot:37, Item:black_stained_glass_pane, Name: '
+    - 'Slot:45, Item:black_stained_glass_pane, Name: '
+    - 'Slot:46, Item:black_stained_glass_pane, Name: '
+    - 'Slot:47, Item:black_stained_glass_pane, Name: '
+    - 'Slot:48, Item:black_stained_glass_pane, Name: '
+    - 'Slot:49, Item:black_stained_glass_pane, Name: '
+    - 'Slot:50, Item:black_stained_glass_pane, Name: '
+    - 'Slot:51, Item:black_stained_glass_pane, Name: '
+    - 'Slot:52, Item:black_stained_glass_pane, Name: '
+    - 'Slot:53, Item:black_stained_glass_pane, Name: '
+    - 'Slot:54, Item:black_stained_glass_pane, Name: '
+    - 'Slot:11, Item:white_stained_glass_pane, Name: '
+    - 'Slot:12, Item:white_stained_glass_pane, Name: '
+    - 'Slot:13, Item:white_stained_glass_pane, Name: '
+    - 'Slot:14, Item:white_stained_glass_pane, Name: '
+    - 'Slot:15, Item:white_stained_glass_pane, Name: '
+    - 'Slot:16, Item:white_stained_glass_pane, Name: '
+    - 'Slot:17, Item:white_stained_glass_pane, Name: '
+    - 'Slot:20, Item:white_stained_glass_pane, Name: '
+    - 'Slot:26, Item:white_stained_glass_pane, Name: '
+    - 'Slot:29, Item:white_stained_glass_pane, Name: '
+    - 'Slot:35, Item:white_stained_glass_pane, Name: '
+    - 'Slot:38, Item:white_stained_glass_pane, Name: '
+    - 'Slot:39, Item:white_stained_glass_pane, Name: '
+    - 'Slot:40, Item:white_stained_glass_pane, Name: '
+    - 'Slot:41, Item:white_stained_glass_pane, Name: '
+    - 'Slot:42, Item:white_stained_glass_pane, Name: '
+    - 'Slot:43, Item:white_stained_glass_pane, Name: '
+    - 'Slot:44, Item:white_stained_glass_pane, Name: '
 Categories: #You can make as many different categories as you want
   Common: #Name of the category
     Name: '&a&l&nCommon' #Name in the GUI
@@ -456,15 +456,15 @@ Categories: #You can make as many different categories as you want
     InGUI: true #Toggle if it's in the GUI or not.
     Lore: #The lore of the Item
       - '&eCost: &6&l20 &6XP Levels'
-    Item: 'LIME_STAINED_GLASS_PANE' #The id for the item
+    Item: 'lime_stained_glass_pane' #The id for the item
     Glowing: true #If it has a glowing effect.
     Cost: 20 #How much each book will cost to buy.
-    Currency: XP_Level #The currency you wish to use.
+    Currency: xp_level #The currency you wish to use.
     Rarity: 1 #This allows the enchantments to be ordered with the Transmog Scrolls. The higher the number the rarer it is. Try and have each category have different rarities.
     LostBook: #Controls the Lost Book shop for this tier
       InGUI: false #If it shows in the /CE Gui
       Slot: 31 #Slot it will be in
-      Item: 'BOOK' #The item that is shown in the GUI
+      Item: 'book' #The item that is shown in the GUI
       Glowing: false #Is it enchanted
       Name: '&8&l&nLost&c&l Tier1 &8&l&nBooks' #Name of the item
       Lore: #Lore on the item
@@ -497,15 +497,15 @@ Categories: #You can make as many different categories as you want
     InGUI: true
     Lore:
       - '&eCost: &6&l40 &6XP Levels'
-    Item: 'BLUE_STAINED_GLASS_PANE'
+    Item: 'blue_stained_glass_pane'
     Glowing: true
     Cost: 40
-    Currency: XP_Level
+    Currency: xp_level
     Rarity: 2
     LostBook:
       InGUI: false
       Slot: 32
-      Item: 'BOOK'
+      Item: 'book'
       Glowing: false
       Name: '&8&l&nLost&c&l Tier2 &8&l&nBooks'
       Lore:
@@ -538,15 +538,15 @@ Categories: #You can make as many different categories as you want
     InGUI: true
     Lore:
       - '&eCost: &6&l60 &6XP Levels'
-    Item: 'RED_STAINED_GLASS_PANE'
+    Item: 'red_stained_glass_pane'
     Glowing: true
     Cost: 60
-    Currency: XP_Level
+    Currency: xp_level
     Rarity: 3
     LostBook:
       InGUI: false
       Slot: 33
-      Item: 'BOOK'
+      Item: 'book'
       Glowing: false
       Name: '&8&l&nLost&c&l Tier3 &8&l&nBooks'
       Lore:
@@ -579,7 +579,7 @@ Categories: #You can make as many different categories as you want
     InGUI: true
     Lore:
       - '&eCost: &6&l120 &6XP Levels'
-    Item: 'AMETHYST_CLUSTER'
+    Item: 'amethyst_cluster'
     Glowing: true
     Cost: 120
     Currency: XP_Level
@@ -587,7 +587,7 @@ Categories: #You can make as many different categories as you want
     LostBook:
       InGUI: false
       Slot: 41
-      Item: 'BOOK'
+      Item: 'book'
       Glowing: false
       Name: '&8&l&nLost&c&l Tier 10 &8&l&nBooks'
       Lore:
