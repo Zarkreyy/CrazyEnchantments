@@ -23,6 +23,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LostBookController implements Listener {
 
@@ -75,8 +76,8 @@ public class LostBookController implements Listener {
 
         player.getInventory().addItem(book.buildBook());
 
-        HashMap<String, String> placeholders = new HashMap<>();
-        placeholders.put("%Found%", book.getItemBuilder().getName());
+        Map<String, String> placeholders = new HashMap<>();
+        placeholders.put("%Found%", book.getItemBuilder().getDisplayName());
 
         player.sendMessage(Messages.CLEAN_LOST_BOOK.getMessage(placeholders));
 

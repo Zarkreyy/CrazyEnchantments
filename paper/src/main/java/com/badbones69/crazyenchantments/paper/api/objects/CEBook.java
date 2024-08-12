@@ -37,7 +37,7 @@ public class CEBook {
     private CEnchantment enchantment;
     private int amount;
     private int level;
-    private boolean glowing;
+    private Boolean glowing;
     private int destroyRate;
     private int successRate;
     
@@ -238,30 +238,25 @@ public class CEBook {
             }
         }
 
-        return this.enchantmentBookSettings.getNormalBook().setAmount(this.amount).setName(name).setLore(lore).setGlow(this.glowing);
+        return this.enchantmentBookSettings.getNormalBook().setAmount(this.amount).setDisplayName(name).setDisplayLore(lore).setGlowing(this.glowing);
     }
     
     /**
      * @return Return the book as an ItemStack.
      */
     public ItemStack buildBook() {
-        ItemStack item = getItemBuilder().build(); //TODO Directly set data instead of reconstructing the item.
-        ItemMeta meta = item.getItemMeta();
+        //todo() Directly set data instead of reconstructing the item.
+        //todo() test this change to make sure the consumer works
+        return getItemBuilder().getStack(itemMeta -> {
+            Gson gson = new Gson();
 
-        // PDC Start
-        Gson gson = new Gson();
+            String data = gson.toJson(new EnchantedBook(this.enchantment.getName(), this.successRate, this.destroyRate, this.level), EnchantedBook.class);
 
-        String data = gson.toJson(new EnchantedBook(this.enchantment.getName(), this.successRate, this.destroyRate, this.level), EnchantedBook.class);
-
-        meta.getPersistentDataContainer().set(DataKeys.stored_enchantments.getNamespacedKey(), PersistentDataType.STRING, data);
-        // PDC End
-        item.setItemMeta(meta);
-
-        return item;
+            itemMeta.getPersistentDataContainer().set(DataKeys.stored_enchantments.getNamespacedKey(), PersistentDataType.STRING, data);
+        });
     }
 
     /**
-     *
      * @return True if the success rate was successful.
      */
     public boolean roleSuccess() {
@@ -269,11 +264,9 @@ public class CEBook {
     }
 
     /**
-     *
      * @return True if the destroy rate was successful.
      */
     public boolean roleDestroy() {
         return methods.randomPicker(this.getDestroyRate(), 100);
     }
-
 }

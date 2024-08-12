@@ -63,22 +63,24 @@ public class BaseMenu extends InventoryBuilder {
 
             if (itemStack == null) return;
 
-            if (!itemStack.hasItemMeta()) return;
+            if (!itemStack.hasItemMeta()) return; //todo() if we switch to pdc, and use item.getPersistentDataContainer. we should not need this hasItemMeta check
 
-            ItemMeta itemMeta = itemStack.getItemMeta();
+            ItemMeta itemMeta = itemStack.getItemMeta(); //todo() we also won't need this, we likely won't need this anywhere reading pdc values only.
 
-            if (itemMeta == null) return;
+            if (itemMeta == null) return; //todo() we also won't need this, same as above
 
-            if (!itemMeta.hasDisplayName()) return;
+            if (!itemMeta.hasDisplayName()) return; //todo() why does it need a display name?
 
             if (itemStack.isSimilar(KitsManager.getBackLeft()) || itemStack.isSimilar(KitsManager.getBackRight())) {
+                //todo() add pdc for the left/right buttons, instead of the hefty isSimilar()
+                // isSimilar checks everything
                 MenuManager.openInfoMenu(player);
 
                 return;
             }
 
             for (EnchantmentType enchantmentType : MenuManager.getEnchantmentTypes()) {
-                if (itemStack.isSimilar(enchantmentType.getDisplayItem())) {
+                if (itemStack.isSimilar(enchantmentType.getDisplayItem())) { //todo() USE PDC
                     MenuManager.openInfoMenu(player, enchantmentType);
 
                     return;

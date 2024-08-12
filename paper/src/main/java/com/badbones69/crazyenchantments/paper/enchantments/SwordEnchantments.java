@@ -4,6 +4,7 @@ import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Methods;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.CrazyManager;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.economy.Currency;
 import com.badbones69.crazyenchantments.paper.api.economy.CurrencyAPI;
 import com.badbones69.crazyenchantments.paper.api.enums.CEnchantments;
@@ -11,7 +12,6 @@ import com.badbones69.crazyenchantments.paper.api.enums.Messages;
 import com.badbones69.crazyenchantments.paper.api.events.RageBreakEvent;
 import com.badbones69.crazyenchantments.paper.api.objects.CEPlayer;
 import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.utils.EnchantUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EntityUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EventUtils;
@@ -19,7 +19,6 @@ import com.badbones69.crazyenchantments.paper.controllers.BossBarController;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
 import com.badbones69.crazyenchantments.paper.scheduler.FoliaRunnable;
 import com.badbones69.crazyenchantments.paper.support.PluginSupport;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport.SupportedPlugins;
 import com.badbones69.crazyenchantments.paper.support.anticheats.NoCheatPlusSupport;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -222,7 +221,7 @@ public class SwordEnchantments implements Listener {
         if (damager.getHealth() > 0 && EnchantUtils.isEventActive(CEnchantments.LIFESTEAL, damager, item, enchantments)) {
             int steal = enchantments.get(CEnchantments.LIFESTEAL.getEnchantment());
             // Uses getValue as if the player has health boost it is modifying the base so the value after the modifier is needed.
-            double maxHealth = damager.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            double maxHealth = damager.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(); //todo() null safety, also check for attribute modifier changes
 
             if (damager.getHealth() + steal < maxHealth) damager.setHealth(damager.getHealth() + steal);
 
@@ -237,7 +236,7 @@ public class SwordEnchantments implements Listener {
 
         if (damager.getHealth() > 0 && EnchantUtils.isEventActive(CEnchantments.VAMPIRE, damager, item, enchantments)) {
             // Uses getValue as if the player has health boost it is modifying the base so the value after the modifier is needed.
-            double maxHealth = damager.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+            double maxHealth = damager.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(); //todo() null safety, also check for attribute modifier changes
 
             if (damager.getHealth() + event.getDamage() / 2 < maxHealth) damager.setHealth(damager.getHealth() + event.getDamage() / 2);
 

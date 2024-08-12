@@ -3,9 +3,9 @@ package com.badbones69.crazyenchantments.paper.api.enums;
 import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Methods;
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
 import com.badbones69.crazyenchantments.paper.api.enums.pdc.DustData;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.google.gson.Gson;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public enum Dust {
@@ -26,7 +27,7 @@ public enum Dust {
     MYSTERY_DUST("Mystery-Dust", "MysteryDust", Arrays.asList("m", "mystery")),
     FAILED_DUST("Failed-Dust", "FailedDust", Arrays.asList("f", "failed"));
     
-    private static final HashMap<Dust, ItemBuilder> itemBuilderDust = new HashMap<>();
+    private static final Map<Dust, ItemBuilder> itemBuilderDust = new HashMap<>();
     private final String name;
     private final String configName;
     private final List<String> knownNames;
@@ -39,7 +40,7 @@ public enum Dust {
     @NotNull
     private final Methods methods = this.plugin.getStarter().getMethods();
     
-    Dust(String name, String configName, List<String> knowNames) {
+    Dust(final String name, final String configName, final List<String> knowNames) {
         this.name = name;
         this.knownNames = knowNames;
         this.configName = configName;
@@ -63,28 +64,27 @@ public enum Dust {
         }
     }
     
-    public static Dust getFromName(String nameString) {
+    public static Dust getFromName(final String nameString) {
         for (Dust dust : Dust.values()) {
-            if (dust.getKnownNames().contains(nameString.toLowerCase()) ||
-            dust.getConfigName().contains(nameString)) return dust;
+            if (dust.getKnownNames().contains(nameString.toLowerCase()) || dust.getConfigName().contains(nameString)) return dust;
         }
 
         return null;
     }
     
-    public String getName() {
+    public final String getName() {
         return this.name;
     }
     
-    public List<String> getKnownNames() {
+    public final List<String> getKnownNames() {
         return this.knownNames;
     }
     
-    public String getConfigName() {
+    public final String getConfigName() {
         return this.configName;
     }
     
-    public ItemStack getDust() {
+    public final ItemStack getDust() {
         return getDust(1);
     }
     

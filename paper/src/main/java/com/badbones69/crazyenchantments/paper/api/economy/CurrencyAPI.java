@@ -21,11 +21,12 @@ public class CurrencyAPI {
 
     /**
      * Get the amount that a player has from a specific currency.
-     * @param player The player you wish to get the amount from.
-     * @param currency The currency you wish to get from.
-     * @return The amount that the player has of that currency.
+     *
+     * @param player The player you wish to get the amount from
+     * @param currency The currency you wish to get from
+     * @return The amount that the player has of that currency
      */
-    public int getCurrency(Player player, Currency currency) {
+    public int getCurrency(final Player player, final Currency currency) {
         try {
             return switch (currency) {
                 case VAULT -> (int) starter.getVaultSupport().getVault().getBalance(player);
@@ -38,8 +39,9 @@ public class CurrencyAPI {
     
     /**
      * Take an amount from a player's currency.
-     * @param player The player you wish to take from.
-     * @param category The category you wish to use.
+     *
+     * @param player The player you wish to take from
+     * @param category The category you wish to use
      */
     public void takeCurrency(Player player, Category category) {
         takeCurrency(player, category.getCurrency(), category.getCost());
@@ -47,8 +49,9 @@ public class CurrencyAPI {
     
     /**
      * Take an amount from a player's currency.
-     * @param player The player you wish to take from.
-     * @param lostBook The lostbook you wish to use.
+     *
+     * @param player The player you wish to take from
+     * @param lostBook The lostbook you wish to use
      */
     public void takeCurrency(Player player, LostBook lostBook) {
         takeCurrency(player, lostBook.getCurrency(), lostBook.getCost());
@@ -56,8 +59,9 @@ public class CurrencyAPI {
     
     /**
      * Take an amount from a player's currency.
-     * @param player The player you wish to take from.
-     * @param option The ShopOption you wish to use.
+     *
+     * @param player The player you wish to take from
+     * @param option The ShopOption you wish to use
      */
     public void takeCurrency(Player player, ShopOption option) {
         takeCurrency(player, option.getCurrency(), option.getCost());
@@ -65,9 +69,10 @@ public class CurrencyAPI {
     
     /**
      * Take an amount from a player's currency.
-     * @param player The player you wish to take from.
-     * @param currency The currency you wish to use.
-     * @param amount The amount you want to take.
+     *
+     * @param player The player you wish to take from
+     * @param currency The currency you wish to use
+     * @param amount The amount you want to take
      */
     public void takeCurrency(Player player, Currency currency, int amount) {
         try {
@@ -81,9 +86,10 @@ public class CurrencyAPI {
     
     /**
      * Give an amount to a player's currency.
-     * @param player The player you are giving to.
-     * @param currency The currency you want to use.
-     * @param amount The amount you are giving to the player.
+     *
+     * @param player The player you are giving to
+     * @param currency The currency you want to use
+     * @param amount The amount you are giving to the player
      */
     public void giveCurrency(Player player, Currency currency, int amount) {
         try {
@@ -97,9 +103,10 @@ public class CurrencyAPI {
     
     /**
      * Checks if the player has enough of a currency.
-     * @param player The player you are checking.
-     * @param category The category you wish to check.
-     * @return True if they have enough to buy it or false if they don't.
+     *
+     * @param player The player you are checking
+     * @param category The category you wish to check
+     * @return True if they have enough to buy it or false if they don't
      */
     public boolean canBuy(Player player, Category category) {
         return canBuy(player, category.getCurrency(), category.getCost());
@@ -107,9 +114,10 @@ public class CurrencyAPI {
     
     /**
      * Checks if the player has enough of a currency.
-     * @param player The player you are checking.
-     * @param lostBook The lostBook you wish to check.
-     * @return True if they have enough to buy it or false if they don't.
+     *
+     * @param player The player you are checking
+     * @param lostBook The lostBook you wish to check
+     * @return True if they have enough to buy it or false if they don't
      */
     public boolean canBuy(Player player, LostBook lostBook) {
         return canBuy(player, lostBook.getCurrency(), lostBook.getCost());
@@ -117,9 +125,10 @@ public class CurrencyAPI {
     
     /**
      * Checks if the player has enough of a currency.
-     * @param player The player you are checking.
-     * @param option The ShopOption you wish to check.
-     * @return True if they have enough to buy it or false if they don't.
+     *
+     * @param player The player you are checking
+     * @param option The ShopOption you wish to check
+     * @return True if they have enough to buy it or false if they don't
      */
     public boolean canBuy(Player player, ShopOption option) {
         return canBuy(player, option.getCurrency(), option.getCost());
@@ -127,10 +136,11 @@ public class CurrencyAPI {
     
     /**
      * Checks if the player has enough of a currency.
-     * @param player The player you are checking.
-     * @param currency The currency you wish to check.
-     * @param cost The cost of the item you are checking.
-     * @return True if they have enough to buy it or false if they don't.
+     *
+     * @param player The player you are checking
+     * @param currency The currency you wish to check
+     * @param cost The cost of the item you are checking
+     * @return True if they have enough to buy it or false if they don't
      */
     public boolean canBuy(Player player, Currency currency, int cost) {
         return getCurrency(player, currency) >= cost;

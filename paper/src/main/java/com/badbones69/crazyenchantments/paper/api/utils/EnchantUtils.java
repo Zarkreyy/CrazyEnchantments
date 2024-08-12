@@ -61,7 +61,7 @@ public class EnchantUtils {
      * @param player the player
      * @param enchant the enchant to use
      * @param enchants the map of enchants
-     * @param multiplier the multipler of the enchant.
+     * @param multiplier the multiplier of the enchant.
      * @return True if the enchant is active and can be used if the event is passed.
      */
     private static boolean isActive(Player player, CEnchantments enchant, Map<CEnchantment, Integer> enchants, double multiplier) {

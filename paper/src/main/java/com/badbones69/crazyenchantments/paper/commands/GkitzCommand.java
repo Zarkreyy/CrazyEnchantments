@@ -19,6 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class GkitzCommand implements CommandExecutor {
 
@@ -69,7 +70,7 @@ public class GkitzCommand implements CommandExecutor {
                         GKitz kit = this.crazyManager.getGKitFromName(args[1]);
 
                         if (kit == null) {
-                            HashMap<String, String> placeholders = new HashMap<>();
+                            Map<String, String> placeholders = new HashMap<>();
                             placeholders.put("%Kit%", args[1]);
                             placeholders.put("%Gkit%", args[1]);
                             sender.sendMessage(Messages.NOT_A_GKIT.getMessage(placeholders));
@@ -92,7 +93,7 @@ public class GkitzCommand implements CommandExecutor {
                         }
 
                         this.crazyManager.getCEPlayer(player).removeCoolDown(kit);
-                        HashMap<String, String> placeholders = new HashMap<>();
+                        Map<String, String> placeholders = new HashMap<>();
 
                         placeholders.put("%Player%", player.getName());
                         placeholders.put("%Gkit%", kit.getName());
@@ -107,7 +108,7 @@ public class GkitzCommand implements CommandExecutor {
                         Player player;
 
                         if (kit == null) {
-                            HashMap<String, String> placeholders = new HashMap<>();
+                            Map<String, String> placeholders = new HashMap<>();
                             placeholders.put("%Kit%", args[0]);
                             placeholders.put("%Gkit%", args[0]);
                             sender.sendMessage(Messages.NOT_A_GKIT.getMessage(placeholders));
@@ -135,9 +136,9 @@ public class GkitzCommand implements CommandExecutor {
                         }
 
                         CEPlayer cePlayer = this.crazyManager.getCEPlayer(player);
-                        HashMap<String, String> placeholders = new HashMap<>();
+                        Map<String, String> placeholders = new HashMap<>();
                         placeholders.put("%Player%", player.getName());
-                        placeholders.put("%Kit%", kit.getDisplayItem().getItemMeta().getDisplayName());
+                        placeholders.put("%Kit%", kit.getDisplayItem().getItemMeta().getDisplayName()); //todo() maybe deconstruct with the ItemBuilder as this would kill us with converting to MiniMessage fully.
 
                         if (cePlayer.hasGkitPermission(kit) || adminGive) {
                             if (cePlayer.canUseGKit(kit) || adminGive) {

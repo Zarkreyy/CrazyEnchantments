@@ -73,7 +73,7 @@ public class BootEnchantments implements Listener {
         if (event.getFrom() == event.getTo()) return;
 
         Player player = event.getPlayer();
-        boolean isFlying = player.isFlying(); // TODO implement single method for all enchantment checks. #EnchantUtils
+        boolean isFlying = player.isFlying(); //todo() implement single method for all enchantment checks. #EnchantUtils
 
         if (this.wingsManager.isWingsEnabled() && this.enchantmentBookSettings.getEnchantments(player.getEquipment().getBoots()).containsKey(CEnchantments.WINGS.getEnchantment())) {
             if (WingsUtils.checkRegion(player)) {

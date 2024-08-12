@@ -138,6 +138,7 @@ public enum Messages {
     
     public static void addMissingMessages() {
         FileConfiguration messages = Files.MESSAGES.getFile();
+
         boolean saveFile = false;
 
         for (Messages message : values()) {
@@ -156,13 +157,13 @@ public enum Messages {
     }
     
     public static String replacePlaceholders(String placeholder, String replacement, String message) {
-        HashMap<String, String> placeholders = new HashMap<>();
+        Map<String, String> placeholders = new HashMap<>();
         placeholders.put(placeholder, replacement);
 
         return replacePlaceholders(placeholders, message);
     }
     
-    public static String replacePlaceholders(HashMap<String, String> placeholders, String message) {
+    public static String replacePlaceholders(Map<String, String> placeholders, String message) {
         for (Entry<String, String> placeholder : placeholders.entrySet()) {
             message = message.replaceAll(placeholder.getKey(), placeholder.getValue())
             .replaceAll(placeholder.getKey().toLowerCase(), placeholder.getValue());
@@ -172,13 +173,14 @@ public enum Messages {
     }
     
     public static List<String> replacePlaceholders(String placeholder, String replacement, List<String> messageList) {
-        HashMap<String, String> placeholders = new HashMap<>();
+        Map<String, String> placeholders = new HashMap<>();
+
         placeholders.put(placeholder, replacement);
 
         return replacePlaceholders(placeholders, messageList);
     }
     
-    public static List<String> replacePlaceholders(HashMap<String, String> placeholders, List<String> messageList) {
+    public static List<String> replacePlaceholders(Map<String, String> placeholders, List<String> messageList) {
         List<String> newMessageList = new ArrayList<>();
 
         for (String message : messageList) {
@@ -196,8 +198,10 @@ public enum Messages {
     }
     
     public String getMessage(String placeholder, String replacement) {
-        HashMap<String, String> placeholders = new HashMap<>();
+        Map<String, String> placeholders = new HashMap<>();
+
         placeholders.put(placeholder, replacement);
+
         return getMessage(placeholders, true);
     }
     
@@ -210,7 +214,7 @@ public enum Messages {
     }
     
     public String getMessageNoPrefix(String placeholder, String replacement) {
-        HashMap<String, String> placeholders = new HashMap<>();
+        Map<String, String> placeholders = new HashMap<>();
         placeholders.put(placeholder, replacement);
 
         return getMessage(placeholders, false);

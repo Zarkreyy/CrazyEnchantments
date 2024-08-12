@@ -52,7 +52,7 @@ public class HoeEnchantments implements Listener {
     @NotNull
     private final EnchantmentBookSettings enchantmentBookSettings = this.starter.getEnchantmentBookSettings();
 
-    private final HashMap<UUID, HashMap<Block, BlockFace>> blocks = new HashMap<>();
+    private final HashMap<UUID, Map<Block, BlockFace>> blocks = new HashMap<>();
 
     private final Set<Material> harvesterCrops = Set.of(Material.WHEAT, Material.CARROTS, Material.BEETROOTS, Material.POTATOES, Material.NETHER_WART, Material.COCOA);
 
@@ -112,7 +112,7 @@ public class HoeEnchantments implements Listener {
             }
         } else if (event.getAction() == Action.LEFT_CLICK_BLOCK && CEnchantments.HARVESTER.isActivated()
                 && this.enchantmentBookSettings.getEnchantments(this.methods.getItemInHand(player)).containsKey(CEnchantments.HARVESTER.getEnchantment())) {
-            HashMap<Block, BlockFace> blockFace = new HashMap<>();
+            Map<Block, BlockFace> blockFace = new HashMap<>();
             blockFace.put(event.getClickedBlock(), event.getBlockFace());
             this.blocks.put(player.getUniqueId(), blockFace);
         }
@@ -183,11 +183,11 @@ public class HoeEnchantments implements Listener {
         if (seedType != null) {
             if (soil.getType() != Material.FARMLAND && !isSoulSand) soil.setType(Material.FARMLAND);
 
-            if (player.getGameMode() != GameMode.CREATIVE) methods.removeItem(playerSeedItem, player); // Take seed from player
+            if (player.getGameMode() != GameMode.CREATIVE) methods.removeItem(playerSeedItem, player); // Take seed from player, seed item might be null? why
 
             plant.setType(seedType);
 
-            if (hasGreenThumb) fullyGrowPlant(plant); // TODO re-add enchant check
+            if (hasGreenThumb) fullyGrowPlant(plant); //todo() re-add enchant check
 
             return true;
         }

@@ -27,12 +27,13 @@ public enum Currency {
     
     /**
      * Get a currency enum.
-     * @param currency The currency you want.
-     * @return The currency enum.
+     *
+     * @param currency The currency you want
+     * @return The currency enum
      */
     public static Currency getCurrency(String currency) {
         for (Currency value : Currency.values()) {
-            if (currency.equalsIgnoreCase(value.getName())) return value;
+            if (currency.toLowerCase().equalsIgnoreCase(value.getName())) return value;
         }
 
         return null;
@@ -40,9 +41,10 @@ public enum Currency {
     
     /**
      * Get the name of the currency.
-     * @return The name of the currency.
+     *
+     * @return The name of the currency
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 }

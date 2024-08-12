@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommandChecker implements Listener {
+public class CommandChecker implements Listener { //todo() why the fuck do we need this anymore? there has to be a better way
 
     @NotNull
     private final CrazyEnchantments plugin = JavaPlugin.getPlugin(CrazyEnchantments.class);

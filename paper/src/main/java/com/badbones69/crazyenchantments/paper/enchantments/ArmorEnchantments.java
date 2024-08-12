@@ -154,7 +154,7 @@ public class ArmorEnchantments implements Listener {
     }
 
     /**
-     * Pulls the data off of all of the enchantments provided and filters out the worst ones.
+     * Pulls the data off of all the enchantments provided and filters out the worst ones.
      * @param topEnchants A list of {@link CEnchantment}'s to filter.
      * @return Returns a list of top potion effects from the provided list of enchantments.
      */
@@ -255,7 +255,7 @@ public class ArmorEnchantments implements Listener {
             }
 
             if (player.getHealth() <= event.getFinalDamage() && EnchantUtils.isEventActive(CEnchantments.SYSTEMREBOOT, player, armor, enchants)) {
-                player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+                player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue()); //todo() null safety, and check for attribute changes
                 event.setCancelled(true);
 
                 return;
@@ -279,7 +279,7 @@ public class ArmorEnchantments implements Listener {
             if (player.getHealth() > 0 && EnchantUtils.isEventActive(CEnchantments.ENLIGHTENED, player, armor, enchants)) {
                 double heal = enchants.get(CEnchantments.ENLIGHTENED.getEnchantment());
                 // Uses getValue as if the player has health boost it is modifying the base so the value after the modifier is needed.
-                double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue();
+                double maxHealth = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(); //todo() null safety, and check for attribute changes
 
                 if (player.getHealth() + heal < maxHealth) player.setHealth(player.getHealth() + heal);
 

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class BossBarController {
+public class BossBarController { //todo() we can use the boss bar stuff in vital api eventually when we switch to minimessage
 
     private final HashMap<UUID, BossBar> bossBars;
     private final CrazyEnchantments plugin;

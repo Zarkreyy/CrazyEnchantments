@@ -2,8 +2,8 @@ package com.badbones69.crazyenchantments.paper.api.objects.gkitz;
 
 import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.api.CrazyManager;
-import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
+import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +19,7 @@ public class GKitzItem {
     private final CrazyManager crazyManager = this.plugin.getStarter().getCrazyManager();
     
     private final ItemBuilder itemBuilder;
-    private final HashMap<CEnchantment, Integer> ceEnchantments;
+    private final Map<CEnchantment, Integer> ceEnchantments;
     
     /**
      * Make an empty gkit item.
@@ -49,9 +49,9 @@ public class GKitzItem {
      * @return Returns a fully finished item.
      */
     public ItemStack build() {
-        ItemStack item = this.itemBuilder.build();
+        ItemStack item = this.itemBuilder.getStack();
 
-        for (Map.Entry<CEnchantment, Integer> enchantment : this.ceEnchantments.entrySet()) {
+        for (Map.Entry<CEnchantment, Integer> enchantment : this.ceEnchantments.entrySet()) { //todo() see if we can move this into the ItemBuilder
             item = this.crazyManager.addEnchantment(item, enchantment.getKey(), enchantment.getValue());
         }
 

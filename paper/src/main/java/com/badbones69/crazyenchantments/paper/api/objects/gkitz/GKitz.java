@@ -2,8 +2,9 @@ package com.badbones69.crazyenchantments.paper.api.objects.gkitz;
 
 import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.api.CrazyManager;
-import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
+import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
+import com.badbones69.crazyenchantments.paper.utils.ItemUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +23,7 @@ public class GKitz {
     private final String name;
     private final String cooldown;
     private final boolean autoEquip;
+    private final List<String> displayLore;
     private final ItemStack displayItem;
     private final List<String> commands;
     private final List<ItemStack> preview;
@@ -38,15 +40,15 @@ public class GKitz {
      * @param itemStrings The items as a string.
      * @param autoEquip This is if the armor equips when given.
      */
-    public GKitz(String name, int slot, String cooldown, ItemStack displayItem, List<ItemStack> preview,
-    List<String> commands, List<String> itemStrings, boolean autoEquip) {
+    public GKitz(String name, int slot, String cooldown, ItemBuilder displayItem, List<ItemStack> preview, List<String> commands, List<String> itemStrings, boolean autoEquip) {
         this.name = name;
         this.slot = slot;
         this.preview = preview;
         this.cooldown = cooldown;
         this.commands = commands;
         this.autoEquip = autoEquip;
-        this.displayItem = displayItem;
+        this.displayLore = displayItem.getStrippedLore();
+        this.displayItem = displayItem.getStack();
         this.itemStrings = itemStrings;
     }
     
@@ -61,7 +63,11 @@ public class GKitz {
     public String getCooldown() {
         return this.cooldown;
     }
-    
+
+    public List<String> getDisplayLore() {
+        return this.displayLore;
+    }
+
     public ItemStack getDisplayItem() {
         return this.displayItem;
     }

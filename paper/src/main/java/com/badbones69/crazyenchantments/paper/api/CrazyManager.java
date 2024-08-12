@@ -165,6 +165,7 @@ public class CrazyManager {
             // Check if we need to patch playerHealth.
             Attribute genericAttribute = Attribute.GENERIC_MAX_HEALTH;
 
+            //todo() attribute system may have changed, plus null pointers.
             double baseValue = player.getAttribute(genericAttribute).getBaseValue();
 
             if (playerHealthPatch) player.getAttribute(genericAttribute).setBaseValue(baseValue);
@@ -181,7 +182,7 @@ public class CrazyManager {
         // Loop through block list.
         blocks.getStringList("Block-List").forEach(id -> {
             try {
-                this.blockList.add(new ItemBuilder().setMaterial(id).getMaterial());
+                this.blockList.add(ItemUtil.getMaterial(id.toLowerCase())); // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
             } catch (Exception ignored) {}
         });
 
@@ -189,16 +190,13 @@ public class CrazyManager {
 
         if (headSec != null) {
             headSec.getKeys(false).forEach(id -> {
-                try {
-                    Material mat = new ItemBuilder().setMaterial(id).getMaterial();
-                    this.headMap.put(mat, headSec.getDouble(id));
-                } catch (Exception ignored) {}
+                this.headMap.put(ItemUtil.getMaterial(id.toLowerCase()), headSec.getDouble(id)); // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
             });
         }
 
         Scrolls.getWhiteScrollProtectionName();
 
-        this.enchantmentBookSettings.setEnchantmentBook(new ItemBuilder().setMaterial(config.getString("Settings.Enchantment-Book-Item", "BOOK")));
+        this.enchantmentBookSettings.setEnchantmentBook(new ItemBuilder().withType(config.getString("Settings.Enchantment-Book-Item", "book").toLowerCase())); // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
         this.useUnsafeEnchantments = config.getBoolean("Settings.EnchantmentOptions.UnSafe-Enchantments", true);
         this.maxEnchantmentCheck = config.getBoolean("Settings.EnchantmentOptions.MaxAmountOfEnchantmentsToggle", true);
         this.useConfigLimits = config.getBoolean("Settings.EnchantmentOptions.Limit.Check-Perms", false);
@@ -459,7 +457,7 @@ public class CrazyManager {
     public CEBook getRandomEnchantmentBook(Category category) {
         try {
             List<CEnchantment> enchantments = category.getEnabledEnchantments();
-            CEnchantment enchantment = enchantments.get(new Random().nextInt(enchantments.size()));
+            CEnchantment enchantment = enchantments.get(ThreadLocalRandom.current().nextInt(enchantments.size()));
 
             return new CEBook(enchantment, randomLevel(enchantment, category), 1, category);
         } catch (Exception e) {
@@ -533,7 +531,7 @@ public class CrazyManager {
      * @param enchantments The enchantments to be added.
      * @return The item with the enchantment on it.
      */
-    public ItemMeta addEnchantments(ItemMeta meta, Map<CEnchantment, Integer> enchantments) {
+    public ItemMeta addEnchantments(ItemMeta meta, Map<CEnchantment, Integer> enchantments) { //todo() need to look into this, and the one method in ItemBuilder
         Gson gson = new Gson();
         Map<CEnchantment, Integer> currentEnchantments = this.enchantmentBookSettings.getEnchantments(meta);
 
@@ -600,8 +598,9 @@ public class CrazyManager {
      * Force an update of a players armor potion effects.
      * @param player The player you are updating the effects of.
      */
-    public void updatePlayerEffects(Player player) { // TODO Remove this method.
+    public void updatePlayerEffects(Player player) { //todo() Remove this method.
         if (player == null) return;
+
         Set<CEnchantments> allEnchantPotionEffects = getEnchantmentPotions().keySet();
 
         for (ItemStack armor : player.getEquipment().getArmorContents()) {
@@ -614,13 +613,13 @@ public class CrazyManager {
         }
     }
 
-    public void checkPotions(Map<PotionEffectType, Integer> effects, Player player) { //TODO Remove this Method
+    public void checkPotions(Map<PotionEffectType, Integer> effects, Player player) { //todo() Remove this Method
         for (Map.Entry<PotionEffectType, Integer> type : effects.entrySet()) {
             int value = type.getValue();
             PotionEffectType key = type.getKey();
 
             player.removePotionEffect(key);
-            if (value == 0) continue; //TODO check usage with new addition of infinity.
+            if (value == 0) continue; //todo() check usage with new addition of infinity.
             PotionEffect potionEffect = new PotionEffect(key, PotionEffect.INFINITE_DURATION, value);
             player.addPotionEffect(potionEffect);
         }
@@ -897,33 +896,33 @@ public class CrazyManager {
             // This is used to convert old v1.7- gkit files to use newer way.
             itemString = getNewItemString(itemString);
 
-            ItemBuilder itemBuilder = ItemBuilder.convertString(itemString);
+            ItemBuilder itemBuilder = ItemUtils.convertString(itemString);
             List<String> customEnchantments = new ArrayList<>();
-            HashMap<Enchantment, Integer> enchantments = new HashMap<>();
+            Map<String, Integer> enchantments = new HashMap<>();
 
-            for (String option : itemString.split(", ")) {
+            for (String option : itemString.split(", ")) { //todo() this whole loop needs looking at
                 try {
-                    Enchantment enchantment = this.methods.getEnchantment(option.split(":")[0]);
+                    Enchantment enchantment = this.methods.getEnchantment(option.split(":")[0]); //todo() this needs to be looked at, this whole thing screams what the fuck
                     CEnchantment cEnchantment = getEnchantmentFromName(option.split(":")[0]);
                     String level = option.split(":")[1];
 
                     if (enchantment != null) {
-                        if (level.contains("-")) {
-                            customEnchantments.add("&7" + option.split(":")[0] + " " + level);
+                        if (level.contains("-")) { // what?
+                            customEnchantments.add("&7" + option.split(":")[0] + " " + level); // the fuck?
                         } else {
-                            enchantments.put(enchantment, Integer.parseInt(level));
+                            enchantments.put(option.split(":")[0], Integer.parseInt(level)); // the fuck?
                         }
                     } else if (cEnchantment != null) {
-                        customEnchantments.add(cEnchantment.getCustomName() + " " + level);
+                        customEnchantments.add(cEnchantment.getCustomName() + " " + level); // the fuck?
                     }
                 } catch (Exception ignore) {}
             }
 
-            itemBuilder.getLore().addAll(0, customEnchantments.stream().map(ColorUtils::legacyTranslateColourCodes).toList());
-            itemBuilder.setEnchantments(enchantments);
+            itemBuilder.setDisplayLore(customEnchantments.stream().toList());
+            itemBuilder.addEnchantments(enchantments, false);
 
-            items.add(itemBuilder.addStringPDC(DataKeys.random_number.getNamespacedKey(), String.valueOf(methods.getRandomNumber(0, Integer.MAX_VALUE))).build());
             // This is done so items do not stack if there are multiple of the same.
+            items.add(itemBuilder.addKey(DataKeys.random_number.getNamespacedKey(), String.valueOf(methods.getRandomNumber(0, Integer.MAX_VALUE))).getStack());
         }
 
         return items;

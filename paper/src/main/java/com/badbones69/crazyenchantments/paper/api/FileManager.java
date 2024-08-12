@@ -19,7 +19,7 @@ import java.util.logging.Level;
  * @author BadBones69
  * @version v1.1
  */
-public class FileManager {
+public class FileManager { //todo() yeet this, vital's internal file manager is better.
 
     @NotNull
     private final CrazyEnchantments plugin = JavaPlugin.getPlugin(CrazyEnchantments.class);

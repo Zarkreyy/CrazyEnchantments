@@ -56,7 +56,7 @@ public class PickaxeEnchantments implements Listener {
     @NotNull
     private final NoCheatPlusSupport noCheatPlusSupport = this.starter.getNoCheatPlusSupport();
 
-    private final HashMap<Player, HashMap<Block, BlockFace>> blocks = new HashMap<>();
+    private final HashMap<Player, Map<Block, BlockFace>> blocks = new HashMap<>();
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockClick(PlayerInteractEvent event) {
@@ -70,7 +70,7 @@ public class PickaxeEnchantments implements Listener {
         if (block == null || block.isEmpty() || !this.crazyManager.getBlastBlockList().contains(block.getType())) return;
         if (!EnchantUtils.isMassBlockBreakActive(player, CEnchantments.BLAST, this.enchantmentBookSettings.getEnchantments(item))) return; // TODO Move over to block break.
 
-        HashMap<Block, BlockFace> blockFace = new HashMap<>();
+        Map<Block, BlockFace> blockFace = new HashMap<>();
         blockFace.put(block, event.getBlockFace());
         this.blocks.put(player, blockFace);
     }
@@ -120,7 +120,7 @@ public class PickaxeEnchantments implements Listener {
 
         if (!EnchantUtils.isMassBlockBreakActive(player, CEnchantments.VEINMINER, enchantments)) return;
 
-        HashSet<Block> blockList = getOreBlocks(currentBlock.getLocation(), enchantments.get(CEnchantments.VEINMINER.getEnchantment()));
+        Set<Block> blockList = getOreBlocks(currentBlock.getLocation(), enchantments.get(CEnchantments.VEINMINER.getEnchantment()));
         blockList.add(currentBlock);
 
         if (massBlockBreakCheck(player, blockList)) return;

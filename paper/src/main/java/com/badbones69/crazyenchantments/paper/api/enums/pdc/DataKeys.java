@@ -8,38 +8,31 @@ import org.jetbrains.annotations.NotNull;
 
 public enum DataKeys {
 
-    dust("Crazy_Dust", PersistentDataType.STRING),
-    white_scroll_protection("White_Scroll_Protection", PersistentDataType.STRING),
-    enchantments("CrazyEnchants", PersistentDataType.STRING),
-    stored_enchantments("Stored_Enchantments", PersistentDataType.STRING),
-    protection_crystal("is_Protections_Crystal", PersistentDataType.BOOLEAN),
-    protected_item("isProtected", PersistentDataType.BOOLEAN),
-    scrambler("isScrambler", PersistentDataType.BOOLEAN),
-    lost_book("Lost_Book_Type", PersistentDataType.STRING),
-    no_firework_damage("no_firework_damage", PersistentDataType.BOOLEAN),
-    scroll("Crazy_Scroll", PersistentDataType.STRING),
-    experience("Experience", PersistentDataType.STRING),
-    limit_reducer("Limit_Reducer", PersistentDataType.INTEGER),
-    slot_crystal("Slot_Crystal", PersistentDataType.BOOLEAN),
-    gkit_type("gkit", PersistentDataType.STRING),
-    random_number("random_number", PersistentDataType.STRING);
+    dust("Crazy_Dust"),
+    white_scroll_protection("White_Scroll_Protection"),
+    enchantments("CrazyEnchants"),
+    stored_enchantments("Stored_Enchantments"),
+    protection_crystal("is_Protections_Crystal"),
+    protected_item("isProtected"),
+    scrambler("isScrambler"),
+    lost_book("Lost_Book_Type"),
+    no_firework_damage("no_firework_damage"),
+    scroll("Crazy_Scroll"),
+    experience("Experience"),
+    limit_reducer("Limit_Reducer"),
+    slot_crystal("Slot_Crystal"),
+    gkit_type("gkit"),
+    random_number("random_number");
 
-    @NotNull
     private final CrazyEnchantments plugin = JavaPlugin.getPlugin(CrazyEnchantments.class);
 
     private final String NamespacedKey;
-    private final PersistentDataType type;
 
-    DataKeys(String NamespacedKey, PersistentDataType type) {
+    DataKeys(final String NamespacedKey) {
         this.NamespacedKey = NamespacedKey;
-        this.type = type;
     }
 
-    public NamespacedKey getNamespacedKey() {
+    public final NamespacedKey getNamespacedKey() {
         return new NamespacedKey(this.plugin, this.NamespacedKey);
-    }
-
-    public PersistentDataType getType() {
-        return this.type;
     }
 }

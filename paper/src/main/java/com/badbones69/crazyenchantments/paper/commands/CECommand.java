@@ -23,7 +23,6 @@ import com.badbones69.crazyenchantments.paper.api.objects.CEBook;
 import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
 import com.badbones69.crazyenchantments.paper.api.objects.Category;
 import com.badbones69.crazyenchantments.paper.api.objects.enchants.EnchantmentType;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.FileUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.NumberUtils;
@@ -31,6 +30,7 @@ import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBo
 import com.badbones69.crazyenchantments.paper.controllers.settings.ProtectionCrystalSettings;
 import com.badbones69.crazyenchantments.paper.listeners.ScramblerListener;
 import com.badbones69.crazyenchantments.paper.support.PluginSupport;
+import com.badbones69.crazyenchantments.paper.utils.ItemUtils;
 import com.google.gson.Gson;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -47,7 +47,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 
 //TODO() Update commands
@@ -117,7 +116,8 @@ public class CECommand implements CommandExecutor {
                 return true;
             }
             case "updateenchants" -> {
-
+                //todo() see about improving this command, no longer need to check item meta for the keys, or to obtain values, lores with itembuilder deconstructor would be less intensive as well.
+                // the reason for that is because, there is an option not to re-create the itemstack, so the garbage collector is unburdened.
                 if (!isPlayer) return true;
                 if (!hasPermission(sender, "updateenchants")) return true;
 
@@ -160,8 +160,9 @@ public class CECommand implements CommandExecutor {
                 player.getInventory().setItemInMainHand(item);
                 return true;
             }
+
             case "convert" -> {
-                if (hasPermission(sender, "convert")) {
+                if (hasPermission(sender, "convert")) { //todo() improve migrator
                     sender.sendMessage(ColorUtils.color("""
                             \n&8&m=======================================================
                             &eTrying to update config files.
@@ -203,7 +204,7 @@ public class CECommand implements CommandExecutor {
             }
             case "limit" -> {
                 if (hasPermission(sender, "limit")) {
-                    HashMap<String, String> placeholders = new HashMap<>();
+                    Map<String, String> placeholders = new HashMap<>();
 
                     placeholders.put("%bypass%", String.valueOf(sender.hasPermission("crazyenchantments.bypass.limit")));
 
@@ -548,7 +549,7 @@ public class CECommand implements CommandExecutor {
 
                     this.methods.addItemToInventory(player, scramblerListener.getScramblers(amount));
 
-                    HashMap<String, String> placeholders = new HashMap<>();
+                    Map<String, String> placeholders = new HashMap<>();
                     placeholders.put("%Amount%", String.valueOf(amount));
                     placeholders.put("%Player%", player.getName());
                     sender.sendMessage(Messages.GIVE_SCRAMBLER_CRYSTAL.getMessage(placeholders));
@@ -585,7 +586,7 @@ public class CECommand implements CommandExecutor {
 
 
                     this.methods.addItemToInventory(player, this.protectionCrystalSettings.getCrystals(amount));
-                    HashMap<String, String> placeholders = new HashMap<>();
+                    Map<String, String> placeholders = new HashMap<>();
                     placeholders.put("%Amount%", String.valueOf(amount));
                     placeholders.put("%Player%", player.getName());
                     sender.sendMessage(Messages.GIVE_PROTECTION_CRYSTAL.getMessage(placeholders));
@@ -624,7 +625,7 @@ public class CECommand implements CommandExecutor {
                     item.setAmount(amount);
 
                     this.methods.addItemToInventory(player, item);
-                    HashMap<String, String> placeholders = new HashMap<>();
+                    Map<String, String> placeholders = new HashMap<>();
                     placeholders.put("%Amount%", String.valueOf(amount));
                     placeholders.put("%Player%", player.getName());
                     sender.sendMessage(Messages.GIVE_SLOT_CRYSTAL.getMessage(placeholders));
@@ -676,7 +677,7 @@ public class CECommand implements CommandExecutor {
                         if (dust != null) {
                             this.methods.addItemToInventory(player, args.length >= 5 ? dust.getDust(percent, amount) : dust.getDust(amount));
 
-                            HashMap<String, String> placeholders = new HashMap<>();
+                            Map<String, String> placeholders = new HashMap<>();
                             placeholders.put("%Amount%", String.valueOf(amount));
                             placeholders.put("%Player%", player.getName());
 
@@ -826,14 +827,14 @@ public class CECommand implements CommandExecutor {
                         } else {
                             if (this.enchantmentBookSettings.getEnchantments(item).containsKey(ceEnchantment)) {
                                 this.methods.setItemInHand(player, this.enchantmentBookSettings.removeEnchantment(item, ceEnchantment));
-                                HashMap<String, String> placeholders = new HashMap<>();
+                                Map<String, String> placeholders = new HashMap<>();
                                 placeholders.put("%Enchantment%", ceEnchantment.getCustomName());
                                 player.sendMessage(Messages.REMOVED_ENCHANTMENT.getMessage(placeholders).replaceAll("&", ""));
                                 return true;
                             }
                         }
 
-                        HashMap<String, String> placeholders = new HashMap<>();
+                        Map<String, String> placeholders = new HashMap<>();
                         placeholders.put("%Enchantment%", args[1]);
                         sender.sendMessage(Messages.DOESNT_HAVE_ENCHANTMENT.getMessage(placeholders));
                     }
@@ -889,7 +890,7 @@ public class CECommand implements CommandExecutor {
                             return true;
                         }
 
-                        HashMap<String, String> placeholders = new HashMap<>();
+                        Map<String, String> placeholders = new HashMap<>();
                         placeholders.put("%Player%", player.getName());
                         sender.sendMessage(Messages.SEND_ENCHANTMENT_BOOK.getMessage(placeholders));
                         this.methods.addItemToInventory(player, new CEBook(enchantment, level, amount).buildBook());

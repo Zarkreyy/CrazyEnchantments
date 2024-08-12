@@ -19,6 +19,7 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AllyMob {
 
@@ -63,11 +64,12 @@ public class AllyMob {
 
         this.ally = (LivingEntity) location.getWorld().spawnEntity(location, this.type.entityType);
 
+        //todo() attributes might've been changed, plus it needs a null pointer.
         this.ally.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(this.type.maxHealth);
 
         this.ally.setHealth(this.type.maxHealth);
 
-        HashMap<String, String> placeholders = new HashMap<>();
+        Map<String, String> placeholders = new HashMap<>();
         placeholders.put("%Player%", this.owner.getName());
         placeholders.put("%Mob%", this.type.entityType.getName());
 

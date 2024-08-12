@@ -2,6 +2,7 @@ package com.badbones69.crazyenchantments.paper.api.utils;
 
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
+import com.ryderbelserion.vital.paper.util.DyeUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -11,10 +12,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static java.util.regex.Matcher.quoteReplacement;
@@ -24,40 +24,18 @@ public class ColorUtils {
     public static void color(List<Color> colors, String colorString) {
         if (colorString.contains(", ")) {
             for (String key : colorString.split(", ")) {
-                Color color = getColor(key);
+                Color color = DyeUtil.getColor(key);
 
                 if (color != null) colors.add(color);
             }
         } else {
-            Color color = getColor(colorString);
+            Color color = DyeUtil.getColor(colorString);
 
             if (color != null) colors.add(color);
         }
     }
 
-    public static Color getColor(String color) {
-        return switch (color.toUpperCase()) {
-            case "AQUA" -> Color.AQUA;
-            case "BLACK" -> Color.BLACK;
-            case "BLUE" -> Color.BLUE;
-            case "FUCHSIA" -> Color.FUCHSIA;
-            case "GRAY" -> Color.GRAY;
-            case "GREEN" -> Color.GREEN;
-            case "LIME" -> Color.LIME;
-            case "MAROON" -> Color.MAROON;
-            case "NAVY" -> Color.NAVY;
-            case "OLIVE" -> Color.OLIVE;
-            case "ORANGE" -> Color.ORANGE;
-            case "PURPLE" -> Color.PURPLE;
-            case "RED" -> Color.RED;
-            case "SILVER" -> Color.SILVER;
-            case "TEAL" -> Color.TEAL;
-            case "YELLOW" -> Color.YELLOW;
-            default -> Color.WHITE;
-        };
-    }
-
-    public static String color(String message) { //TODO Remove the usage of bungee.
+    public static String color(String message) { //todo() remove this shit
         Matcher matcher = Pattern.compile("#[a-fA-F\\d]{6}").matcher(message);
         StringBuilder buffer = new StringBuilder();
 
@@ -68,7 +46,7 @@ public class ColorUtils {
         return ChatColor.translateAlternateColorCodes('&', matcher.appendTail(buffer).toString());
     }
 
-    public static void sendMessage(CommandSender commandSender, String message, boolean prefixToggle) {
+    public static void sendMessage(CommandSender commandSender, String message, boolean prefixToggle) { //todo() move this into messages enum after re-doing the config files and message enum
         if (message == null || message.isEmpty()) return;
 
         String prefix = getPrefix();
@@ -82,63 +60,61 @@ public class ColorUtils {
         if (!prefix.isEmpty() && prefixToggle) commandSender.sendMessage(color(message.replaceAll("%prefix%", quoteReplacement(prefix))).replaceAll("%Prefix%", quoteReplacement(prefix))); else commandSender.sendMessage(color(message));
     }
 
-    public static String getPrefix() {
+    public static String getPrefix() { //todo() move this into messages enum after re-doing the config files and message enum
         return color(Files.CONFIG.getFile().getString("Settings.Prefix"));
     }
 
-    public static String getPrefix(String msg) {
+    public static String getPrefix(String msg) { //todo() move this into messages enum after re-doing the config files and message enum
         return color(getPrefix() + msg);
     }
 
-    public static String sanitizeColor(String msg) {
+    public static String sanitizeColor(String msg) { //todo() see about removing this
         return sanitizeFormat(color(msg));
     }
 
-    public static String sanitizeFormat(String string) {
+    public static String sanitizeFormat(String string) { //todo() see about removing this
         return TextComponent.toLegacyText(TextComponent.fromLegacyText(string));
     }
 
-    public static String removeColor(String msg) {
+    public static String removeColor(String msg) { //todo() see about removing this
         return ChatColor.stripColor(msg);
     }
 
-    public static net.kyori.adventure.text.TextComponent legacyTranslateColourCodes(String input) {
+    public static net.kyori.adventure.text.TextComponent legacyTranslateColourCodes(String input) { //todo() see about removing this
         return (net.kyori.adventure.text.TextComponent) LegacyComponentSerializer.legacyAmpersand().deserialize(input).decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
     }
 
-    public static String toLegacy(Component text) {
+    public static String toLegacy(Component text) { //todo() see about removing this
         return LegacyComponentSerializer.legacyAmpersand().serialize(text).replaceAll("§", "&").replaceAll("&&", "&");
     }
 
-    public static String toPlainText(Component text) {
+    public static String toPlainText(Component text) { //todo() see about removing this
         return PlainTextComponentSerializer.plainText().serialize(text);
     }
 
     public static ItemBuilder getRandomPaneColor() {
-        Random random = new Random();
-
         List<String> colors = Arrays.asList(
-                "WHITE_STAINED_GLASS_PANE",
-                "ORANGE_STAINED_GLASS_PANE",
-                "MAGENTA_STAINED_GLASS_PANE",
-                "LIGHT_BLUE_STAINED_GLASS_PANE",
-                "YELLOW_STAINED_GLASS_PANE",
-                "LIME_STAINED_GLASS_PANE",
-                "PINK_STAINED_GLASS_PANE",
-                "GRAY_STAINED_GLASS_PANE",
-                // Skipped 8 due to it being basically invisible in a GUI.
-                "CYAN_STAINED_GLASS_PANE",
-                "PURPLE_STAINED_GLASS_PANE",
-                "BLUE_STAINED_GLASS_PANE",
-                "BROWN_STAINED_GLASS_PANE",
-                "GREEN_STAINED_GLASS_PANE",
-                "RED_STAINED_GLASS_PANE",
-                "BLACK_STAINED_GLASS_PANE");
+                "white_stained_glass_pane",
+                "orange_stained_glass_pane",
+                "magenta_stained_glass_pane",
+                "light_blue_stained_glass_pane",
+                "yellow_stained_glass_pane",
+                "lime_stained_glass_pane",
+                "pink_stained_glass_pane",
+                "gray_stained_glass_pane",
+                // skipped 8 due to it being basically invisible in a gui.
+                "cyan_stained_glass_pane",
+                "purple_stained_glass_pane",
+                "blue_stained_glass_pane",
+                "brown_stained_glass_pane",
+                "green_stained_glass_pane",
+                "red_stained_glass_pane",
+                "black_stained_glass_pane");
 
-        return new ItemBuilder().setMaterial(colors.get(random.nextInt(colors.size())));
+        return new ItemBuilder().withType(colors.get(ThreadLocalRandom.current().nextInt(colors.size())));
     }
 
-    public static String stripStringColour(String s) {
-        return s.replaceAll("([&§]?#[0-9a-fA-F]{6}|[&§][1-9a-fA-Fk-or])", "");
+    public static String stripStringColour(String key) { //todo() see about removing this
+        return key.replaceAll("([&§]?#[0-9a-fA-F]{6}|[&§][1-9a-fA-Fk-or])", "");
     }
 }

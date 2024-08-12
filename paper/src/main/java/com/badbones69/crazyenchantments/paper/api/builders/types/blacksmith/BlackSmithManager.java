@@ -139,7 +139,7 @@ public class BlackSmithManager {
 
         inventoryName = ColorUtils.color(section.getString("GUIName"));
         itemCost = section.getString("Results.Found", "&c&lCost: &6&l%cost% XP");
-        currency = Currency.getCurrency(section.getString("Transaction.Currency", "XP_LEVEL"));
+        currency = Currency.getCurrency(section.getString("Transaction.Currency", "xp_level").toLowerCase()); // lowercased this, because internally it looks prettier.
 
         bookUpgrade = section.getInt("Transaction.Costs.Book-Upgrade", 5);
         levelUp = section.getInt("Transaction.Costs.Power-Up", 5);
