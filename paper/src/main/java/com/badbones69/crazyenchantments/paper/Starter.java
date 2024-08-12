@@ -21,8 +21,6 @@ import com.badbones69.crazyenchantments.paper.listeners.ScrollListener;
 import com.badbones69.crazyenchantments.paper.listeners.SlotCrystalListener;
 import com.badbones69.crazyenchantments.paper.support.PluginSupport;
 import com.badbones69.crazyenchantments.paper.support.PluginSupport.SupportedPlugins;
-import com.badbones69.crazyenchantments.paper.support.SkullCreator;
-import com.badbones69.crazyenchantments.paper.support.anticheats.NoCheatPlusSupport;
 import com.badbones69.crazyenchantments.paper.support.claims.SuperiorSkyBlockSupport;
 import com.badbones69.crazyenchantments.paper.support.misc.OraxenSupport;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -36,7 +34,6 @@ public class Starter {
     private FileManager fileManager;
     private CrazyManager crazyManager;
     private Methods methods;
-    private SkullCreator skullCreator;
 
     // Settings.
     private ProtectionCrystalSettings protectionCrystalSettings;
@@ -50,7 +47,6 @@ public class Starter {
     private PluginSupport pluginSupport;
     private VaultSupport vaultSupport;
     private OraxenSupport oraxenSupport;
-    private NoCheatPlusSupport noCheatPlusSupport;
 
     // Plugin Managers.
     private ArmorEnchantmentManager armorEnchantmentManager;
@@ -77,8 +73,6 @@ public class Starter {
         this.pluginSupport.initializeWorldGuard();
 
         if (SupportedPlugins.SUPERIORSKYBLOCK.isPluginLoaded()) this.superiorSkyBlockSupport = new SuperiorSkyBlockSupport();
-
-        if (SupportedPlugins.NO_CHEAT_PLUS.isPluginLoaded()) this.noCheatPlusSupport = new NoCheatPlusSupport();
 
         if (SupportedPlugins.ORAXEN.isPluginLoaded()) this.oraxenSupport = new OraxenSupport();
 
@@ -110,9 +104,7 @@ public class Starter {
         this.plugin.pluginManager.registerEvents(this.scrollListener = new ScrollListener(), this.plugin);
         this.plugin.pluginManager.registerEvents(this.slotCrystalListener = new SlotCrystalListener(), this.plugin);
 
-        this.skullCreator = new SkullCreator();
-
-        this.crazyManager = new CrazyManager();
+        this.crazyManager = new CrazyManager(this.plugin);
 
         // Plugin Utils.
         this.bowUtils = new BowUtils();
@@ -130,10 +122,6 @@ public class Starter {
 
     public CrazyManager getCrazyManager() {
         return this.crazyManager;
-    }
-
-    public SkullCreator getSkullCreator() {
-        return this.skullCreator;
     }
 
     // Settings.
@@ -168,10 +156,6 @@ public class Starter {
 
     public OraxenSupport getOraxenSupport() {
         return this.oraxenSupport;
-    }
-
-    public NoCheatPlusSupport getNoCheatPlusSupport() {
-        return this.noCheatPlusSupport;
     }
 
     // Economy Management.
