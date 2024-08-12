@@ -121,14 +121,14 @@ public class KitsMenu extends InventoryBuilder {
 
             ItemStack itemStack = event.getCurrentItem();
 
-            if (itemStack == null || itemStack.isEmpty() || !itemStack.hasItemMeta()) return;
+            if (itemStack == null || itemStack.isEmpty()) return;
 
             CEPlayer cePlayer = this.crazyManager.getCEPlayer(player.getUniqueId());
 
             if (event.getClickedInventory() != holder.getInventoryView().getTopInventory()) return;
 
-
-            String kitName = itemStack.getItemMeta().getPersistentDataContainer().get(DataKeys.gkit_type.getNamespacedKey(), PersistentDataType.STRING);
+            //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+            String kitName = itemStack.getPersistentDataContainer().get(DataKeys.gkit_type.getNamespacedKey(), PersistentDataType.STRING);
 
             if (kitName == null) return;
 

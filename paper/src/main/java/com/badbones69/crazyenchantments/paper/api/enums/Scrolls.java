@@ -133,16 +133,20 @@ public enum Scrolls {
         lore.add(ColorUtils.legacyTranslateColourCodes(getWhiteScrollProtectionName()));
         meta.getPersistentDataContainer().set(whiteScrollProtectionKey, PersistentDataType.BOOLEAN, true);
 
-        meta.lore(lore);
-        item.setItemMeta(meta);
-        return item;
+        return itemBuilder.getStack(itemMeta -> { //todo() debug this, it adds the pdc on getStack build through a consumer, so editMeta is only called once.
+            // adds the item protection key
+            if (!itemBuilder.hasKey(whiteScrollProtectionKey)) itemMeta.getPersistentDataContainer().set(whiteScrollProtectionKey, PersistentDataType.BOOLEAN, true); //todo() test this, it gets added when the stack is built in the consumer
+        });
     }
 
     public static ItemStack removeWhiteScrollProtection(@NotNull ItemStack item) {
         if (!item.hasItemMeta()) return item;
 
-        ItemMeta meta = item.getItemMeta();
-        if (meta.getPersistentDataContainer().has(whiteScrollProtectionKey, PersistentDataType.BOOLEAN)) meta.getPersistentDataContainer().remove(whiteScrollProtectionKey);
+        // creates a new itembuilder without creating a new itemstack!
+        final ItemBuilder itemBuilder = new ItemBuilder(item);
+
+        // removes the item protection key
+        if (itemBuilder.hasKey(whiteScrollProtectionKey)) itemBuilder.removePersistentKey(whiteScrollProtectionKey);
 
         if (item.lore() == null) {
             item.setItemMeta(meta);

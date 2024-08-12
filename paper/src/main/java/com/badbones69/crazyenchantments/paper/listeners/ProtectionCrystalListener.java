@@ -49,7 +49,8 @@ public class ProtectionCrystalListener implements Listener {
 
         if (this.protectionCrystalSettings.isProtectionCrystal(item)) return;
 
-        if (ProtectionCrystalSettings.isProtected(item)) return;
+        //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        if (ProtectionCrystalSettings.isProtected(item.getPersistentDataContainer())) return;
 
         if (item.getAmount() > 1 || crystalItem.getAmount() > 1) {
             player.sendMessage(Messages.NEED_TO_UNSTACK_ITEM.getMessage());
@@ -74,8 +75,7 @@ public class ProtectionCrystalListener implements Listener {
         for (ItemStack item : event.getDrops()) {
 
             if (item != null) {
-
-                if (ProtectionCrystalSettings.isProtected(item) && this.protectionCrystalSettings.isProtectionSuccessful(player)) {
+                if (ProtectionCrystalSettings.isProtected(item.getPersistentDataContainer()) && this.protectionCrystalSettings.isProtectionSuccessful(player)) { //todo() debug and run spark profiler, it should no longer call item meta, but we must check
                     savedItems.add(item);
                     continue;
                 }

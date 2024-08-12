@@ -103,21 +103,18 @@ public class ArmorEnchantments implements Listener {
 
     @EventHandler
     public void onEquip(PlayerArmorChangeEvent event) {
-        NamespacedKey key = DataKeys.enchantments.getNamespacedKey();
-        Player player = event.getPlayer();
-        ItemStack newItem = event.getNewItem();
-        ItemStack oldItem = event.getOldItem();
-        boolean oldHasMeta = oldItem.hasItemMeta();
-        boolean newHasMeta = newItem.hasItemMeta();
+        final NamespacedKey key = DataKeys.enchantments.getNamespacedKey();
+        final Player player = event.getPlayer();
+        final ItemStack newItem = event.getNewItem();
+        final ItemStack oldItem = event.getOldItem();
+
+        //todo() do not need item meta checks anymore. test to make sure it functions as intended for what the checks are for.
 
         // Return if no enchants would effect the player with the change.
-        if ((!newHasMeta || !newItem.getItemMeta().getPersistentDataContainer().has(key))
-             && (!oldHasMeta || !oldItem.getItemMeta().getPersistentDataContainer().has(key))) return;
+        if ((!newItem.getPersistentDataContainer().has(key)) && (!oldItem.getPersistentDataContainer().has(key))) return;
 
         // Added to prevent armor change event being called on damage.
-        if (newHasMeta && oldHasMeta
-            && Objects.equals(newItem.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING),
-                              oldItem.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING))) return;
+        if (Objects.equals(newItem.getPersistentDataContainer().get(key, PersistentDataType.STRING), oldItem.getPersistentDataContainer().get(key, PersistentDataType.STRING))) return;
 
         newUpdateEffects(player, newItem, oldItem);
     }
@@ -393,7 +390,8 @@ public class ArmorEnchantments implements Listener {
             if (EnchantUtils.isEventActive(CEnchantments.SELFDESTRUCT, player, item, enchantments)) {
                 this.methods.explode(player);
                 List<ItemStack> items = event.getDrops().stream().filter(drop ->
-                        ProtectionCrystalSettings.isProtected(drop) && this.protectionCrystalSettings.isProtectionSuccessful(player)).toList();
+                        //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+                        ProtectionCrystalSettings.isProtected(drop.getPersistentDataContainer()) && this.protectionCrystalSettings.isProtectionSuccessful(player)).toList();
 
                 event.getDrops().clear();
                 event.getDrops().addAll(items);

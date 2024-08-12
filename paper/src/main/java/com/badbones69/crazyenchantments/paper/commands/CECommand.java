@@ -125,13 +125,15 @@ public class CECommand implements CommandExecutor {
                 Player player = (Player) sender;
                 Enchant enchants = new Enchant(null);
                 ArrayList<Component> lore = new ArrayList<>();
-                ItemStack item = player.getInventory().getItemInMainHand();
-                if (!item.hasItemMeta() || item.lore() == null) return true;
-                ItemMeta meta = item.getItemMeta();
+                ItemStack item = player.getInventory().getItemInMainHand(); //todo() maybe deconstruct with the ItemBuilder?
 
-                if (meta.getPersistentDataContainer().has(DataKeys.enchantments.getNamespacedKey())) {
-                    enchants = gson.fromJson(meta.getPersistentDataContainer().get(DataKeys.enchantments.getNamespacedKey(), PersistentDataType.STRING), Enchant.class);
+                //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+                if (item.getPersistentDataContainer().has(DataKeys.enchantments.getNamespacedKey())) {
+                    enchants = gson.fromJson(item.getPersistentDataContainer().get(DataKeys.enchantments.getNamespacedKey(), PersistentDataType.STRING), Enchant.class);
                 }
+
+                if (!item.hasItemMeta() || item.lore() == null) return true;
+                ItemMeta meta = item.getItemMeta(); //todo() maybe deconstruct with the ItemBuilder?
 
                 for (Component line : meta.lore()) {
                     String strippedName = ColorUtils.toPlainText(line);

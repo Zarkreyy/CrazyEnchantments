@@ -1,6 +1,7 @@
 package com.badbones69.crazyenchantments.paper.controllers.settings;
 
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
+import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.economy.Currency;
 import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
 import com.badbones69.crazyenchantments.paper.api.enums.pdc.Enchant;
@@ -9,7 +10,6 @@ import com.badbones69.crazyenchantments.paper.api.objects.CEBook;
 import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
 import com.badbones69.crazyenchantments.paper.api.objects.Category;
 import com.badbones69.crazyenchantments.paper.api.objects.LostBook;
-import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EnchantUtils;
 import com.google.common.collect.Lists;
@@ -70,11 +70,9 @@ public class EnchantmentBookSettings {
      */
     @Nullable
     public CEBook getCEBook(ItemStack book) {
-        if (!book.hasItemMeta()) return null;
-        ItemMeta meta = book.getItemMeta();
-        if (!meta.getPersistentDataContainer().has(DataKeys.stored_enchantments.getNamespacedKey())) return null;
-
-        EnchantedBook data = this.gson.fromJson(meta.getPersistentDataContainer().get(DataKeys.stored_enchantments.getNamespacedKey(), PersistentDataType.STRING), EnchantedBook.class);
+        //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        if (!book.getPersistentDataContainer().has(DataKeys.stored_enchantments.getNamespacedKey())) return null;
+        EnchantedBook data = this.gson.fromJson(book.getPersistentDataContainer().get(DataKeys.stored_enchantments.getNamespacedKey(), PersistentDataType.STRING), EnchantedBook.class);
        
         CEnchantment enchantment = null;
         for (CEnchantment enchant : getRegisteredEnchantments()) {
@@ -96,9 +94,8 @@ public class EnchantmentBookSettings {
      */
     @Nullable
     public ItemStack getNewScrambledBook(ItemStack book) {
-        if (!book.hasItemMeta()) return null;
-
-        EnchantedBook data = this.gson.fromJson(book.getItemMeta().getPersistentDataContainer().get(DataKeys.stored_enchantments.getNamespacedKey(), PersistentDataType.STRING), EnchantedBook.class);
+        //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        EnchantedBook data = this.gson.fromJson(book.getPersistentDataContainer().get(DataKeys.stored_enchantments.getNamespacedKey(), PersistentDataType.STRING), EnchantedBook.class);
 
         CEnchantment enchantment = null;
         int bookLevel = 0;
@@ -120,11 +117,12 @@ public class EnchantmentBookSettings {
      * @return True if it is and false if not.
      */
     public boolean isEnchantmentBook(ItemStack book) {
+        if (book == null) return false;
+        //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        if (!book.getPersistentDataContainer().has(DataKeys.stored_enchantments.getNamespacedKey())) return false;
 
-        if (book == null || book.getItemMeta() == null) return false;
-        if (!book.getItemMeta().getPersistentDataContainer().has(DataKeys.stored_enchantments.getNamespacedKey())) return false;
-
-        String dataString = book.getItemMeta().getPersistentDataContainer().get(DataKeys.stored_enchantments.getNamespacedKey(), PersistentDataType.STRING);
+        //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        String dataString = book.getPersistentDataContainer().get(DataKeys.stored_enchantments.getNamespacedKey(), PersistentDataType.STRING);
         EnchantedBook data = this.gson.fromJson(dataString, EnchantedBook.class);
 
         for (CEnchantment enchantment : getRegisteredEnchantments()) {
@@ -156,7 +154,7 @@ public class EnchantmentBookSettings {
      */
     @NotNull
     public ItemStack getEnchantmentBookItem() {
-        return new ItemBuilder(this.enchantmentBook).build();
+        return new ItemBuilder(this.enchantmentBook).getStack();
     }
 
     /**
@@ -317,7 +315,7 @@ public class EnchantmentBookSettings {
      * @return The level the enchantment has.
      */
     public int getLevel(@NotNull ItemStack item, @NotNull CEnchantment enchant) {
-        String data = item.getItemMeta().getPersistentDataContainer().get(DataKeys.enchantments.getNamespacedKey(), PersistentDataType.STRING);
+        String data = item.getPersistentDataContainer().get(DataKeys.enchantments.getNamespacedKey(), PersistentDataType.STRING); //todo() debug this and spark profile, don't need to get item meta to get the level.
 
         int level = data == null ? 0 : this.gson.fromJson(data, Enchant.class).getLevel(enchant.getName());
 
@@ -332,7 +330,7 @@ public class EnchantmentBookSettings {
      * @return Item without the enchantment.
      */
     @NotNull
-    public ItemStack removeEnchantment(@NotNull ItemStack item, @NotNull CEnchantment enchant) {
+    public ItemStack removeEnchantment(@NotNull ItemStack item, @NotNull CEnchantment enchant) { //todo() edit this to match changes in the todo below if necessary
         if (!item.hasItemMeta()) return item;
 
         item.setItemMeta(removeEnchantment(item.getItemMeta(), enchant));
@@ -342,6 +340,10 @@ public class EnchantmentBookSettings {
 
     @NotNull
     public ItemMeta removeEnchantment(@NotNull ItemMeta meta, @NotNull CEnchantment enchant) {
+        //todo() again, we no longer need to check item meta to check the keys, or get the values.
+        // we can use the itemstack, and for removing lore. we can deconstruct using the itembuilder, without constructing a new itemstack i.e. new ItemBuilder(itemStack, false)
+        // reduce the pdc container call to 1, change itemmeta to itemstack and use ItemStack#editMeta in places it makes sense to use.
+
         List<Component> lore = meta.lore();
 
         if (lore != null) {
@@ -371,8 +373,7 @@ public class EnchantmentBookSettings {
     }
 
     @NotNull
-    public ItemMeta removeEnchantments(@NotNull ItemMeta meta, @NotNull List<CEnchantment> enchants) {
-
+    public ItemMeta removeEnchantments(@NotNull ItemMeta meta, @NotNull List<CEnchantment> enchants) { //todo() the same as above.
         List<Component> lore = meta.lore();
 
         if (lore != null) {

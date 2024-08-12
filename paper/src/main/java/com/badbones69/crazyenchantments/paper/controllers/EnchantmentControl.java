@@ -70,7 +70,8 @@ public class EnchantmentControl implements Listener {
         if (enchantment == null || !enchantment.canEnchantItem(item)) return;
 
         Map<CEnchantment, Integer> enchantments = enchantmentBookSettings.getEnchantments(item);
-        boolean hasWhiteScrollProtection = Scrolls.hasWhiteScrollProtection(item);
+        //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        boolean hasWhiteScrollProtection = Scrolls.hasWhiteScrollProtection(item.getPersistentDataContainer());
         boolean hasEnchantment = enchantments.containsKey(enchantment);
 
         PreBookApplyEvent preApplyEvent = new PreBookApplyEvent(player, item, ceBook);

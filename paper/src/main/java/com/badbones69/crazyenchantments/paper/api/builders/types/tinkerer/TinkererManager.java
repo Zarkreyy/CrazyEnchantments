@@ -44,13 +44,11 @@ public class TinkererManager {
 
         ItemStack item = mainHand ? inventory.getItemInMainHand() : inventory.getItemInOffHand();
 
-        if (item.isEmpty() || !item.hasItemMeta()) return false;
+        if (item.isEmpty()) return false;
 
-        ItemMeta itemMeta = item.getItemMeta();
-
-        if (!itemMeta.getPersistentDataContainer().has(DataKeys.experience.getNamespacedKey())) return false;
-
-        int amount = Integer.parseInt(item.getItemMeta().getPersistentDataContainer().getOrDefault(DataKeys.experience.getNamespacedKey(), PersistentDataType.STRING, "0"));
+        //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        if (!item.getPersistentDataContainer().has(DataKeys.experience.getNamespacedKey())) return false;
+        int amount = Integer.parseInt(item.getPersistentDataContainer().getOrDefault(DataKeys.experience.getNamespacedKey(), PersistentDataType.STRING, "0"));
 
         event.setCancelled(true);
 

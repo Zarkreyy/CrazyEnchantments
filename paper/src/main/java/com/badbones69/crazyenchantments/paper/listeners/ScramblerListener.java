@@ -81,18 +81,13 @@ public class ScramblerListener implements Listener {
      * @return The scramblers.
      */
     public ItemStack getScramblers(int amount) {
-        ItemStack item = this.scramblerItem.setAmount(amount).build();
-        ItemMeta meta = item.getItemMeta();
-
-        meta.getPersistentDataContainer().set(DataKeys.scrambler.getNamespacedKey(), PersistentDataType.BOOLEAN, true);
-        item.setItemMeta(meta);
-
-        return item;
+        return this.scramblerItem.setAmount(amount).getStack(itemMeta -> { //todo() debug this, it adds the pdc on getStack build through a consumer, so editMeta is only called once.
+            itemMeta.getPersistentDataContainer().set(DataKeys.scrambler.getNamespacedKey(), PersistentDataType.BOOLEAN, true);
+        });
     }
 
-    public boolean isScrambler(ItemStack item) {
-        if (!item.hasItemMeta()) return false;
-        return item.getItemMeta().getPersistentDataContainer().has(DataKeys.scrambler.getNamespacedKey());
+    public boolean isScrambler(ItemStack item) { //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        return item.getPersistentDataContainer().has(DataKeys.scrambler.getNamespacedKey());
     }
 
     private void setGlass(Inventory inv) {
@@ -156,7 +151,7 @@ public class ScramblerListener implements Listener {
                         cancel();
                         roll.remove(player);
 
-                        ItemStack item = inventory.getItem(13).clone();
+                        ItemStack item = inventory.getItem(13).clone(); //todo() null check
 
                         item.setType(enchantmentBookSettings.getEnchantmentBookItem().getType());
                         methods.setDurability(item, methods.getDurability(enchantmentBookSettings.getEnchantmentBookItem()));
@@ -235,16 +230,17 @@ public class ScramblerListener implements Listener {
 
     @EventHandler(ignoreCancelled = true)
     public void onInvClick(InventoryClickEvent event) {
-        if (event.getView().getTitle().equals(this.guiName)) event.setCancelled(true);
+        if (event.getView().getTitle().equals(this.guiName)) event.setCancelled(true); //todo() fucking no, this needs to be an inventory holder check.
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onScramblerClick(PlayerInteractEvent event) {
         ItemStack item = this.methods.getItemInHand(event.getPlayer());
 
-        if (item.isEmpty() || !item.hasItemMeta()) return;
+        if (item.isEmpty()) return;
 
-        if (item.getItemMeta().getPersistentDataContainer().has(DataKeys.scrambler.getNamespacedKey())) event.setCancelled(true);
+        //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        if (item.getPersistentDataContainer().has(DataKeys.scrambler.getNamespacedKey())) event.setCancelled(true);
     }
 
     @EventHandler(ignoreCancelled = true)

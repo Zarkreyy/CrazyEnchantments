@@ -18,6 +18,7 @@ import com.badbones69.crazyenchantments.paper.api.utils.NumberUtils;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
 import com.badbones69.crazyenchantments.paper.controllers.settings.ProtectionCrystalSettings;
 import com.google.gson.Gson;
+import io.papermc.paper.persistence.PersistentDataContainerView;
 import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,12 +33,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class ScrollListener implements Listener {
@@ -89,7 +93,7 @@ public class ScrollListener implements Listener {
             case "BlackScroll" -> {
                 if (this.methods.isInventoryFull(player)) return;
 
-                List<CEnchantment> enchantments = this.enchantmentBookSettings.getEnchantmentsOnItem(item);
+                List<CEnchantment> enchantments = this.enchantmentBookSettings.getEnchantmentsOnItem(item); //todo() what do we use then?
                 if (!enchantments.isEmpty()) { // Item has enchantments
                     event.setCancelled(true);
                     player.setItemOnCursor(this.methods.removeItem(scroll));
@@ -99,16 +103,15 @@ public class ScrollListener implements Listener {
                         return;
                     }
 
-                    Random random = new Random();
-
-                    CEnchantment enchantment = enchantments.get(random.nextInt(enchantments.size()));
+                    CEnchantment enchantment = enchantments.get(ThreadLocalRandom.current().nextInt(enchantments.size()));
                     player.getInventory().addItem(new CEBook(enchantment, this.enchantmentBookSettings.getLevel(item, enchantment), 1).buildBook());
                     event.setCurrentItem(this.enchantmentBookSettings.removeEnchantment(item, enchantment));
                 }
             }
 
             case "WhiteScroll" -> {
-                if (Scrolls.hasWhiteScrollProtection(item)) return;
+                //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+                if (Scrolls.hasWhiteScrollProtection(item.getPersistentDataContainer())) return;
                 for (EnchantmentType enchantmentType : MenuManager.getEnchantmentTypes()) {
                     if (enchantmentType.getEnchantableMaterials().contains(item.getType())) {
                         event.setCancelled(true);
@@ -141,12 +144,13 @@ public class ScrollListener implements Listener {
         if (checkScroll(player.getInventory().getItemInMainHand(), player, event)) return;
 
         checkScroll(player.getInventory().getItemInOffHand(), player, event);
-
     }
 
     private boolean checkScroll(ItemStack scroll, Player player, PlayerInteractEvent event) {
-        if (scroll.isEmpty() || !scroll.hasItemMeta()) return false;
-        PersistentDataContainer container = scroll.getItemMeta().getPersistentDataContainer();
+        if (scroll.isEmpty()) return false;
+
+        PersistentDataContainerView container = scroll.getPersistentDataContainer(); //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+
         if (!container.has(DataKeys.scroll.getNamespacedKey())) return false;
 
         String data = container.get(DataKeys.scroll.getNamespacedKey(), PersistentDataType.STRING);
@@ -165,9 +169,9 @@ public class ScrollListener implements Listener {
     }
 
     @Deprecated
-    private ItemStack orderNewEnchantments(ItemStack item) {
-        HashMap<CEnchantment, Integer> enchantmentLevels = new HashMap<>();
-        HashMap<CEnchantment, Integer> categories = new HashMap<>();
+    private ItemStack orderNewEnchantments(ItemStack item) { //todo() change how adding lore should be, simply deconstructing the ItemBuilder like I've explained in other todo()'s should be enough.
+        Map<CEnchantment, Integer> enchantmentLevels = new HashMap<>();
+        Map<CEnchantment, Integer> categories = new HashMap<>();
         List<CEnchantment> newEnchantmentOrder = new ArrayList<>();
 
         for (Map.Entry<CEnchantment, Integer> enchantment : this.enchantmentBookSettings.getEnchantments(item).entrySet()) {
@@ -193,19 +197,17 @@ public class ScrollListener implements Listener {
         return item;
     }
 
-    private ItemStack newOrderNewEnchantments(ItemStack item) {
+    private ItemStack newOrderNewEnchantments(ItemStack item) { //todo() change how adding lore should be, simply deconstructing the ItemBuilder like I've explained in other todo()'s should be enough.
         Gson gson = new Gson();
 
-        ItemMeta meta = item.getItemMeta();
-        List<Component> lore = item.lore();
-        assert meta != null && lore != null;
+        FileConfiguration config = Files.CONFIG.getFile(); // reduced file configuration calls.
 
-        PersistentDataContainer container = meta.getPersistentDataContainer();
+        PersistentDataContainerView container = item.getPersistentDataContainer(); //todo() debug and run spark profiler, it should no longer call item meta, but we must check
         Enchant data = gson.fromJson(container.get(DataKeys.enchantments.getNamespacedKey(), PersistentDataType.STRING), Enchant.class);
-        boolean addSpaces = Files.CONFIG.getFile().getBoolean("Settings.TransmogScroll.Add-Blank-Lines", true);
+        boolean addSpaces = config.getBoolean("Settings.TransmogScroll.Add-Blank-Lines", true);
         List<CEnchantment> newEnchantmentOrder = new ArrayList<>();
         Map<CEnchantment, Integer> enchantments = new HashMap<>();
-        List<String> order = Files.CONFIG.getFile().getStringList("Settings.TransmogScroll.Lore-Order");
+        List<String> order = config.getStringList("Settings.TransmogScroll.Lore-Order");
         if (order.isEmpty()) order = Arrays.asList("CE_Enchantments", "Protection", "Normal_Lore");
 
         if (data == null) return item; // Only order if it has CE_Enchants
@@ -221,6 +223,11 @@ public class ScrollListener implements Listener {
 
         List<Component> enchantLore = newEnchantmentOrder.stream().map(i ->
                 ColorUtils.legacyTranslateColourCodes("%s %s".formatted(i.getCustomName(), NumberUtils.toRoman(data.getLevel(i.getName()))))).collect(Collectors.toList());
+
+        ItemMeta meta = item.getItemMeta(); //todo() following the todo above will eliminate the need to call this, but we also don't have to rebuild the itemstack when deconstructing.
+        List<Component> lore = item.lore();
+        assert meta != null && lore != null;
+
         List<Component> normalLore = stripNonNormalLore(lore, newEnchantmentOrder);
         List<Component> protectionLore = getAllProtectionLore(container);
 
@@ -248,22 +255,25 @@ public class ScrollListener implements Listener {
         }
 
         useSuffix(item, meta, newEnchantmentOrder);
-
-        meta.lore(newLore);
+        meta.lore(newLore); //todo() linked to the todo()'s above.
         item.setItemMeta(meta);
+
         return item;
     }
 
-    private List<Component> getAllProtectionLore(PersistentDataContainer container) {
+    private List<Component> getAllProtectionLore(PersistentDataContainerView container) { //todo() changed it to use the itemstack pdc instead of item meta
         List<Component> lore = new ArrayList<>();
 
-        if (Scrolls.hasWhiteScrollProtection(container)) lore.add(ColorUtils.legacyTranslateColourCodes(Files.CONFIG.getFile().getString("Settings.WhiteScroll.ProtectedName")));
-        if (ProtectionCrystalSettings.isProtected(container)) lore.add(ColorUtils.legacyTranslateColourCodes(Files.CONFIG.getFile().getString("Settings.ProtectionCrystal.Protected")));
+        FileConfiguration config = Files.CONFIG.getFile(); // reduced file configuration calls.
+
+        //todo() following the todo above will eliminate the need to call this, but we also don't have to rebuild the itemstack when deconstructing.
+        if (Scrolls.hasWhiteScrollProtection(container)) lore.add(ColorUtils.legacyTranslateColourCodes(config.getString("Settings.WhiteScroll.ProtectedName")));
+        if (ProtectionCrystalSettings.isProtected(container)) lore.add(ColorUtils.legacyTranslateColourCodes(config.getString("Settings.ProtectionCrystal.Protected")));
 
         return lore;
     }
 
-    private List<Component> stripNonNormalLore(List<Component> lore, List<CEnchantment> enchantments) {
+    private List<Component> stripNonNormalLore(List<Component> lore, List<CEnchantment> enchantments) {  //todo() following the todo above will eliminate the need to call this, but we also don't have to rebuild the itemstack when deconstructing.
 
         // Remove blank lines
         lore.removeIf(loreComponent -> ColorUtils.toPlainText(loreComponent).replaceAll(" ", "").isEmpty());
@@ -284,7 +294,7 @@ public class ScrollListener implements Listener {
         return lore;
     }
 
-    private void useSuffix(ItemStack item, ItemMeta meta, List<CEnchantment> newEnchantmentOrder) {
+    private void useSuffix(ItemStack item, ItemMeta meta, List<CEnchantment> newEnchantmentOrder) { //todo() following the todo above will eliminate the need to call this, but we also don't have to rebuild the itemstack when deconstructing.
         if (this.useSuffix) {
             String newName = meta.hasDisplayName() ? ColorUtils.toLegacy(meta.displayName()) :
                     "&b" + WordUtils.capitalizeFully(item.getType().toString().replace("_", " "));

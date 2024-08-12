@@ -84,9 +84,9 @@ public class SlotCrystalListener implements Listener {
     }
 
     private boolean isSlotCrystal(ItemStack crystalItem) {
-        if (crystalItem == null || !crystalItem.hasItemMeta() || crystalItem.isEmpty()) return false;
+        if (crystalItem == null || crystalItem.isEmpty()) return false;
 
-        return crystalItem.getItemMeta().getPersistentDataContainer().has(DataKeys.slot_crystal.getNamespacedKey());
+        return crystalItem.getPersistentDataContainer().has(DataKeys.slot_crystal.getNamespacedKey()); //todo() debug and run spark profiler, it should no longer call item meta, but we must check
     }
 
     public ItemStack getSlotCrystal() {

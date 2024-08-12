@@ -116,18 +116,10 @@ public class ProtectionCrystalSettings {
 
     /**
      * Check if the item is protected or not.
-     * @param item - The item to check.
+     * @param data- The pdc to check.
      * @return True if yes otherwise false.
      */
-    public static boolean isProtected(ItemStack item) {
-        return item.hasItemMeta() && isProtected(item.getItemMeta());
-    }
-
-    public static boolean isProtected(ItemMeta meta) {
-        return  meta != null && isProtected(meta.getPersistentDataContainer());
-    }
-
-    public static boolean isProtected(PersistentDataContainer data) {
+    public static boolean isProtected(PersistentDataContainerView data) { //todo() debug and run spark profiler, it should no longer call item meta, but we must check
         return data != null && data.has(DataKeys.protected_item.getNamespacedKey());
     }
 
@@ -136,8 +128,8 @@ public class ProtectionCrystalSettings {
      * @param item - The item to check.
      * @return True if the item is a protection crystal.
      */
-    public boolean isProtectionCrystal(ItemStack item) {
-        return item.getItemMeta().getPersistentDataContainer().has(DataKeys.protection_crystal.getNamespacedKey());
+    public boolean isProtectionCrystal(ItemStack item) { //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        return item.getPersistentDataContainer().has(DataKeys.protection_crystal.getNamespacedKey());
     }
 
     /**
@@ -145,21 +137,22 @@ public class ProtectionCrystalSettings {
      * @param item - The item to remove protection from.
      * @return The new item.
      */
-    public ItemStack removeProtection(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        if (meta.getPersistentDataContainer().has(DataKeys.protected_item.getNamespacedKey())) meta.getPersistentDataContainer().remove(DataKeys.protected_item.getNamespacedKey());
+    public ItemStack removeProtection(ItemStack item) { //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        if (item.getPersistentDataContainer().has(DataKeys.protected_item.getNamespacedKey())) {
+            if (!(item.lore() == null)) {
+                List<Component> lore = item.lore();
 
-        if (!(item.lore() == null)) {
-            List<Component> lore = item.lore();
+                assert lore != null; //todo() maybe deconstruct with the ItemBuilder?
+                lore.removeIf(loreComponent -> ColorUtils.toPlainText(loreComponent)
+                        .contains(ColorUtils.stripStringColour(this.protectionString)));
 
-            assert lore != null;
-            lore.removeIf(loreComponent -> ColorUtils.toPlainText(loreComponent)
-                    .contains(ColorUtils.stripStringColour(this.protectionString)));
+                item.editMeta(itemMeta -> {
+                    itemMeta.getPersistentDataContainer().remove(DataKeys.protected_item.getNamespacedKey());
 
-            meta.lore(lore);
+                    itemMeta.lore(lore);
+                });
+            }
         }
-
-        item.setItemMeta(meta);
 
         return item;
     }

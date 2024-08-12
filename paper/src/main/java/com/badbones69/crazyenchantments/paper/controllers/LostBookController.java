@@ -50,8 +50,7 @@ public class LostBookController implements Listener {
 
         ItemStack item = this.methods.getItemInHand(player);
 
-        if (!item.hasItemMeta()) return;
-        String data = item.getItemMeta().getPersistentDataContainer().get(DataKeys.lost_book.getNamespacedKey(), PersistentDataType.STRING);
+        String data = item.getPersistentDataContainer().get(DataKeys.lost_book.getNamespacedKey(), PersistentDataType.STRING); //todo() do not need to check item meta, spark profile and debug.
         if (data == null) return;
 
         for (Category eachCategory : enchantmentBookSettings.getCategories()) {

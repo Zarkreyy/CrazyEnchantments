@@ -88,23 +88,18 @@ public enum Dust {
         return getDust(1);
     }
     
-    public ItemStack getDust(int amount) {
+    public final ItemStack getDust(final int amount) {
         return getDust(this.methods.percentPick(this.max, this.min), amount);
     }
     
-    public ItemStack getDust(int percent, int amount) {
-        ItemStack item = itemBuilderDust.get(this).addLorePlaceholder("%Percent%", String.valueOf(percent)).setAmount(amount).build();
+    public final ItemStack getDust(final int percent, final int amount) {
+        //todo() debug this, it adds the pdc on getStack build through a consumer, so editMeta is only called once.
+        return itemBuilderDust.get(this).addLorePlaceholder("%Percent%", String.valueOf(percent)).setAmount(amount).getStack(itemMeta -> {
+            if (Objects.equals(getName(), FAILED_DUST.getName())) return;
 
-        if (Objects.equals(getName(), FAILED_DUST.getName())) return item;
+            final Gson gson = new Gson();
 
-        // PDC Start
-        Gson gson = new Gson();
-
-        ItemMeta meta = item.getItemMeta();
-        meta.getPersistentDataContainer().set(DataKeys.dust.getNamespacedKey(), PersistentDataType.STRING, gson.toJson(new DustData(getConfigName(), this.min, this.max, percent)));
-        item.setItemMeta(meta);
-        // PDC End
-
-        return item;
+            itemMeta.getPersistentDataContainer().set(DataKeys.dust.getNamespacedKey(), PersistentDataType.STRING, gson.toJson(new DustData(getConfigName(), this.min, this.max, percent)))
+        });
     }
 }

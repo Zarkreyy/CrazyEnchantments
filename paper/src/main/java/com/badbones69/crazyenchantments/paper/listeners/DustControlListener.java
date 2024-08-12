@@ -93,9 +93,9 @@ public class DustControlListener implements Listener {
 
         if (book.getAmount() > 1) return;
 
-        // PDC Start
-        DustData dustData = this.gson.fromJson(dust.getItemMeta().getPersistentDataContainer().get(DataKeys.dust.getNamespacedKey(), PersistentDataType.STRING), DustData.class);
-        EnchantedBook bookData = this.gson.fromJson(book.getItemMeta().getPersistentDataContainer().get(DataKeys.stored_enchantments.getNamespacedKey(), PersistentDataType.STRING), EnchantedBook.class); //Once Books have PDC
+        // PDC Start //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        DustData dustData = this.gson.fromJson(dust.getPersistentDataContainer().get(DataKeys.dust.getNamespacedKey(), PersistentDataType.STRING), DustData.class);
+        EnchantedBook bookData = this.gson.fromJson(book.getPersistentDataContainer().get(DataKeys.stored_enchantments.getNamespacedKey(), PersistentDataType.STRING), EnchantedBook.class); //Once Books have PDC
         // PDC End
 
         if (bookData == null || dustData == null) return;
@@ -185,8 +185,8 @@ public class DustControlListener implements Listener {
 
         if (item.isEmpty() || !item.hasItemMeta()) return false;
 
-        // PDC Start
-        DustData data = gson.fromJson(item.getItemMeta().getPersistentDataContainer().get(DataKeys.dust.getNamespacedKey(), PersistentDataType.STRING), DustData.class);
+        // PDC Start //todo() debug and run spark profiler, it should no longer call item meta, but we must check
+        DustData data = gson.fromJson(item.getPersistentDataContainer().get(DataKeys.dust.getNamespacedKey(), PersistentDataType.STRING), DustData.class);
         // PDC End
         if (data == null) return false;
 

@@ -566,31 +566,23 @@ public class CrazyManager {
     }
 
     /**
-     * @see #changeEnchantmentLimiter(ItemMeta, int)
+     * @param itemStack The {@link ItemStack} of the item to change.
+     * @param amount    The amount to change the stored limiter by.
+     * @return {@link ItemStack}
      */
-    public ItemStack changeEnchantmentLimiter(@NotNull ItemStack item, int amount) {
-        item.setItemMeta(changeEnchantmentLimiter(item.getItemMeta(), amount));
-        return item;
-    }
-
-    /**
-     *
-     * @param meta The {@link ItemMeta} of the item to change.
-     * @param amount The amount to change the stored limiter by.
-     * @return The altered {@link ItemMeta}.
-     */
-    public ItemMeta changeEnchantmentLimiter(@NotNull ItemMeta meta, int amount) {
-        PersistentDataContainer container = meta.getPersistentDataContainer();
+    public @NotNull ItemStack changeEnchantmentLimiter(@NotNull ItemStack itemStack, int amount) {
+        PersistentDataContainerView container = itemStack.getPersistentDataContainer(); //todo() use itemstack pdc view instead, we need to test this.
         int newAmount = container.getOrDefault(DataKeys.limit_reducer.getNamespacedKey(), PersistentDataType.INTEGER, 0);
         newAmount += amount;
 
         if (newAmount == 0) {
-            container.remove(DataKeys.limit_reducer.getNamespacedKey());
+            itemStack.editMeta(itemMeta -> itemMeta.getPersistentDataContainer().remove(DataKeys.limit_reducer.getNamespacedKey())); // only edit the item meta after
         } else {
-            container.set(DataKeys.limit_reducer.getNamespacedKey(), PersistentDataType.INTEGER, newAmount);
+            int finalNewAmount = newAmount;
+            itemStack.editMeta(itemMeta -> itemMeta.getPersistentDataContainer().set(DataKeys.limit_reducer.getNamespacedKey(), PersistentDataType.INTEGER, finalNewAmount));
         }
 
-        return meta;
+        return itemStack;
     }
 
     /**
@@ -600,7 +592,8 @@ public class CrazyManager {
      */
     public int getEnchantmentLimiter(@NotNull ItemStack item) {
         if (!useEnchantmentLimiter) return 0;
-        return item.getItemMeta().getPersistentDataContainer().getOrDefault(DataKeys.limit_reducer.getNamespacedKey(), PersistentDataType.INTEGER, 0);
+
+        return item.getPersistentDataContainer().getOrDefault(DataKeys.limit_reducer.getNamespacedKey(), PersistentDataType.INTEGER, 0); //todo() test this, but we check the itemstack instead of a useless item meta call
     }
 
     /**

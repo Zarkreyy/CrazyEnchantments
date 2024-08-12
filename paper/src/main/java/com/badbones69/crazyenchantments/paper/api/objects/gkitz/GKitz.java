@@ -93,7 +93,7 @@ public class GKitz {
             //This is used to convert old v1.7- gkit files to use newer way.
             itemString = this.crazyManager.getNewItemString(itemString);
 
-            GKitzItem item = new GKitzItem(ItemBuilder.convertString(itemString));
+            GKitzItem item = new GKitzItem(ItemUtils.convertString(itemString));
 
             for (String option : itemString.split(", ")) {
                 try {
