@@ -99,7 +99,7 @@ public enum Dust {
 
             final Gson gson = new Gson();
 
-            itemMeta.getPersistentDataContainer().set(DataKeys.dust.getNamespacedKey(), PersistentDataType.STRING, gson.toJson(new DustData(getConfigName(), this.min, this.max, percent)))
+            itemMeta.getPersistentDataContainer().set(DataKeys.dust.getNamespacedKey(), PersistentDataType.STRING, gson.toJson(new DustData(getConfigName(), this.min, this.max, percent)));
         });
     }
 }
