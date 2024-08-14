@@ -74,7 +74,7 @@ tasks {
     }
 
     runServer {
-        jvmArgs("-Dnet.kyori.ansi.colorLevel=truecolor")
+        jvmArgs("-Dnet.kyori.adventure.text.warnWhenLegacyFormattingDetected=false -Dnet.kyori.ansi.colorLevel=truecolor")
 
         defaultCharacterEncoding = Charsets.UTF_8.name()
 
