@@ -111,6 +111,9 @@ public class Starter extends VitalPaper {
 
         this.crazyManager = new CrazyManager();
 
+        // add any missing enchantments to the Enchantments.yml
+        CEnchantments.addMissingEnchantments();
+
         // Plugin Utils.
         this.bowUtils = new BowUtils();
 
