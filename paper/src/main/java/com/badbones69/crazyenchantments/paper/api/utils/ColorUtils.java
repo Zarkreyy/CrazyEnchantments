@@ -111,7 +111,7 @@ public class ColorUtils {
                 "red_stained_glass_pane",
                 "black_stained_glass_pane");
 
-        return new ItemBuilder().withType(colors.get(ThreadLocalRandom.current().nextInt(colors.size())));
+        return new ItemBuilder().withType(colors.get(ThreadLocalRandom.current().nextInt(colors.size())).toLowerCase());
     }
 
     public static String stripStringColour(String key) { //todo() see about removing this

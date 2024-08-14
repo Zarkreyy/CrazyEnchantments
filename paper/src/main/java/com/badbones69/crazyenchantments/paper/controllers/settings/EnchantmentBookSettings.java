@@ -270,7 +270,7 @@ public class EnchantmentBookSettings {
                     config.getInt(path + ".Slot"),
                     config.getBoolean(path + ".InGUI", true),
                     new ItemBuilder()
-                            .withType(config.getString(path + ".Item", ColorUtils.getRandomPaneColor().getType().getKey().getKey().toLowerCase())) // use the correct getKey from random pane
+                            .withType(config.getString(path + ".Item", ColorUtils.getRandomPaneColor().getType().getKey().getKey().toLowerCase()).toLowerCase()) // use the correct getKey from random pane
                             .setPlayer(config.getString(path + ".Player", ""))
                             .setDisplayName(config.getString(path + ".Name", "Error getting name."))
                             .setDisplayLore(config.getStringList(path + ".Lore"))
