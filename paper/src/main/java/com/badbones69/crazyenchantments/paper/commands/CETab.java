@@ -71,7 +71,9 @@ public class CETab implements TabCompleter {
                         } catch (NullPointerException ignore) {}
                     }
 
-                    Arrays.asList(Enchantment.values()).forEach(enchantment -> completions.add(enchantment.getKey().getKey()));
+                    if (!args[0].equalsIgnoreCase("book")) {
+                        Arrays.asList(Enchantment.values()).forEach(enchantment -> completions.add(enchantment.getKey().getKey()));
+                    }
                 }
                 case "remove" ->
                         this.enchantmentBookSettings.getEnchantments(((Player) sender).getInventory().getItemInMainHand())
