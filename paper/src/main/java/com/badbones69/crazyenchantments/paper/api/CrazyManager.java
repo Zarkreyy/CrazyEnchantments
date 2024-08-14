@@ -901,7 +901,7 @@ public class CrazyManager {
 
             for (String option : itemString.split(", ")) {
                 try {
-                    Enchantment enchantment = ItemUtil.getEnchantment(option.split(":")[0]);
+                    Enchantment enchantment = ItemUtil.getEnchantment(option.split(":")[0], false);
                     CEnchantment cEnchantment = getEnchantmentFromName(option.split(":")[0]);
                     String level = option.split(":")[1];
 

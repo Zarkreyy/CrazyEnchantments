@@ -760,7 +760,7 @@ public class CECommand implements CommandExecutor {
                             level = args[2];
                         }
 
-                        Enchantment vanillaEnchantment = ItemUtil.getEnchantment(args[1]);
+                        Enchantment vanillaEnchantment = ItemUtil.getEnchantment(args[1], false);
                         CEnchantment ceEnchantment = this.crazyManager.getEnchantmentFromName(args[1]);
                         boolean isVanilla = vanillaEnchantment != null;
 
@@ -801,7 +801,7 @@ public class CECommand implements CommandExecutor {
 
                     if (args.length >= 2) {
                         Player player = (Player) sender;
-                        Enchantment vanillaEnchantment = ItemUtil.getEnchantment(args[1]);
+                        Enchantment vanillaEnchantment = ItemUtil.getEnchantment(args[1], false);
                         CEnchantment ceEnchantment = this.crazyManager.getEnchantmentFromName(args[1]);
                         boolean isVanilla = vanillaEnchantment != null;
 

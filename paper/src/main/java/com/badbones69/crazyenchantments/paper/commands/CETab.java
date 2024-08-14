@@ -131,7 +131,7 @@ public class CETab implements TabCompleter {
                 }
                 case "add" -> {
                     ceEnchantment = this.crazyManager.getEnchantmentFromName(args[1]);
-                    Enchantment vanillaEnchantment = ItemUtil.getEnchantment(args[1]);
+                    Enchantment vanillaEnchantment = ItemUtil.getEnchantment(args[1], false);
 
                     if (vanillaEnchantment != null || ceEnchantment != null) {
                         int maxLevel = vanillaEnchantment != null ? vanillaEnchantment.getMaxLevel() : ceEnchantment.getMaxLevel();
