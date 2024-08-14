@@ -55,7 +55,7 @@ GKitz: #GKit options.
     Auto-Equip: false #If armor is auto equipped onto the player if the slots are available.
     Cooldown: '24h' #Cooldown for the GKit. Available options d - Day, h - Hour, m - Minute, s - Second
     Items: #The items that are given the players.
-      - 'Item:diamond_helmet, Amount:1, Name:&6&lHero Helmet, protection:4, Respiration:3, thorns:3, aqua_affinity:1, Overload:1-5, Hulk:2-5, Glowing:0-1, Implants:0-5, Lore:&aA special helmet worn by a great hero.,&aTake special care of this.'
+      - 'Item:diamond_helmet, Amount:1, Name:&6&lHero Helmet, protection:4, respiration:3, thorns:3, aqua_affinity:1, Overload:1-5, Hulk:2-5, Glowing:0-1, Implants:0-5, Lore:&aA special helmet worn by a great hero.,&aTake special care of this.'
       - 'Item:diamond_chestplate, Amount:1, Name:&6&lHero Chestplate, protection:4, thorns:3, Overload:0-5, Hulk:2-5, Lore:&aA special chestplate worn by a great hero.,&aTake special care of this.'
       - 'Item:diamond_leggings, Amount:1, Name:&6&lHero Leggings, protection:4, thorns:3, Overload:0-5, Hulk:2-5, Lore:&aA special leggings worn by a great hero.,&aTake special care of this.'
       - 'Item:diamond_boots, Amount:1, Name:&6&lHero Boots, protection:4, thorns:3, Overload:0-5, Hulk:2-5, Gears:0-3, Rocket:1, Anti-Gravity:0-5, Lore:&aA special boots worn by a great hero.,&aTake special care of this.'
