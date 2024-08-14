@@ -34,8 +34,8 @@ Enchantments:
       Name: '&e&lGlowing &7(&bI&7)'
       #The description of what it does.
       Description:
-        - '&7Give you night vision'
-        - '&7when you put it on you.'
+        - '&7Gives you night vision'
+        - '&7when you put it on.'
         - ''
         - '&6Found in:'
         - '&7 - &a&l&nCommon'
@@ -1744,7 +1744,7 @@ Enchantments:
     Info:
       Name: '&e&lImplants &7(&bI-&bV&7)'
       Description:
-        - '&7While moving your hunger will'
+        - '&7While moving, your hunger will'
         - '&7start to go up while equipped.'
         - ''
         - '&6Found in:'
