@@ -11,11 +11,11 @@ plugins {
 
 val buildNumber: String? = System.getenv("BUILD_NUMBER")
 
-rootProject.version = if (buildNumber != null) "${libs.versions.minecraft.get()}-$buildNumber" else "2.4.2"
+rootProject.version = if (buildNumber != null) "${libs.versions.minecraft.get()}-$buildNumber" else "2.5"
 
-val isSnapshot = false
+val isBeta = true
 
-val content: String = if (isSnapshot) {
+val content: String = if (isBeta) {
     formatLog(latestCommitHash(), latestCommitMessage(), rootProject.name, "Crazy-Crew")
 } else {
     rootProject.file("CHANGELOG.md").readText(Charsets.UTF_8)
@@ -30,7 +30,7 @@ modrinth {
 
     projectId.set(rootProject.name.lowercase())
 
-    versionType.set(if (isSnapshot) "beta" else "release")
+    versionType.set(if (isBeta) "beta" else "release")
 
     versionName.set("${rootProject.name} ${rootProject.version}")
     versionNumber.set(rootProject.version as String)
@@ -55,7 +55,7 @@ hangarPublish {
 
         version.set(rootProject.version as String)
 
-        channel.set(if (isSnapshot) "Beta" else "Release")
+        channel.set(if (isBeta) "Beta" else "Release")
 
         changelog.set(content)
 
