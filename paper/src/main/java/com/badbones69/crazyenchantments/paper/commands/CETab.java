@@ -126,8 +126,7 @@ public class CETab implements TabCompleter {
                 case "book" -> {
                     ceEnchantment = this.crazyManager.getEnchantmentFromName(args[1]);
 
-                    if (ceEnchantment != null) for (int amount = 1; amount <= ceEnchantment.getMaxLevel(); amount++)
-                        completions.add(String.valueOf(amount));
+                    if (ceEnchantment != null) for (int amount = 1; amount <= ceEnchantment.getMaxLevel(); amount++) completions.add(String.valueOf(amount));
                 }
                 case "add" -> {
                     ceEnchantment = this.crazyManager.getEnchantmentFromName(args[1]);
@@ -152,7 +151,7 @@ public class CETab implements TabCompleter {
                 }
                 case "crystal", "scrambler", "slotcrystal" -> this.plugin.getServer().getOnlinePlayers().forEach(player -> completions.add(player.getName()));
                 case "give" ->
-                    completions.add("Item:DIAMOND_HELMET, Amount:1, Name:&6&lHat, Protection:4, Overload:1-5, Hulk:2-5, Lore:&aLine 1.,&aLine 2.");
+                    completions.add("Item:DIAMOND_HELMET, Amount:1, Name:&6&lHat, protection:4, Overload:1-5, Hulk:2-5, Lore:&aLine 1.,&aLine 2.");
             }
 
             return StringUtil.copyPartialMatches(args[2], completions, new ArrayList<>());
