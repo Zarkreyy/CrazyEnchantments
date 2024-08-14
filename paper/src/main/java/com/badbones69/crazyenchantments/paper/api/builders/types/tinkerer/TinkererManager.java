@@ -9,6 +9,7 @@ import com.badbones69.crazyenchantments.paper.api.economy.CurrencyAPI;
 import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
 import com.badbones69.crazyenchantments.paper.api.objects.CEBook;
 import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
+import com.ryderbelserion.vital.common.utils.StringUtil;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -16,7 +17,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -101,8 +101,8 @@ public class TinkererManager {
 
         if (item.hasItemMeta() && item.getItemMeta().hasEnchants()) { // Vanilla Enchantments
             for (Map.Entry<Enchantment, Integer> enchantment : item.getEnchantments().entrySet()) {
-                String[] values = config.getString("Tinker.Vanilla-Enchantments." + convertToLegacy(enchantment.getKey().getKey().value()).toUpperCase(), "0").replaceAll(" ", "").split(",");
-                int baseAmount = Integer.parseInt(values[0]); // TODO add converter to convert legacy to new enchant names.
+                String[] values = config.getString("Tinker.Vanilla-Enchantments." + StringUtil.getEnchant(enchantment.getKey().getKey().value()).toUpperCase(), "0").replaceAll(" ", "").split(",");
+                int baseAmount = Integer.parseInt(values[0]);
                 int multiplier = values.length < 2 ? 0 : Integer.parseInt(values[1]);
                 int enchantmentLevel = enchantment.getValue();
                 total += baseAmount + enchantmentLevel * multiplier;
@@ -110,66 +110,6 @@ public class TinkererManager {
         }
 
         return total;
-    }
-
-    private static String convertLegacy(String from) { // Stolen from Enchantment class -TDL
-        if (from == null) {
-            return null;
-        }
-
-        return switch (from.toLowerCase()) {
-            case "protection_environmental" -> "protection";
-            case "protection_fire" -> "fire_protection";
-            case "protection_fall" -> "feather_falling";
-            case "protection_explosions" -> "blast_protection";
-            case "protection_projectile" -> "projectile_protection";
-            case "oxygen" -> "respiration";
-            case "water_worker" -> "aqua_affinity";
-            case "damage_all" -> "sharpness";
-            case "damage_undead" -> "smite";
-            case "damage_arthropods" -> "bane_of_arthropods";
-            case "loot_bonus_mobs" -> "looting";
-            case "sweeping_edge" -> "sweeping";
-            case "dig_speed" -> "efficiency";
-            case "durability" -> "unbreaking";
-            case "loot_bonus_blocks" -> "fortune";
-            case "arrow_damage" -> "power";
-            case "arrow_knockback" -> "punch";
-            case "arrow_fire" -> "flame";
-            case "arrow_infinite" -> "infinity";
-            case "luck" -> "luck_of_the_sea";
-            default -> from;
-        };
-    }
-
-    private static String convertToLegacy(String from) { // Stolen inverse of the above method. -TDL
-        if (from == null) {
-            return null;
-        }
-
-        return switch (from.toLowerCase()) {
-            case "protection" -> "protection_environmental";
-            case "fire_protection" -> "protection_fire";
-            case  "feather_falling" -> "protection_fall";
-            case  "blast_protection" -> "protection_explosions";
-            case  "projectile_protection" -> "protection_projectile";
-            case  "respiration" -> "oxygen";
-            case  "aqua_affinity" -> "water_worker";
-            case  "sharpness" -> "damage_all";
-            case  "smite" -> "damage_undead";
-            case  "bane_of_arthropods" -> "damage_arthropods";
-            case  "looting" -> "loot_bonus_mobs";
-            case  "sweeping" -> "sweeping_edge";
-            case  "efficiency" -> "dig_speed";
-            case  "unbreaking" -> "durability";
-            case  "fortune" -> "loot_bonus_blocks";
-            case  "power" -> "arrow_damage";
-            case  "punch" -> "arrow_knockback";
-            case  "flame" -> "arrow_fire";
-            case  "infinity" -> "arrow_infinite";
-            case  "luck_of_the_sea" -> "luck";
-            default -> from;
-        };
     }
 
     public static int getMaxDustLevelFromBook(CEBook book, FileConfiguration config) {

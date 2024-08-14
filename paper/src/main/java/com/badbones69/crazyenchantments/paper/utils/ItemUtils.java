@@ -2,7 +2,7 @@ package com.badbones69.crazyenchantments.paper.utils;
 
 import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
-import com.ryderbelserion.vital.common.utils.StringUtils;
+import com.ryderbelserion.vital.common.utils.StringUtil;
 import com.ryderbelserion.vital.paper.util.DyeUtil;
 import com.ryderbelserion.vital.paper.util.ItemUtil;
 import org.bukkit.DyeColor;
@@ -109,23 +109,23 @@ public class ItemUtils {
                     }
                     case "glowing" -> itemBuilder.setGlowing(Boolean.valueOf(value));
                     case "amount" -> {
-                        final Optional<Number> amount = StringUtils.tryParseInt(value);
+                        final Optional<Number> amount = StringUtil.tryParseInt(value);
                         itemBuilder.setAmount(amount.map(Number::intValue).orElse(1));
                     }
                     case "damage" -> {
-                        final Optional<Number> amount = StringUtils.tryParseInt(value);
+                        final Optional<Number> amount = StringUtil.tryParseInt(value);
                         itemBuilder.setDamage(amount.map(Number::intValue).orElse(1));
                     }
                     case "lore" -> itemBuilder.setDisplayLore(List.of(value.split(",")));
                     case "player" -> itemBuilder.setPlayer(value);
                     case "skull" -> itemBuilder.setSkull(value, plugin.getApi());
-                    case "custom-model-data" -> itemBuilder.setCustomModelData(StringUtils.tryParseInt(value).orElse(-1).intValue());
+                    case "custom-model-data" -> itemBuilder.setCustomModelData(StringUtil.tryParseInt(value).orElse(-1).intValue());
                     case "unbreakable-item" -> itemBuilder.setUnbreakable(value.isEmpty() || value.equalsIgnoreCase("true"));
                     case "trim-pattern" -> itemBuilder.applyTrimPattern(value);
                     case "trim-material" -> itemBuilder.applyTrimMaterial(value);
                     default -> {
                         if (getEnchantment(option.toLowerCase()) != null) {
-                            final Optional<Number> amount = StringUtils.tryParseInt(value);
+                            final Optional<Number> amount = StringUtil.tryParseInt(value);
 
                             itemBuilder.addEnchantment(option.toLowerCase(), amount.map(Number::intValue).orElse(1), true);
 
