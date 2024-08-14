@@ -271,20 +271,6 @@ public class Methods { //todo() purge this of hacky lore checks
         this.plugin.getServer().getRegionScheduler().runDelayed(this.plugin, loc, task -> firework.detonate(), 2);
     }
 
-    public Enchantment getEnchantment(@NotNull String enchantmentName) { //todo() what the fuck?
-        try {
-            // HashMap<String, String> enchantments = getEnchantments();
-            enchantmentName = enchantmentName.replaceAll("-|_| ", "");
-
-            for (Enchantment enchantment : Enchantment.values()) {
-                // MC 1.13+ has the correct names.
-                if (enchantment.getKey().getKey().replaceAll("-|_| ", "").equalsIgnoreCase(enchantmentName)) return enchantment;
-            }
-        } catch (Exception ignore) {}
-
-        return null;
-    }
-
     public int getMaxDurability(@NotNull ItemStack item) {
         if (!PluginSupport.SupportedPlugins.ORAXEN.isPluginLoaded()) return item.getType().getMaxDurability();
 

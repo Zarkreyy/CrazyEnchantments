@@ -32,6 +32,7 @@ import com.badbones69.crazyenchantments.paper.listeners.ScramblerListener;
 import com.badbones69.crazyenchantments.paper.support.PluginSupport;
 import com.badbones69.crazyenchantments.paper.utils.ItemUtils;
 import com.google.gson.Gson;
+import com.ryderbelserion.vital.paper.util.ItemUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -759,7 +760,7 @@ public class CECommand implements CommandExecutor {
                             level = args[2];
                         }
 
-                        Enchantment vanillaEnchantment = this.methods.getEnchantment(args[1]);
+                        Enchantment vanillaEnchantment = ItemUtil.getEnchantment(args[1]);
                         CEnchantment ceEnchantment = this.crazyManager.getEnchantmentFromName(args[1]);
                         boolean isVanilla = vanillaEnchantment != null;
 
@@ -800,7 +801,7 @@ public class CECommand implements CommandExecutor {
 
                     if (args.length >= 2) {
                         Player player = (Player) sender;
-                        Enchantment vanillaEnchantment = this.methods.getEnchantment(args[1]);
+                        Enchantment vanillaEnchantment = ItemUtil.getEnchantment(args[1]);
                         CEnchantment ceEnchantment = this.crazyManager.getEnchantmentFromName(args[1]);
                         boolean isVanilla = vanillaEnchantment != null;
 

@@ -9,6 +9,7 @@ import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
 import com.badbones69.crazyenchantments.paper.api.objects.Category;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
+import com.ryderbelserion.vital.paper.util.ItemUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -130,7 +131,7 @@ public class CETab implements TabCompleter {
                 }
                 case "add" -> {
                     ceEnchantment = this.crazyManager.getEnchantmentFromName(args[1]);
-                    Enchantment vanillaEnchantment = this.methods.getEnchantment(args[1]);
+                    Enchantment vanillaEnchantment = ItemUtil.getEnchantment(args[1]);
 
                     if (vanillaEnchantment != null || ceEnchantment != null) {
                         int maxLevel = vanillaEnchantment != null ? vanillaEnchantment.getMaxLevel() : ceEnchantment.getMaxLevel();

@@ -899,9 +899,9 @@ public class CrazyManager {
             List<String> customEnchantments = new ArrayList<>();
             Map<String, Integer> enchantments = new HashMap<>();
 
-            for (String option : itemString.split(", ")) { //todo() this whole loop needs looking at
+            for (String option : itemString.split(", ")) {
                 try {
-                    Enchantment enchantment = this.methods.getEnchantment(option.split(":")[0]); //todo() this needs to be looked at, this whole thing screams what the fuck
+                    Enchantment enchantment = ItemUtil.getEnchantment(option.split(":")[0]);
                     CEnchantment cEnchantment = getEnchantmentFromName(option.split(":")[0]);
                     String level = option.split(":")[1];
 
