@@ -62,7 +62,7 @@ public class CrazyEnchantments extends JavaPlugin {
             this.api = new HeadDatabaseAPI();
         }
 
-        this.starter = new Starter();
+        this.starter = new Starter(this);
         this.starter.run();
 
         this.starter.getCurrencyAPI().loadCurrency();

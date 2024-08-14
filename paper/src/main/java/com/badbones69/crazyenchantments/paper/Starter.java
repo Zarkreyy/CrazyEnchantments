@@ -7,6 +7,7 @@ import com.badbones69.crazyenchantments.paper.api.builders.types.blacksmith.Blac
 import com.badbones69.crazyenchantments.paper.api.builders.types.gkitz.KitsManager;
 import com.badbones69.crazyenchantments.paper.api.economy.CurrencyAPI;
 import com.badbones69.crazyenchantments.paper.api.economy.vault.VaultSupport;
+import com.badbones69.crazyenchantments.paper.api.enums.CEnchantments;
 import com.badbones69.crazyenchantments.paper.api.managers.AllyManager;
 import com.badbones69.crazyenchantments.paper.api.managers.ArmorEnchantmentManager;
 import com.badbones69.crazyenchantments.paper.api.managers.BowEnchantmentManager;
@@ -23,10 +24,11 @@ import com.badbones69.crazyenchantments.paper.support.PluginSupport;
 import com.badbones69.crazyenchantments.paper.support.PluginSupport.SupportedPlugins;
 import com.badbones69.crazyenchantments.paper.support.claims.SuperiorSkyBlockSupport;
 import com.badbones69.crazyenchantments.paper.support.misc.OraxenSupport;
+import com.ryderbelserion.vital.paper.VitalPaper;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public class Starter {
+public class Starter extends VitalPaper {
 
     @NotNull
     private final CrazyEnchantments plugin = JavaPlugin.getPlugin(CrazyEnchantments.class);
@@ -63,6 +65,9 @@ public class Starter {
     private ScrollListener scrollListener;
     private SlotCrystalListener slotCrystalListener;
 
+    public Starter(JavaPlugin plugin) {
+        super(plugin);
+    }
 
     public void run() {
         this.fileManager = new FileManager();
@@ -104,7 +109,7 @@ public class Starter {
         this.plugin.pluginManager.registerEvents(this.scrollListener = new ScrollListener(), this.plugin);
         this.plugin.pluginManager.registerEvents(this.slotCrystalListener = new SlotCrystalListener(), this.plugin);
 
-        this.crazyManager = new CrazyManager(this.plugin);
+        this.crazyManager = new CrazyManager();
 
         // Plugin Utils.
         this.bowUtils = new BowUtils();
@@ -200,5 +205,15 @@ public class Starter {
     // Plugin Utils.
     public BowUtils getBowUtils() {
         return this.bowUtils;
+    }
+
+    @Override
+    public final boolean isLegacy() {
+        return true;
+    }
+
+    @Override
+    public final boolean isVerbose() {
+        return true;
     }
 }

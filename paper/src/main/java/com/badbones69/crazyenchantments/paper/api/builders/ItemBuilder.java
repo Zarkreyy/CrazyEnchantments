@@ -29,8 +29,6 @@ public class ItemBuilder extends com.ryderbelserion.vital.paper.api.builders.ite
 
     private final Starter starter = plugin.getStarter();
 
-    private final SkullCreator skullCreator = this.starter.getSkullCreator();
-
     private Map<CEnchantment, Integer> customEnchantments = new HashMap<>();
 
     private final Map<NamespacedKey, String> keys = new HashMap<>();

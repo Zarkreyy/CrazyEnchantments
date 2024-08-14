@@ -34,7 +34,6 @@ import com.badbones69.crazyenchantments.paper.support.CropManager;
 import com.badbones69.crazyenchantments.paper.support.interfaces.CropManagerVersion;
 import com.badbones69.crazyenchantments.paper.utils.ItemUtils;
 import com.google.gson.Gson;
-import com.ryderbelserion.vital.paper.VitalPaper;
 import com.ryderbelserion.vital.paper.util.ItemUtil;
 import io.papermc.paper.persistence.PersistentDataContainerView;
 import net.kyori.adventure.text.Component;
@@ -65,7 +64,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-public class CrazyManager extends VitalPaper {
+public class CrazyManager {
 
     @NotNull
     private final CrazyEnchantments plugin = JavaPlugin.getPlugin(CrazyEnchantments.class);
@@ -134,10 +133,6 @@ public class CrazyManager extends VitalPaper {
 
     private int CESuccessOverride;
     private int CEFailureOverride;
-
-    public CrazyManager(@NotNull final JavaPlugin plugin) {
-        super(plugin);
-    }
 
     /**
      * Loads everything for the Crazy Enchantments plugin.
@@ -962,14 +957,4 @@ public class CrazyManager extends VitalPaper {
 
     /** Gets the failure override from the config. Default -1 means no override should be used */
     public int getCEFailureOverride() { return CEFailureOverride; }
-
-    @Override
-    public final boolean isLegacy() {
-        return true;
-    }
-
-    @Override
-    public final boolean isVerbose() {
-        return true;
-    }
 }
