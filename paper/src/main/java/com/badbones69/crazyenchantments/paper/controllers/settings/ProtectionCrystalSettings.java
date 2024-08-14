@@ -45,7 +45,7 @@ public class ProtectionCrystalSettings {
         FileConfiguration config = Files.CONFIG.getFile();
 
         this.crystal = new ItemBuilder()
-                .withType(config.getString("Settings.ProtectionCrystal.Item", "emerald")) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+                .withType(config.getString("Settings.ProtectionCrystal.Item", "emerald").toLowerCase()) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
                 .setDisplayName(config.getString("Settings.ProtectionCrystal.Name", "Error getting name."))
                 .setDisplayLore(config.getStringList("Settings.ProtectionCrystal.Lore"))
                 .setGlowing(config.getBoolean("Settings.ProtectionCrystal.Glowing", false));

@@ -60,7 +60,7 @@ public enum Dust {
             Dust.itemBuilderDust.put(dust, new ItemBuilder()
             .setDisplayName(config.getString(path + "Name", "Error getting name."))
             .setDisplayLore(config.getStringList(path + "Lore"))
-            .withType(config.getString(path + "Item", "glowstone_dust"))); // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+            .withType(config.getString(path + "Item", "glowstone_dust").toLowerCase())); // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
         }
     }
     

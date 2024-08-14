@@ -55,12 +55,12 @@ public class ScramblerListener implements Listener {
     public void loadScrambler() {
         FileConfiguration config = Files.CONFIG.getFile();
         this.scramblerItem = new ItemBuilder()
-        .withType(config.getString("Settings.Scrambler.Item", "sunflower")) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+        .withType(config.getString("Settings.Scrambler.Item", "sunflower").toLowerCase()) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
         .setDisplayName(config.getString("Settings.Scrambler.Name", "Error getting name."))
         .setDisplayLore(config.getStringList("Settings.Scrambler.Lore"))
         .setGlowing(config.getBoolean("Settings.Scrambler.Glowing", false));
         this.pointer = new ItemBuilder()
-        .withType(config.getString("Settings.Scrambler.GUI.Pointer.Item", "redstone_torch")) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+        .withType(config.getString("Settings.Scrambler.GUI.Pointer.Item", "redstone_torch").toLowerCase()) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
         .setDisplayName(config.getString("Settings.Scrambler.GUI.Pointer.Name", "Error getting name."))
         .setDisplayLore(config.getStringList("Settings.Scrambler.GUI.Pointer.Lore"));
         this.animationToggle = Files.CONFIG.getFile().getBoolean("Settings.Scrambler.GUI.Toggle", true);

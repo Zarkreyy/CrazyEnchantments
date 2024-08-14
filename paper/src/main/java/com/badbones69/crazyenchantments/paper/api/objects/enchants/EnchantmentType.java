@@ -34,7 +34,7 @@ public class EnchantmentType {
         this.displayName = name;
         this.slot = file.getInt(path + ".Display-Item.Slot", 1) - 1;
         this.displayItem = new ItemBuilder()
-        .withType(file.getString(path + ".Display-Item.Item", "stone")) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
+        .withType(file.getString(path + ".Display-Item.Item", "stone").toLowerCase()) // this is lowercased, because internally. the itembuilder uses mojang mapped ids.
         .setDisplayName(file.getString(path + ".Display-Item.Name", "Error getting name."))
         .setDisplayLore(file.getStringList(path + ".Display-Item.Lore")).getStack();
 
