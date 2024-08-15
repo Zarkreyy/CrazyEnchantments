@@ -9,7 +9,6 @@ import com.badbones69.crazyenchantments.paper.api.enums.Dust;
 import com.badbones69.crazyenchantments.paper.api.enums.Messages;
 import com.badbones69.crazyenchantments.paper.api.objects.CEBook;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport;
 import com.ryderbelserion.vital.paper.api.enums.Support;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -108,7 +107,7 @@ public class TinkererMenu extends InventoryBuilder {
                     ItemStack reward = inventory.getItem(slot.getValue());
 
                     if (reward != null) {
-                        if (Currency.getCurrency(this.configuration.getString("Settings.Currency")) == Currency.VAULT && PluginSupport.SupportedPlugins.VAULT.isPluginEnabled()) { // check if vault is enabled, just in case.
+                        if (Currency.getCurrency(this.configuration.getString("Settings.Currency")) == Currency.VAULT && Support.vault.isEnabled()) { // check if vault is enabled, just in case.
                             total = TinkererManager.getTotalXP(inventory.getItem(slot.getKey()), this.configuration);
                         } else {
                             bottomInventory.addItem(reward).values().forEach(item -> player.getWorld().dropItem(player.getLocation(), item));
@@ -123,7 +122,7 @@ public class TinkererMenu extends InventoryBuilder {
 
                 player.closeInventory();
 
-                if (total != 0 && PluginSupport.SupportedPlugins.VAULT.isPluginEnabled()) { // this is to support vault
+                if (total != 0 && Support.vault.isEnabled()) { // this is to support vault
                     this.plugin.getStarter().getVaultSupport().getVault().depositPlayer(player, total);
                 }
 
