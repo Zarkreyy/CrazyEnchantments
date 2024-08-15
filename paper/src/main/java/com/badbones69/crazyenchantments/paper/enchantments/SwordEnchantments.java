@@ -5,8 +5,8 @@ import com.badbones69.crazyenchantments.paper.Methods;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.CrazyManager;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
-import com.badbones69.crazyenchantments.paper.api.economy.CurrencyAPI;
+import com.badbones69.crazyenchantments.paper.tasks.support.SupportManager;
+import com.badbones69.crazyenchantments.paper.tasks.support.enums.Currency;
 import com.badbones69.crazyenchantments.paper.api.enums.CEnchantments;
 import com.badbones69.crazyenchantments.paper.api.enums.Messages;
 import com.badbones69.crazyenchantments.paper.api.events.RageBreakEvent;
@@ -17,7 +17,6 @@ import com.badbones69.crazyenchantments.paper.api.utils.EntityUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EventUtils;
 import com.badbones69.crazyenchantments.paper.controllers.BossBarController;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport;
 import com.ryderbelserion.vital.paper.util.scheduler.FoliaRunnable;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -63,22 +62,15 @@ public class SwordEnchantments implements Listener {
     @NotNull
     private final Methods methods = this.starter.getMethods();
 
-    // Plugin Support.
-    @NotNull
-    private final PluginSupport pluginSupport = this.starter.getPluginSupport();
-
     @NotNull
     private final BossBarController bossBarController = this.plugin.getBossBarController();
-
-    // Economy Management.
-    @NotNull
-    private final CurrencyAPI currencyAPI = this.starter.getCurrencyAPI();
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         if (EventUtils.isIgnoredEvent(event) || EventUtils.isIgnoredUUID(event.getDamager().getUniqueId())) return;
 
-        if (this.pluginSupport.isFriendly(event.getDamager(), event.getEntity())) return;
+        //todo() update plugin support
+//        if (this.pluginSupport.isFriendly(event.getDamager(), event.getEntity())) return;
 
         if (this.crazyManager.isBreakRageOnDamageOn() && event.getEntity() instanceof Player player) {
             CEPlayer cePlayer = this.crazyManager.getCEPlayer(player);
@@ -203,14 +195,13 @@ public class SwordEnchantments implements Listener {
             int amount = 4 + enchantments.get(CEnchantments.SKILLSWIPE.getEnchantment());
 
             if (player.getTotalExperience() > 0) {
-
-                if (this.currencyAPI.getCurrency(player, Currency.XP_TOTAL) >= amount) {
-                    this.currencyAPI.takeCurrency(player, Currency.XP_TOTAL, amount);
+                if (SupportManager.getCurrency(player, Currency.XP_TOTAL) >= amount) {
+                    SupportManager.takeCurrency(player, Currency.XP_TOTAL, amount);
                 } else {
                     player.setTotalExperience(0);
                 }
 
-                this.currencyAPI.giveCurrency(damager, Currency.XP_TOTAL, amount);
+                SupportManager.giveCurrency(damager, Currency.XP_TOTAL, amount);
             }
         }
 
@@ -324,7 +315,7 @@ public class SwordEnchantments implements Listener {
 
         if (EnchantUtils.isEventActive(CEnchantments.REVENGE, damager, item, enchantments)) {
             for (Entity entity : player.getNearbyEntities(10, 10, 10)) {
-                if (!pluginSupport.isFriendly(entity, player)) continue;
+//                if (!pluginSupport.isFriendly(entity, player)) continue;        //todo() update plugin support
                 Player ally = (Player) entity;
 
                 ally.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5 * 20, 1));
@@ -359,9 +350,10 @@ public class SwordEnchantments implements Listener {
                 int radius = 4 + enchantments.get(CEnchantments.CHARGE.getEnchantment());
                 damager.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10 * 20, 1));
 
-                damager.getNearbyEntities(radius, radius, radius).stream().filter(entity ->
-                        this.pluginSupport.isFriendly(entity, damager)).forEach(entity ->
-                        ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10 * 20, 1)));
+                //todo() update plugin support
+//                damager.getNearbyEntities(radius, radius, radius).stream().filter(entity ->
+//                        this.pluginSupport.isFriendly(entity, damager)).forEach(entity ->
+//                        ((Player) entity).addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10 * 20, 1)));
             }
         }
     }

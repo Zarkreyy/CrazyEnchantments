@@ -29,7 +29,6 @@ import com.badbones69.crazyenchantments.paper.api.utils.NumberUtils;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
 import com.badbones69.crazyenchantments.paper.controllers.settings.ProtectionCrystalSettings;
 import com.badbones69.crazyenchantments.paper.listeners.ScramblerListener;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport;
 import com.badbones69.crazyenchantments.paper.utils.ItemUtils;
 import com.google.gson.Gson;
 import com.ryderbelserion.vital.paper.util.ItemUtil;
@@ -66,9 +65,6 @@ public class CECommand implements CommandExecutor {
     // Settings.
     private final ProtectionCrystalSettings protectionCrystalSettings = this.starter.getProtectionCrystalSettings();
     private final EnchantmentBookSettings enchantmentBookSettings = this.starter.getEnchantmentBookSettings();
-
-    // Plugin Support.
-    private final PluginSupport pluginSupport = this.starter.getPluginSupport();
 
     // Listeners
     private final ScramblerListener scramblerListener = this.starter.getScramblerListener();

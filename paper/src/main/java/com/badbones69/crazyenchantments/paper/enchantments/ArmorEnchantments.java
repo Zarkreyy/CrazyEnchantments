@@ -15,8 +15,9 @@ import com.badbones69.crazyenchantments.paper.api.utils.EnchantUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EventUtils;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
 import com.badbones69.crazyenchantments.paper.controllers.settings.ProtectionCrystalSettings;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport;
 import com.badbones69.crazyenchantments.paper.tasks.processors.ArmorProcessor;
+import com.badbones69.crazyenchantments.paper.tasks.support.SupportManager;
+import com.badbones69.crazyenchantments.paper.tasks.support.types.GenericProtection;
 import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -68,13 +69,11 @@ public class ArmorEnchantments implements Listener {
     @NotNull
     private final EnchantmentBookSettings enchantmentBookSettings = this.starter.getEnchantmentBookSettings();
 
-    // Plugin Support.
-    @NotNull
-    private final PluginSupport pluginSupport = this.starter.getPluginSupport();
-
     // Plugin Managers.
     @NotNull
     private final ArmorEnchantmentManager armorEnchantmentManager = this.starter.getArmorEnchantmentManager();
+
+    private final GenericProtection protection = SupportManager.getProtection();
 
     private final ArmorProcessor armorProcessor = new ArmorProcessor();
 
@@ -208,7 +207,10 @@ public class ArmorEnchantments implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         if (EventUtils.isIgnoredEvent(event) || EventUtils.isIgnoredUUID(event.getDamager().getUniqueId())) return;
-        if (this.pluginSupport.isFriendly(event.getDamager(), event.getEntity())) return;
+
+        //todo() update plugin support
+        //if (this.pluginSupport.isFriendly(event.getDamager(), event.getEntity())) return;
+        //if (this.protection.canDamage(event.getDamager(), event.getEntity())) return;
 
         if (!(event.getDamager() instanceof LivingEntity damager) || !(event.getEntity() instanceof Player player)) return;
 
@@ -313,11 +315,13 @@ public class ArmorEnchantments implements Listener {
             if (!enchants.containsKey(CEnchantments.LEADERSHIP.getEnchantment())) continue;
 
             int radius = 4 + enchants.get(CEnchantments.LEADERSHIP.getEnchantment());
-            int players = (int) damager.getNearbyEntities(radius, radius, radius).stream().filter(entity -> entity instanceof Player && this.pluginSupport.isFriendly(damager, entity)).count();
 
-            if (players > 0 && EnchantUtils.isEventActive(CEnchantments.LEADERSHIP, player, armor, enchants)) {
-                event.setDamage(event.getDamage() + (players / 2d));
-            }
+            //todo() update plugin support
+            //int players = (int) damager.getNearbyEntities(radius, radius, radius).stream().filter(entity -> entity instanceof Player && this.pluginSupport.isFriendly(damager, entity)).count();
+
+            //if (players > 0 && EnchantUtils.isEventActive(CEnchantments.LEADERSHIP, player, armor, enchants)) {
+            //    event.setDamage(event.getDamage() + (players / 2d));
+            //}
         }
     }
 
@@ -327,12 +331,13 @@ public class ArmorEnchantments implements Listener {
         Player other = event.getOther();
 
         if (!player.canSee(other) || !other.canSee(player)) return;
-        if (this.pluginSupport.isVanished(player) || this.pluginSupport.isVanished(other)) return;
+        if (SupportManager.isVanished(player) || SupportManager.isVanished(other)) return;
 
         CEnchantments enchant = event.getEnchantment();
         int level = event.getLevel();
 
-        if (!this.pluginSupport.allowCombat(other.getLocation()) || this.pluginSupport.isFriendly(player, other) || this.methods.hasPermission(other, "bypass.aura", false)) return;
+        //todo() update plugin support
+        //if (!this.pluginSupport.allowCombat(other.getLocation()) || this.pluginSupport.isFriendly(player, other) || this.methods.hasPermission(other, "bypass.aura", false)) return;
 
         Map<CEnchantment, Integer> enchantments = Map.of(enchant.getEnchantment(), level);
 
@@ -377,7 +382,8 @@ public class ArmorEnchantments implements Listener {
 
         Player killer = player.getKiller();
 
-        if (!this.pluginSupport.allowCombat(player.getLocation())) return;
+        //todo() update plugin support
+        //if (!this.pluginSupport.allowCombat(player.getLocation())) return;
 
         for (ItemStack item : player.getEquipment().getArmorContents()) {
             Map<CEnchantment, Integer> enchantments = this.enchantmentBookSettings.getEnchantments(item);

@@ -5,8 +5,6 @@ import com.badbones69.crazyenchantments.paper.api.FileManager;
 import com.badbones69.crazyenchantments.paper.api.builders.types.MenuManager;
 import com.badbones69.crazyenchantments.paper.api.builders.types.blacksmith.BlackSmithManager;
 import com.badbones69.crazyenchantments.paper.api.builders.types.gkitz.KitsManager;
-import com.badbones69.crazyenchantments.paper.api.economy.CurrencyAPI;
-import com.badbones69.crazyenchantments.paper.api.economy.vault.VaultSupport;
 import com.badbones69.crazyenchantments.paper.api.enums.CEnchantments;
 import com.badbones69.crazyenchantments.paper.api.managers.AllyManager;
 import com.badbones69.crazyenchantments.paper.api.managers.ArmorEnchantmentManager;
@@ -20,10 +18,7 @@ import com.badbones69.crazyenchantments.paper.controllers.settings.ProtectionCry
 import com.badbones69.crazyenchantments.paper.listeners.ScramblerListener;
 import com.badbones69.crazyenchantments.paper.listeners.ScrollListener;
 import com.badbones69.crazyenchantments.paper.listeners.SlotCrystalListener;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport.SupportedPlugins;
-import com.badbones69.crazyenchantments.paper.support.claims.SuperiorSkyBlockSupport;
-import com.badbones69.crazyenchantments.paper.support.misc.OraxenSupport;
+import com.badbones69.crazyenchantments.paper.tasks.support.types.items.OraxenSupport;
 import com.ryderbelserion.vital.paper.VitalPaper;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -44,10 +39,6 @@ public class Starter extends VitalPaper {
     // Plugin Utils.
     private BowUtils bowUtils;
 
-    // Plugin Support.
-    private SuperiorSkyBlockSupport superiorSkyBlockSupport;
-    private PluginSupport pluginSupport;
-    private VaultSupport vaultSupport;
     private OraxenSupport oraxenSupport;
 
     // Plugin Managers.
@@ -56,9 +47,6 @@ public class Starter extends VitalPaper {
     private WingsManager wingsManager;
     private AllyManager allyManager;
     private ShopManager shopManager;
-
-    // Economy Management.
-    private CurrencyAPI currencyAPI;
 
     // Listeners.
     private ScramblerListener scramblerListener;
@@ -74,12 +62,13 @@ public class Starter extends VitalPaper {
         this.fileManager.setup();
 
         // Plugin Support.
-        this.pluginSupport = new PluginSupport();
-        this.pluginSupport.initializeWorldGuard();
+        //todo() update plugin support
+        //this.pluginSupport = new PluginSupport();
+        //this.pluginSupport.initializeWorldGuard();
 
-        if (SupportedPlugins.SUPERIORSKYBLOCK.isPluginLoaded()) this.superiorSkyBlockSupport = new SuperiorSkyBlockSupport();
+        //if (SupportedPlugins.SUPERIORSKYBLOCK.isPluginLoaded()) this.superiorSkyBlockSupport = new SuperiorSkyBlockSupport();
 
-        if (SupportedPlugins.ORAXEN.isPluginLoaded()) this.oraxenSupport = new OraxenSupport();
+        //if (SupportedPlugins.ORAXEN.isPluginLoaded()) this.oraxenSupport = new OraxenSupport();
 
         // Methods
         this.methods = new Methods();
@@ -92,9 +81,6 @@ public class Starter extends VitalPaper {
         KitsManager.load();
 
         MenuManager.load();
-
-        // Economy Management.
-        this.currencyAPI = new CurrencyAPI();
 
         this.shopManager = new ShopManager();
 
@@ -141,34 +127,8 @@ public class Starter extends VitalPaper {
         return this.enchantmentBookSettings;
     }
 
-    // Plugin Support.
-    public PluginSupport getPluginSupport() {
-        return this.pluginSupport;
-    }
-
-    public VaultSupport getVaultSupport() {
-        return this.vaultSupport;
-    }
-
-    public void setVaultSupport(VaultSupport vaultSupport) {
-        this.vaultSupport = vaultSupport;
-
-        vaultSupport.loadVault();
-    }
-
-    public SuperiorSkyBlockSupport getSuperiorSkyBlockSupport() {
-        if (this.superiorSkyBlockSupport == null) this.superiorSkyBlockSupport = new SuperiorSkyBlockSupport();
-
-        return this.superiorSkyBlockSupport;
-    }
-
     public OraxenSupport getOraxenSupport() {
         return this.oraxenSupport;
-    }
-
-    // Economy Management.
-    public CurrencyAPI getCurrencyAPI() {
-        return this.currencyAPI;
     }
 
     // Plugin Managers.

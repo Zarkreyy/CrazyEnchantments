@@ -4,7 +4,8 @@ import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
 import com.badbones69.crazyenchantments.paper.api.builders.InventoryBuilder;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
+import com.badbones69.crazyenchantments.paper.tasks.support.SupportManager;
+import com.badbones69.crazyenchantments.paper.tasks.support.enums.Currency;
 import com.badbones69.crazyenchantments.paper.api.enums.Dust;
 import com.badbones69.crazyenchantments.paper.api.enums.Messages;
 import com.badbones69.crazyenchantments.paper.api.objects.CEBook;
@@ -123,7 +124,7 @@ public class TinkererMenu extends InventoryBuilder {
                 player.closeInventory();
 
                 if (total != 0 && Support.vault.isEnabled()) { // this is to support vault
-                    this.plugin.getStarter().getVaultSupport().getVault().depositPlayer(player, total);
+                    SupportManager.getVaultCurrency().depositPlayer(player, total);
                 }
 
                 if (toggle) player.sendMessage(Messages.TINKER_SOLD_MESSAGE.getMessage());

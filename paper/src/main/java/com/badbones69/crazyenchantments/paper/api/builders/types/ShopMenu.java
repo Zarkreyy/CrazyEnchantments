@@ -3,8 +3,8 @@ package com.badbones69.crazyenchantments.paper.api.builders.types;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.builders.InventoryBuilder;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
-import com.badbones69.crazyenchantments.paper.api.economy.CurrencyAPI;
+import com.badbones69.crazyenchantments.paper.tasks.support.SupportManager;
+import com.badbones69.crazyenchantments.paper.tasks.support.enums.Currency;
 import com.badbones69.crazyenchantments.paper.api.managers.ShopManager;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -16,9 +16,6 @@ public class ShopMenu extends InventoryBuilder {
     @NotNull
     private final Starter starter = this.plugin.getStarter();
 
-    @NotNull
-    private final CurrencyAPI currencyAPI = this.starter.getCurrencyAPI();
-
     private final ShopManager shopManager = this.starter.getShopManager();
 
     public ShopMenu(Player player, int size, String title) {
@@ -27,10 +24,10 @@ public class ShopMenu extends InventoryBuilder {
 
     @Override
     public InventoryBuilder build() {
-        HashMap<String, String> placeholders = new HashMap<>();
+        Map<String, String> placeholders = new HashMap<>();
 
         for (Currency currency : Currency.values()) {
-            placeholders.put("%" + currency.getName() + "%", String.valueOf(this.currencyAPI.getCurrency(getPlayer(), currency)));
+            placeholders.put("%" + currency.getName() + "%", String.valueOf(SupportManager.getCurrency(getPlayer(), currency)));
         }
 
         for (Map.Entry<ItemBuilder, Integer> itemBuilders : this.shopManager.getCustomizerItems().entrySet()) {

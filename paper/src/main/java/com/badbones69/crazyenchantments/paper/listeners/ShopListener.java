@@ -6,7 +6,6 @@ import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.CrazyManager;
 import com.badbones69.crazyenchantments.paper.api.builders.types.MenuManager;
 import com.badbones69.crazyenchantments.paper.api.builders.types.ShopMenu;
-import com.badbones69.crazyenchantments.paper.api.economy.CurrencyAPI;
 import com.badbones69.crazyenchantments.paper.api.enums.Dust;
 import com.badbones69.crazyenchantments.paper.api.enums.Scrolls;
 import com.badbones69.crazyenchantments.paper.api.enums.ShopOption;
@@ -18,6 +17,7 @@ import com.badbones69.crazyenchantments.paper.api.objects.LostBook;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
 import com.badbones69.crazyenchantments.paper.controllers.settings.ProtectionCrystalSettings;
+import com.badbones69.crazyenchantments.paper.tasks.support.SupportManager;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -63,10 +63,6 @@ public class ShopListener implements Listener {
     @NotNull
     private final SlotCrystalListener slotCrystalListener = this.starter.getSlotCrystalListener();
 
-    // Economy Management.
-    @NotNull
-    private final CurrencyAPI currencyAPI = this.starter.getCurrencyAPI();
-
     @EventHandler(ignoreCancelled = true)
     public void onInvClick(InventoryClickEvent event) {
         ItemStack item = event.getCurrentItem();
@@ -88,11 +84,13 @@ public class ShopListener implements Listener {
                 if (this.methods.isInventoryFull(player)) return;
 
                 if (category.getCurrency() != null && player.getGameMode() != GameMode.CREATIVE) {
-                    if (this.currencyAPI.canBuy(player, category)) {
-                        this.currencyAPI.takeCurrency(player, category);
+                    if (SupportManager.canBuy(player, category.getCurrency(), category.getCost())) {
+                        SupportManager.takeCurrency(player, category.getCurrency(), category.getCost());
                     } else {
-                        String needed = String.valueOf(category.getCost() - this.currencyAPI.getCurrency(player, category.getCurrency()));
+                        String needed = String.valueOf(category.getCost() - SupportManager.getCurrency(player, category.getCurrency()));
+
                         this.methods.switchCurrency(player, category.getCurrency(), "%Money_Needed%", "%XP%", needed);
+
                         return;
                     }
                 }
@@ -115,10 +113,10 @@ public class ShopListener implements Listener {
                 if (this.methods.isInventoryFull(player)) return;
 
                 if (lostBook.getCurrency() != null && player.getGameMode() != GameMode.CREATIVE) {
-                    if (this.currencyAPI.canBuy(player, lostBook)) {
-                        this.currencyAPI.takeCurrency(player, lostBook);
+                    if (SupportManager.canBuy(player, lostBook.getCurrency(), lostBook.getCost())) {
+                        SupportManager.takeCurrency(player, lostBook.getCurrency(), lostBook.getCost());
                     } else {
-                        String needed = String.valueOf(lostBook.getCost() - this.currencyAPI.getCurrency(player, lostBook.getCurrency()));
+                        String needed = String.valueOf(lostBook.getCost() - SupportManager.getCurrency(player, lostBook.getCurrency()));
                         this.methods.switchCurrency(player, lostBook.getCurrency(), "%Money_Needed%", "%XP%", needed);
                         return;
                     }
@@ -137,10 +135,10 @@ public class ShopListener implements Listener {
                     if (this.methods.isInventoryFull(player)) return;
 
                     if (option.getCurrency() != null && player.getGameMode() != GameMode.CREATIVE) {
-                        if (this.currencyAPI.canBuy(player, option)) {
-                            this.currencyAPI.takeCurrency(player, option);
+                        if (SupportManager.canBuy(player, option.getCurrency(), option.getCost())) {
+                            SupportManager.takeCurrency(player, option.getCurrency(), option.getCost());
                         } else {
-                            String needed = String.valueOf(option.getCost() - this.currencyAPI.getCurrency(player, option.getCurrency()));
+                            String needed = String.valueOf(option.getCost() - SupportManager.getCurrency(player, option.getCurrency()));
                             this.methods.switchCurrency(player, option.getCurrency(), "%Money_Needed%", "%XP%", needed);
                             return;
                         }

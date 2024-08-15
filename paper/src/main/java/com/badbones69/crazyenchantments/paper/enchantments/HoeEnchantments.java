@@ -9,6 +9,8 @@ import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
 import com.badbones69.crazyenchantments.paper.api.utils.EnchantUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EventUtils;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
+import com.badbones69.crazyenchantments.paper.tasks.support.SupportManager;
+import com.badbones69.crazyenchantments.paper.tasks.support.types.items.CropSupport;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,6 +50,8 @@ public class HoeEnchantments implements Listener {
     @NotNull
     private final CrazyManager crazyManager = this.starter.getCrazyManager();
 
+    private final CropSupport cropSupport = SupportManager.getCropSupport();
+
     // Settings.
     @NotNull
     private final EnchantmentBookSettings enchantmentBookSettings = this.starter.getEnchantmentBookSettings();
@@ -73,7 +77,7 @@ public class HoeEnchantments implements Listener {
 
             // Crop is not fully grown.
             if (this.seedlings.contains(block.getType())
-                    && !this.crazyManager.getNMSSupport().isFullyGrown(block)
+                    && !this.cropSupport.isFullyGrown(block)
                     && EnchantUtils.isEventActive(CEnchantments.GREENTHUMB, player, hoe, enchantments)) {
                 fullyGrowPlant(block);
                 if (player.getGameMode() != GameMode.CREATIVE) this.methods.removeDurability(hoe, player);
@@ -90,7 +94,7 @@ public class HoeEnchantments implements Listener {
                         if (soil.getType() != Material.SOUL_SAND) {
                             for (Block water : getAreaBlocks(soil, 4)) {
                                 if (water.getType() == Material.WATER) {
-                                    this.crazyManager.getNMSSupport().hydrateSoil(soil);
+                                    this.cropSupport.hydrateSoil(soil);
                                     break;
                                 }
                             }
@@ -137,14 +141,15 @@ public class HoeEnchantments implements Listener {
             BlockFace blockFace = this.blocks.get(player.getUniqueId()).get(plant);
             this.blocks.remove(player.getUniqueId());
 
-            if (!this.crazyManager.getNMSSupport().isFullyGrown(plant)) return;
+            if (!this.cropSupport.isFullyGrown(plant)) return;
 
             getAreaCrops(plant, blockFace).forEach(block -> this.methods.playerBreakBlock(player, block, hoe, true));
         }
     }
 
     private void fullyGrowPlant(Block block) {
-        this.crazyManager.getNMSSupport().fullyGrowPlant(block);
+        this.cropSupport.fullyGrowPlant(block);
+
         block.getLocation().getWorld().spawnParticle(Particle.HAPPY_VILLAGER, block.getLocation(), 20, .25F, .25F, .25F);
     }
 
@@ -215,7 +220,7 @@ public class HoeEnchantments implements Listener {
         List<Block> blockList = new ArrayList<>();
 
         for (Block crop : getAreaBlocks(block, blockFace, 1)) { // Radius of 1 is 3x3
-            if (this.harvesterCrops.contains(crop.getType()) && this.crazyManager.getNMSSupport().isFullyGrown(crop)) {
+            if (this.harvesterCrops.contains(crop.getType()) && this.cropSupport.isFullyGrown(crop)) {
                 blockList.add(crop);
             }
         }

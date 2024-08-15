@@ -1,7 +1,7 @@
 package com.badbones69.crazyenchantments.paper.api.objects;
 
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
+import com.badbones69.crazyenchantments.paper.tasks.support.enums.Currency;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.badbones69.crazyenchantments.paper.api.events;
 
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
+import com.badbones69.crazyenchantments.paper.tasks.support.enums.Currency;
 import com.badbones69.crazyenchantments.paper.api.objects.CEBook;
 import com.badbones69.crazyenchantments.paper.api.objects.CEPlayer;
 import org.bukkit.event.Event;

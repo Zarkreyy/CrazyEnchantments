@@ -4,9 +4,8 @@ import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.enums.CEnchantments;
 import com.badbones69.crazyenchantments.paper.api.managers.WingsManager;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport.SupportedPlugins;
-import com.badbones69.crazyenchantments.paper.support.interfaces.claims.WorldGuardVersion;
+import com.badbones69.crazyenchantments.paper.tasks.support.SupportManager;
+import com.badbones69.crazyenchantments.paper.tasks.support.types.GenericProtection;
 import com.ryderbelserion.vital.paper.util.scheduler.FoliaRunnable;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -29,8 +28,7 @@ public class WingsUtils {
     @NotNull
     private static final Starter starter = plugin.getStarter();
 
-    @NotNull
-    private static final PluginSupport pluginSupport = starter.getPluginSupport();
+    private static final GenericProtection protection = SupportManager.getProtection();
 
     @NotNull
     private static final WingsManager wingsManager = starter.getWingsManager();
@@ -76,11 +74,12 @@ public class WingsUtils {
     }
 
     private static boolean inWingsRegion(Player player) {
-        if (!SupportedPlugins.WORLDGUARD.isPluginLoaded()) return true;
+        //todo() update plugin support
+        //if (!SupportedPlugins.WORLDGUARD.isPluginLoaded()) return true;
 
-        WorldGuardVersion worldGuardVersion = starter.getPluginSupport().getWorldGuardUtils().getWorldGuardSupport();
+        //WorldGuardVersion worldGuardVersion = starter.getPluginSupport().getWorldGuardUtils().getWorldGuardSupport();
 
-        for (String region : wingsManager.getRegions()) {
+        /*for (String region : wingsManager.getRegions()) {
             if (worldGuardVersion.inRegion(region, player.getLocation())) {
                 return true;
             } else {
@@ -88,20 +87,19 @@ public class WingsUtils {
 
                 if (wingsManager.canMembersFly() && worldGuardVersion.isMember(player)) return true;
             }
-        }
+        }*/
 
         return false;
     }
 
     public static boolean checkRegion(Player player) {
-        return wingsManager.inLimitlessFlightWorld(player) || (!wingsManager.inBlacklistedWorld(player) && (pluginSupport.inTerritory(player) || inWingsRegion(player) || wingsManager.inWhitelistedWorld(player)));
+        return wingsManager.inLimitlessFlightWorld(player) || (!wingsManager.inBlacklistedWorld(player) && (protection.isProtected(player.getLocation()) || inWingsRegion(player) || wingsManager.inWhitelistedWorld(player)));
     }
 
-    public static boolean isEnemiesNearby(Player player) {
+    public static boolean isEnemiesNearby(final Player player) {
         if (wingsManager.isEnemyCheckEnabled() && !wingsManager.inLimitlessFlightWorld(player)) {
-            for (Player otherPlayer : getNearbyPlayers(player, wingsManager.getEnemyRadius())) {
-                //todo() update this
-                if (!(player.hasPermission("crazyenchantments.bypass.wings") && pluginSupport.isFriendly(player, otherPlayer))) return true;
+            for (final Player target : getNearbyPlayers(player, wingsManager.getEnemyRadius())) {
+                if (!(player.hasPermission("crazyenchantments.bypass.wings") && !protection.canDamage(player, target))) return true;
             }
         }
 

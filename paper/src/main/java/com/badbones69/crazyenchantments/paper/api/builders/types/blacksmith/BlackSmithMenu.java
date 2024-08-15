@@ -4,8 +4,8 @@ import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Methods;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.builders.InventoryBuilder;
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
-import com.badbones69.crazyenchantments.paper.api.economy.CurrencyAPI;
+import com.badbones69.crazyenchantments.paper.tasks.support.SupportManager;
+import com.badbones69.crazyenchantments.paper.tasks.support.enums.Currency;
 import com.badbones69.crazyenchantments.paper.api.enums.Messages;
 import com.badbones69.crazyenchantments.paper.api.objects.BlackSmithResult;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
@@ -134,14 +134,11 @@ public class BlackSmithMenu extends InventoryBuilder {
                             Currency currency = BlackSmithManager.getCurrency();
 
                             if (currency != null && player.getGameMode() != GameMode.CREATIVE) {
-                                CurrencyAPI currencyAPI = this.plugin.getStarter().getCurrencyAPI();
-
-                                if (currencyAPI.canBuy(player, currency, result.getCost())) {
-                                    currencyAPI.takeCurrency(player, currency, result.getCost());
+                                if (SupportManager.canBuy(player, currency, result.getCost())) {
+                                    SupportManager.takeCurrency(player, currency, result.getCost());
                                 } else {
-                                    String needed = String.valueOf(result.getCost() - currencyAPI.getCurrency(player, currency));
+                                    this.methods.switchCurrency(player, currency, "%Money_Needed%", "%XP%", String.valueOf(result.getCost() - SupportManager.getCurrency(player, currency)));
 
-                                    this.methods.switchCurrency(player, currency, "%Money_Needed%", "%XP%", needed);
                                     return;
                                 }
                             }

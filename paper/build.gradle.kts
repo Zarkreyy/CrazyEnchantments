@@ -13,32 +13,14 @@ dependencies {
 
     compileOnly(libs.bundles.plugins)
 
-    compileOnly(libs.informative.annotations)
-
     compileOnly(libs.vault) {
         exclude("org.bukkit", "bukkit")
     }
 
-    compileOnly(libs.griefprevention)
+    compileOnly(libs.yardwatch)
 
     compileOnly(libs.worldguard)
     compileOnly(libs.worldedit)
-
-    compileOnly(libs.kingdoms)
-
-    compileOnly(libs.factions) {
-        exclude("org.kitteh")
-        exclude("org.spongepowered")
-        exclude("com.darkblade12")
-    }
-
-    compileOnly(libs.towny)
-
-    compileOnly(libs.paster)
-
-    compileOnly(libs.skyblock)
-
-    compileOnly(libs.plotsquared)
 
     compileOnly(libs.mcmmo)
 }

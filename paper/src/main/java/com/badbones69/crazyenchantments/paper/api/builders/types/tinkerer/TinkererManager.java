@@ -4,12 +4,11 @@ import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.Methods;
 import com.badbones69.crazyenchantments.paper.Starter;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
-import com.badbones69.crazyenchantments.paper.api.economy.CurrencyAPI;
+import com.badbones69.crazyenchantments.paper.tasks.support.SupportManager;
+import com.badbones69.crazyenchantments.paper.tasks.support.enums.Currency;
 import com.badbones69.crazyenchantments.paper.api.enums.pdc.DataKeys;
 import com.badbones69.crazyenchantments.paper.api.objects.CEBook;
 import com.badbones69.crazyenchantments.paper.api.objects.CEnchantment;
-import com.ryderbelserion.vital.common.utils.StringUtil;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
@@ -36,9 +35,6 @@ public class TinkererManager {
     @NotNull
     private static final Methods methods = starter.getMethods();
 
-    @NotNull
-    private static final CurrencyAPI currencyAPI = starter.getCurrencyAPI();
-
     public static boolean useExperience(Player player, PlayerInteractEvent event, boolean mainHand, FileConfiguration configuration) {
         PlayerInventory inventory = player.getInventory();
 
@@ -59,7 +55,7 @@ public class TinkererManager {
         }
 
         if (Currency.isCurrency(configuration.getString("Settings.Currency"))) {
-            currencyAPI.giveCurrency(player, Currency.getCurrency(configuration.getString("Settings.Currency")), amount);
+            SupportManager.giveCurrency(player, Currency.getCurrency(configuration.getString("Settings.Currency", "xp_level")), amount);
         }
 
         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);

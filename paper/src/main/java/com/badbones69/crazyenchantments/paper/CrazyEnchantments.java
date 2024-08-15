@@ -65,8 +65,6 @@ public class CrazyEnchantments extends JavaPlugin {
         this.starter = new Starter(this);
         this.starter.run();
 
-        this.starter.getCurrencyAPI().loadCurrency();
-
         FileConfiguration config = Files.CONFIG.getFile();
         FileConfiguration tinker = Files.TINKER.getFile();
 

@@ -2,21 +2,18 @@ package com.badbones69.crazyenchantments.paper;
 
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
 import com.badbones69.crazyenchantments.paper.api.builders.types.MenuManager;
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
+import com.badbones69.crazyenchantments.paper.tasks.support.enums.Currency;
 import com.badbones69.crazyenchantments.paper.api.enums.Messages;
 import com.badbones69.crazyenchantments.paper.api.objects.enchants.EnchantmentType;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EventUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.NumberUtils;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport;
-import com.badbones69.crazyenchantments.paper.support.misc.OraxenSupport;
+import com.badbones69.crazyenchantments.paper.tasks.support.types.items.OraxenSupport;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
-import org.bukkit.damage.DamageSource;
-import org.bukkit.damage.DamageType;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event;
@@ -24,7 +21,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDropItemEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -45,10 +41,6 @@ public class Methods { //todo() purge this of hacky lore checks
 
     @NotNull
     private final Starter starter = this.plugin.getStarter();
-
-    // Plugin Support.
-    @NotNull
-    private final PluginSupport pluginSupport = this.starter.getPluginSupport();
 
     @NotNull
     private final OraxenSupport oraxenSupport = this.starter.getOraxenSupport();
@@ -272,17 +264,19 @@ public class Methods { //todo() purge this of hacky lore checks
     }
 
     public int getMaxDurability(@NotNull ItemStack item) {
-        if (!PluginSupport.SupportedPlugins.ORAXEN.isPluginLoaded()) return item.getType().getMaxDurability();
+        //todo() update this
+        //if (!PluginSupport.SupportedPlugins.ORAXEN.isPluginLoaded()) return item.getType().getMaxDurability();
 
         return this.oraxenSupport.getMaxDurability(item);
     }
 
     public int getDurability(@NotNull ItemStack item) {
-        if (!PluginSupport.SupportedPlugins.ORAXEN.isPluginLoaded()) {
+        //todo() update this
+        /*if (!PluginSupport.SupportedPlugins.ORAXEN.isPluginLoaded()) {
             ItemMeta meta = item.getItemMeta();
             if (meta instanceof Damageable) return ((Damageable) item.getItemMeta()).getDamage();
             return 0;
-        }
+        }*/
 
         return this.oraxenSupport.getDamage(item);
     }
@@ -290,7 +284,8 @@ public class Methods { //todo() purge this of hacky lore checks
     public void setDurability(@NotNull ItemStack item, int newDamage) {
         newDamage = Math.max(newDamage, 0);
 
-        if (!PluginSupport.SupportedPlugins.ORAXEN.isPluginLoaded()) {
+        //todo() update this
+        /*if (!PluginSupport.SupportedPlugins.ORAXEN.isPluginLoaded()) {
             ItemMeta meta = item.getItemMeta();
 
             if (meta instanceof Damageable damageable) {
@@ -299,7 +294,7 @@ public class Methods { //todo() purge this of hacky lore checks
             }
 
             return;
-        }
+        }*/
 
         this.oraxenSupport.setDamage(item, newDamage);
     }
@@ -339,19 +334,19 @@ public class Methods { //todo() purge this of hacky lore checks
         spawnExplodeParticles(player.getWorld(), player.getLocation());
 
         for (Entity entity : getNearbyEntities(3D, player)) {
-            if (this.pluginSupport.allowCombat(entity.getLocation())) {
+            /*if (this.pluginSupport.allowCombat(entity.getLocation())) { //todo() update this
                 if (entity.getType() == EntityType.ITEM) {
                     entity.remove();
                     continue;
                 }
 
                 if (!(entity instanceof LivingEntity en)) continue;
-                if (this.pluginSupport.isFriendly(player, en)) continue;
+                //if (this.pluginSupport.isFriendly(player, en)) continue;
                 if (player.getName().equalsIgnoreCase(entity.getName())) continue;
                 en.damage(5D);
 
                 en.setVelocity(en.getLocation().toVector().subtract(player.getLocation().toVector()).normalize().multiply(1).setY(.5));
-            }
+            }*/
         }
     }
 
@@ -368,7 +363,7 @@ public class Methods { //todo() purge this of hacky lore checks
         spawnExplodeParticles(shooter.getWorld(), arrow.getLocation());
 
         for (Entity value : getNearbyEntities(3D, arrow)) {
-            if (this.pluginSupport.allowCombat(value.getLocation())) {
+            /*if (this.pluginSupport.allowCombat(value.getLocation())) { //todo() update this
                 if (value.getType() == EntityType.ITEM) {
                     value.remove();
                     continue;
@@ -386,8 +381,7 @@ public class Methods { //todo() purge this of hacky lore checks
                 livingEntity.damage(5D);
 
                 livingEntity.setVelocity(livingEntity.getLocation().toVector().subtract(arrow.getLocation().toVector()).normalize().multiply(1).setY(.5));
-
-            }
+            }*/
         }
     }
 
@@ -417,7 +411,8 @@ public class Methods { //todo() purge this of hacky lore checks
         EventUtils.addIgnoredUUID(damager.getUniqueId());
         this.plugin.getServer().getPluginManager().callEvent(damageByEntityEvent);
 
-        if (!damageByEntityEvent.isCancelled() && this.pluginSupport.allowCombat(entity.getLocation()) && !this.pluginSupport.isFriendly(damager, entity)) entity.damage(5D);
+        //todo() update this
+        //if (!damageByEntityEvent.isCancelled() && this.pluginSupport.allowCombat(entity.getLocation()) && !this.pluginSupport.isFriendly(damager, entity)) entity.damage(5D);
 
         EventUtils.removeIgnoredEvent(damageByEntityEvent);
         EventUtils.removeIgnoredUUID(damager.getUniqueId());

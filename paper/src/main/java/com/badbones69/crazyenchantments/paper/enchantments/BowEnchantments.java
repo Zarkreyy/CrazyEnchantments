@@ -14,7 +14,6 @@ import com.badbones69.crazyenchantments.paper.api.utils.BowUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EnchantUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EventUtils;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
@@ -54,10 +53,6 @@ public class BowEnchantments implements Listener {
 
     @NotNull
     private final EnchantmentBookSettings enchantmentBookSettings = this.starter.getEnchantmentBookSettings();
-
-    // Plugin Support.
-    @NotNull
-    private final PluginSupport pluginSupport = this.starter.getPluginSupport();
 
     // Plugin Managers.
     @NotNull
@@ -133,8 +128,9 @@ public class BowEnchantments implements Listener {
                 EventUtils.addIgnoredUUID(shooter.getUniqueId());
                 shooter.getServer().getPluginManager().callEvent(damageByEntityEvent);
 
-                if (!damageByEntityEvent.isCancelled() && !this.pluginSupport.isFriendly(arrow.getShooter(), entity) && !arrow.getShooter().getUniqueId().equals(entity.getUniqueId()))
-                    entity.damage(5D);
+                //todo() update plugin support
+                /*if (!damageByEntityEvent.isCancelled() && !this.pluginSupport.isFriendly(arrow.getShooter(), entity) && !arrow.getShooter().getUniqueId().equals(entity.getUniqueId()))
+                    entity.damage(5D);*/
 
                 EventUtils.removeIgnoredEvent(damageByEntityEvent);
                 EventUtils.removeIgnoredUUID(shooter.getUniqueId());
@@ -156,11 +152,14 @@ public class BowEnchantments implements Listener {
         EnchantedArrow arrow = this.bowUtils.getEnchantedArrow(entityArrow);
         if (arrow == null) return;
 
-        if (!this.pluginSupport.allowCombat(arrow.arrow().getLocation())) return;
+        //todo() update plugin support
+        /*if (!this.pluginSupport.allowCombat(arrow.arrow().getLocation())) return;*/
+
         ItemStack bow = arrow.bow();
         // Damaged player is friendly.
 
-        if (EnchantUtils.isEventActive(CEnchantments.DOCTOR, arrow.getShooter(), arrow.bow(), arrow.enchantments()) && this.pluginSupport.isFriendly(arrow.getShooter(), event.getEntity())) {
+        //todo() update plugin support
+        /*if (EnchantUtils.isEventActive(CEnchantments.DOCTOR, arrow.getShooter(), arrow.bow(), arrow.enchantments()) && this.pluginSupport.isFriendly(arrow.getShooter(), event.getEntity())) {
             int heal = 1 + arrow.getLevel(CEnchantments.DOCTOR);
             // Uses getValue as if the player has health boost it is modifying the base so the value after the modifier is needed.
             double maxHealth = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue(); //todo() null safety, also check for attribute modifier changes
@@ -172,7 +171,7 @@ public class BowEnchantments implements Listener {
         }
 
         // Damaged player is an enemy.
-        if (this.pluginSupport.isFriendly(arrow.getShooter(), entity)) return;
+        if (this.pluginSupport.isFriendly(arrow.getShooter(), entity)) return;*/
 
         this.bowUtils.spawnWebs(event.getEntity(), arrow, entityArrow);
 

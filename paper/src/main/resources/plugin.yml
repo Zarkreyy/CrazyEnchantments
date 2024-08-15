@@ -11,6 +11,7 @@ folia-supported: true
 website: '${website}'
 
 softdepend:
+  - YardWatch
   - WorldGuard
   - WorldEdit
   - PlotSquared

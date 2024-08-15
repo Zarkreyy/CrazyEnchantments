@@ -30,8 +30,6 @@ import com.badbones69.crazyenchantments.paper.controllers.settings.ProtectionCry
 import com.badbones69.crazyenchantments.paper.listeners.ScramblerListener;
 import com.badbones69.crazyenchantments.paper.listeners.ScrollListener;
 import com.badbones69.crazyenchantments.paper.listeners.SlotCrystalListener;
-import com.badbones69.crazyenchantments.paper.support.CropManager;
-import com.badbones69.crazyenchantments.paper.support.interfaces.CropManagerVersion;
 import com.badbones69.crazyenchantments.paper.utils.ItemUtils;
 import com.google.gson.Gson;
 import com.ryderbelserion.vital.paper.util.ItemUtil;
@@ -89,8 +87,6 @@ public class CrazyManager {
 
     @NotNull
     private final SlotCrystalListener slotCrystalListener = this.starter.getSlotCrystalListener();
-
-    private CropManagerVersion cropManagerVersion;
 
     @NotNull
     private final AllyManager allyManager = this.starter.getAllyManager();
@@ -151,8 +147,6 @@ public class CrazyManager {
         this.gkitz.clear();
         this.enchantmentBookSettings.getRegisteredEnchantments().clear();
         this.enchantmentBookSettings.getCategories().clear();
-
-        this.starter.getPluginSupport().updateHooks();
 
         // Check if we should patch player health.
         boolean playerHealthPatch = config.getBoolean("Settings.Reset-Players-Max-Health", true);
@@ -289,8 +283,6 @@ public class CrazyManager {
         // Loads the Scroll Control settings.
         this.scrollListener.loadScrollControl();
 
-        this.cropManagerVersion = new CropManager();
-
         // Loads the scrolls.
         Scrolls.loadScrolls();
         // Loads the dust.
@@ -382,13 +374,6 @@ public class CrazyManager {
         }
 
         Files.DATA.saveFile();
-    }
-
-    /**
-     * @return NMS support class.
-     */
-    public CropManagerVersion getNMSSupport() {
-        return this.cropManagerVersion;
     }
 
     public boolean checkVanillaLimit() {

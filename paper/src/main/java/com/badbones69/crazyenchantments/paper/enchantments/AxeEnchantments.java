@@ -11,7 +11,6 @@ import com.badbones69.crazyenchantments.paper.api.utils.EnchantUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EntityUtils;
 import com.badbones69.crazyenchantments.paper.api.utils.EventUtils;
 import com.badbones69.crazyenchantments.paper.controllers.settings.EnchantmentBookSettings;
-import com.badbones69.crazyenchantments.paper.support.PluginSupport;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -50,14 +49,11 @@ public class AxeEnchantments implements Listener {
     @NotNull
     private final CrazyManager crazyManager = this.starter.getCrazyManager();
 
-    // Plugin Support.
-    @NotNull
-    private final PluginSupport pluginSupport = this.starter.getPluginSupport();
-
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         if (EventUtils.isIgnoredEvent(event)) return;
-        if (this.pluginSupport.isFriendly(event.getDamager(), event.getEntity())) return;
+        //todo() update plugin support
+        //if (this.pluginSupport.isFriendly(event.getDamager(), event.getEntity())) return;
 
         if (!(event.getEntity() instanceof LivingEntity entity)) return;
         if (!(event.getDamager() instanceof Player damager)) return;
@@ -94,11 +90,12 @@ public class AxeEnchantments implements Listener {
         if (EnchantUtils.isEventActive(CEnchantments.BATTLECRY, damager, item, enchantments)) {
             for (Entity nearbyEntity : damager.getNearbyEntities(3, 3, 3)) {
                 entity.getScheduler().run(plugin, task -> {
-                    if (!this.pluginSupport.isFriendly(damager, nearbyEntity)) {
+                    //todo() update plugin support
+                    /*if (!this.pluginSupport.isFriendly(damager, nearbyEntity)) {
                         Vector vector = damager.getLocation().toVector().normalize().setY(.5);
                         Vector vector1 = nearbyEntity.getLocation().toVector().subtract(vector);
                         nearbyEntity.setVelocity(vector1);
-                    }
+                    }*/
                 }, null);
             }
         }
@@ -122,7 +119,8 @@ public class AxeEnchantments implements Listener {
 
         if (player.getKiller() == null) return;
 
-        if (!this.pluginSupport.allowCombat(player.getLocation())) return;
+        //todo() update plugin support
+        //if (!this.pluginSupport.allowCombat(player.getLocation())) return;
 
         Player damager = player.getKiller();
         ItemStack item = this.methods.getItemInHand(damager);

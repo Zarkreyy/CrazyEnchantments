@@ -2,7 +2,7 @@ package com.badbones69.crazyenchantments.paper.api.builders.types.blacksmith;
 
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
+import com.badbones69.crazyenchantments.paper.tasks.support.enums.Currency;
 import com.badbones69.crazyenchantments.paper.api.utils.ColorUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;

@@ -3,7 +3,7 @@ package com.badbones69.crazyenchantments.paper.api.enums;
 import com.badbones69.crazyenchantments.paper.CrazyEnchantments;
 import com.badbones69.crazyenchantments.paper.api.FileManager.Files;
 import com.badbones69.crazyenchantments.paper.api.builders.ItemBuilder;
-import com.badbones69.crazyenchantments.paper.api.economy.Currency;
+import com.badbones69.crazyenchantments.paper.tasks.support.enums.Currency;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -66,7 +66,7 @@ public enum ShopOption {
                 config.getInt(itemPath + "Slot", 1) - 1,
                 config.getBoolean(itemPath + "InGUI", true),
                 config.getInt(costPath + "Cost", 100),
-                Currency.getCurrency(config.getString(costPath + "Currency", "Vault").toLowerCase()))); // looks prettier when lowercased
+                Currency.getCurrency(config.getString(costPath + "Currency", "vault").toLowerCase()))); // looks prettier when lowercased
             } catch (Exception exception) {
                 plugin.getLogger().log(Level.SEVERE, "The option " + shopOption.getOptionPath() + " has failed to load.", exception);
             }

@@ -1,4 +1,4 @@
-package com.badbones69.crazyenchantments.paper.api.economy;
+package com.badbones69.crazyenchantments.paper.tasks.support.enums;
 
 public enum Currency {
     
@@ -37,7 +37,7 @@ public enum Currency {
             if (currency.toLowerCase().equalsIgnoreCase(value.getName())) return value;
         }
 
-        return null;
+        return Currency.XP_LEVEL;
     }
     
     /**
