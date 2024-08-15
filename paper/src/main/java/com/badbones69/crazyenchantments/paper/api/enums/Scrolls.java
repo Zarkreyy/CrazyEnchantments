@@ -121,7 +121,7 @@ public enum Scrolls {
         // creates a new itembuilder without creating a new itemstack!
         final ItemBuilder itemBuilder = new ItemBuilder(item);
 
-        final List<String> lore = itemBuilder.getStrippedLore(); // todo() test and run this through a spark profile
+        final List<String> lore = itemBuilder.getDisplayLore(); // todo() test and run this through a spark profile
         lore.add(getWhiteScrollProtectionName());
 
         itemBuilder.setDisplayLore(lore);
