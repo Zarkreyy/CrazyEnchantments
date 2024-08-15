@@ -101,7 +101,7 @@ public class TinkererManager {
 
         if (item.hasItemMeta() && item.getItemMeta().hasEnchants()) { // Vanilla Enchantments
             for (Map.Entry<Enchantment, Integer> enchantment : item.getEnchantments().entrySet()) {
-                String[] values = config.getString("Tinker.Vanilla-Enchantments." + StringUtil.getEnchant(enchantment.getKey().getKey().value()), "0").replaceAll(" ", "").split(",");
+                String[] values = config.getString("Tinker.Vanilla-Enchantments." + enchantment.getKey().getKey().value(), "0").replaceAll(" ", "").split(",");
                 int baseAmount = Integer.parseInt(values[0]);
                 int multiplier = values.length < 2 ? 0 : Integer.parseInt(values[1]);
                 int enchantmentLevel = enchantment.getValue();
