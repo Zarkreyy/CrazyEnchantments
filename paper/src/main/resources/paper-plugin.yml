@@ -1,6 +1,7 @@
 name: '${name}'
-main: '${group}.loader.CrazyEnchantmentsPlugin'
-loader: '${group}.loader.CrazyEnchantmentsLoader'
+main: '${group}.CrazyEnchantments'
+loader: '${group}.loader.CrazyLoader'
+bootstrapper: '${group}.loader.CrazyLoader'
 
 version: '${version}'
 api-version: '${apiVersion}'
