@@ -1,84 +1,31 @@
 plugins {
-    alias(libs.plugins.paperweight)
     alias(libs.plugins.runPaper)
     alias(libs.plugins.shadow)
-
-    `paper-plugin`
 }
 
-base {
-    archivesName.set(rootProject.name)
+repositories {
+    maven("https://papermc.io/repo/repository/maven-public/")
+
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+
+    maven("https://repo.essentialsx.net/releases")
 }
 
 dependencies {
-    paperweight.paperDevBundle(libs.versions.paper)
+    //compileOnly(libs.bundles.cloud.paper)
 
-    compileOnly(libs.informative.annotations)
-
-    compileOnly(libs.vault) {
+    compileOnly(libs.bundles.shared) {
+        exclude("org.spigotmc", "spigot-api")
+        exclude("org.bstats", "bstats-bukkit")
         exclude("org.bukkit", "bukkit")
     }
 
-    compileOnly(libs.griefprevention)
+    compileOnly(libs.vital.paper)
 
-    //compileOnly(libs.nocheatplus)
-
-    compileOnly(libs.oraxen)
-
-    compileOnly(libs.worldguard)
-    compileOnly(libs.worldedit)
-
-    compileOnly(libs.kingdoms)
-
-    compileOnly(libs.factions) {
-        exclude("org.kitteh")
-        exclude("org.spongepowered")
-        exclude("com.darkblade12")
-    }
-
-    compileOnly(libs.towny)
-
-    compileOnly(libs.lands)
-
-    compileOnly(libs.paster)
-
-    compileOnly(libs.skyblock)
-
-    compileOnly(libs.plotsquared)
-
-    compileOnly(libs.mcmmo)
-}
-
-val component: SoftwareComponent = components["java"]
-
-paperweight {
-    paperweight.reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
+    compileOnly(libs.paper)
 }
 
 tasks {
-    publishing {
-        repositories {
-            maven {
-                url = uri("https://repo.crazycrew.us/releases")
-
-                credentials {
-                    this.username = System.getenv("gradle_username")
-                    this.password = System.getenv("gradle_password")
-                }
-            }
-        }
-
-        publications{
-            create<MavenPublication>("maven") {
-                groupId = rootProject.group.toString()
-                artifactId = "${rootProject.name.lowercase()}-paper-api"
-                version = rootProject.version.toString()
-
-                from(component)
-            }
-        }
-    }
-
     runServer {
         jvmArgs("-Dnet.kyori.ansi.colorLevel=truecolor")
 
@@ -88,6 +35,8 @@ tasks {
     }
 
     assemble {
+        dependsOn(shadowJar)
+
         doLast {
             copy {
                 from(shadowJar.get())
@@ -100,23 +49,22 @@ tasks {
         archiveBaseName.set(rootProject.name)
         archiveClassifier.set("")
 
-        listOf(
-            "de.tr7zw.changeme.nbtapi"
-        ).forEach {
-            relocate(it, "libs.$it")
-        }
+        //listOf(
+        //    "com.ryderbelserion.vital"
+        //).forEach {
+        //    relocate(it, "libs.$it")
+        //}
     }
 
     processResources {
         inputs.properties("name" to rootProject.name)
         inputs.properties("version" to project.version)
-        inputs.properties("group" to "${project.group}.paper")
-        inputs.properties("description" to project.properties["description"])
+        inputs.properties("group" to project.group)
         inputs.properties("apiVersion" to libs.versions.minecraft.get())
-        inputs.properties("authors" to project.properties["authors"])
-        inputs.properties("website" to project.properties["website"])
+        inputs.properties("description" to project.description)
+        inputs.properties("website" to "https://modrinth.com/plugin/crazyenchantments")
 
-        filesMatching("plugin.yml") {
+        filesMatching("paper-plugin.yml") {
             expand(inputs.properties)
         }
     }
