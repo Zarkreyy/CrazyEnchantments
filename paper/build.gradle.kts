@@ -20,7 +20,7 @@ dependencies {
         exclude("org.bukkit", "bukkit")
     }
 
-    compileOnly(libs.vital.paper)
+    implementation(libs.vital.paper)
 
     compileOnly(libs.paper)
 }
@@ -49,11 +49,11 @@ tasks {
         archiveBaseName.set(rootProject.name)
         archiveClassifier.set("")
 
-        //listOf(
-        //    "com.ryderbelserion.vital"
-        //).forEach {
-        //    relocate(it, "libs.$it")
-        //}
+        listOf(
+            "com.ryderbelserion.vital"
+        ).forEach {
+            relocate(it, "libs.$it")
+        }
     }
 
     processResources {
