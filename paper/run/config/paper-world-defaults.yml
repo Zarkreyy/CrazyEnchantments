@@ -143,6 +143,7 @@ entities:
         cobblestone: 300
     count-all-mobs-for-spawning: false
     creative-arrow-despawn-rate: default
+    despawn-range-shape: ELLIPSOID
     despawn-ranges:
       ambient:
         hard: 128
@@ -249,6 +250,8 @@ environment:
     find-already-discovered:
       loot-tables: default
       villager-trade: false
+  void-damage-amount: 4.0
+  void-damage-min-build-height-offset: -64.0
   water-over-lava-flow-speed: 5
 feature-seeds:
   generate-random-seeds-for-all: false
@@ -274,6 +277,7 @@ lootables:
   reset-seed-on-fill: true
   restrict-player-reloot: true
   restrict-player-reloot-time: disabled
+  retain-unlooted-shulker-box-loot-table-on-non-player-break: true
 maps:
   item-frame-cursor-limit: 128
   item-frame-cursor-update-interval: 10
@@ -284,6 +288,7 @@ max-growth-height:
   cactus: 3
   reeds: 3
 misc:
+  alternate-current-update-order: HORIZONTAL_FIRST_OUTWARD
   disable-end-credits: false
   disable-relative-projectile-velocity: false
   disable-sprint-interruption-on-attack: false
