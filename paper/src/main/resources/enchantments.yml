@@ -1,0 +1,28 @@
+enchantments:
+  viper: # Do not change this
+    # Should this enchant be enabled?
+    enabled: true
+    # The cosmetic look of the enchantment
+    display:
+      # The name of the enchantment
+      name: '<red>Viper'
+    # The max level
+    max-level: 3
+    # The weight
+    weight: 10
+    # A list of items, supporting applying the enchantment directly.
+    supported-items:
+      - 'swords'
+      - 'axes'
+    # What
+    enchantment-table:
+      # Should this be in the enchantment table?
+      enabled: false
+      # What items can the enchant apply to from the table?
+      primary-items:
+        - 'swords'
+        - 'axes'
+    # Anvil related settings
+    anvil:
+      # The cost to apply/repair an item with this enchant in the anvil.
+      cost: 1
