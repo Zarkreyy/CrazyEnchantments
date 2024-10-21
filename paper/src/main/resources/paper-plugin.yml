@@ -1,6 +1,6 @@
 name: '${name}'
 main: '${group}.CrazyEnchantments'
-loader: '${group}.loader.CrazyLoader'
+#loader: '${group}.loader.CrazyLoader'
 bootstrapper: '${group}.loader.CrazyLoader'
 
 version: '${version}'

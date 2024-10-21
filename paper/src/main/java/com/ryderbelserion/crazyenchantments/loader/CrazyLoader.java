@@ -1,40 +1,33 @@
 package com.ryderbelserion.crazyenchantments.loader;
 
 import com.ryderbelserion.crazyenchantments.CrazyEnchantments;
+import com.ryderbelserion.vital.paper.VitalPaper;
+import com.ryderbelserion.vital.paper.api.files.FileManager;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.plugin.bootstrap.PluginProviderContext;
-import io.papermc.paper.plugin.loader.PluginClasspathBuilder;
-import io.papermc.paper.plugin.loader.PluginLoader;
-import io.papermc.paper.plugin.loader.library.impl.MavenLibraryResolver;
+import io.papermc.paper.registry.event.RegistryEvents;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.eclipse.aether.artifact.DefaultArtifact;
-import org.eclipse.aether.graph.Dependency;
-import org.eclipse.aether.repository.RemoteRepository;
 import org.jetbrains.annotations.NotNull;
 
-public class CrazyLoader implements PluginBootstrap, PluginLoader {
+public class CrazyLoader implements PluginBootstrap {
+
+    private VitalPaper vital;
 
     @Override
     public void bootstrap(@NotNull BootstrapContext context) {
+        this.vital = new VitalPaper(context);
+
+        //this.fileManager.addFile("enchantments.yml");
+
+        final FileManager fileManager = this.vital.getFileManager();
+
+        fileManager.addFile("enchantments.yml");
 
     }
 
     @Override
     public @NotNull JavaPlugin createPlugin(@NotNull PluginProviderContext context) {
-        return new CrazyEnchantments();
-    }
-
-    @Override
-    public void classloader(@NotNull PluginClasspathBuilder classpathBuilder) {
-        MavenLibraryResolver resolver = new MavenLibraryResolver();
-
-        resolver.addDependency(new Dependency(new DefaultArtifact("com.ryderbelserion.vital:paper:1.0.6"), null));
-
-        //resolver.addRepository(new RemoteRepository.Builder("paper", "default", "https://repo.papermc.io/repository/maven-public").build());
-
-        resolver.addRepository(new RemoteRepository.Builder("crazycrew", "default", "https://repo.crazycrew.us/libraries").build());
-
-        classpathBuilder.addLibrary(resolver);
+        return new CrazyEnchantments(this.vital);
     }
 }
