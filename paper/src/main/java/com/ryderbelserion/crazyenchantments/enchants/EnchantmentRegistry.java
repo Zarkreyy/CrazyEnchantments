@@ -1,8 +1,8 @@
 package com.ryderbelserion.crazyenchantments.enchants;
 
 import com.ryderbelserion.crazyenchantments.enchants.interfaces.CustomEnchantment;
-import com.ryderbelserion.crazyenchantments.enchants.types.DisorderEnchantment;
-import com.ryderbelserion.crazyenchantments.enchants.types.ViperEnchantment;
+import com.ryderbelserion.crazyenchantments.enchants.types.DisorderEnchant;
+import com.ryderbelserion.crazyenchantments.enchants.types.ViperEnchant;
 import com.ryderbelserion.vital.paper.api.files.CustomFile;
 import com.ryderbelserion.vital.paper.api.files.FileManager;
 import net.kyori.adventure.key.Key;
@@ -61,9 +61,9 @@ public class EnchantmentRegistry {
 
             switch (value) {
                 case "viper" -> {
-                    enchantment = new ViperEnchantment(enchantmentSection);
+                    enchantment = new ViperEnchant(enchantmentSection);
 
-                    key = ViperEnchantment.viper_key;
+                    key = ViperEnchant.viper_key;
                 }
             }
 
@@ -97,9 +97,9 @@ public class EnchantmentRegistry {
 
             switch (value) {
                 case "disorder" -> {
-                    enchantment = new DisorderEnchantment(enchantmentSection);
+                    enchantment = new DisorderEnchant(enchantmentSection);
 
-                    key = DisorderEnchantment.disorder_key;
+                    key = DisorderEnchant.disorder_key;
                 }
             }
 

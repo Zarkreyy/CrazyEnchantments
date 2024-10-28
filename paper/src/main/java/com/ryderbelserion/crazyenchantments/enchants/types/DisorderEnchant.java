@@ -1,4 +1,4 @@
-package com.ryderbelserion.crazyenchantments.enchants;
+package com.ryderbelserion.crazyenchantments.enchants.types;
 
 import com.ryderbelserion.crazyenchantments.enchants.interfaces.CustomEnchantment;
 import com.ryderbelserion.vital.utils.Methods;
@@ -13,19 +13,19 @@ import org.bukkit.inventory.ItemType;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ViperEnchantment implements CustomEnchantment {
+public class DisorderEnchant implements CustomEnchantment {
 
-    public static final Key viper_key = Key.key("crazyenchantments:viper");
+    public static final Key disorder_key = Key.key("crazyenchantments:disorder_curse");
 
     private final ConfigurationSection section;
 
-    public ViperEnchantment(final ConfigurationSection section) {
+    public DisorderEnchant(final ConfigurationSection section) {
         this.section = section;
     }
 
     @Override
     public Key getKey() {
-        return viper_key;
+        return disorder_key;
     }
 
     @Override
