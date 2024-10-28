@@ -1,35 +1,36 @@
 package com.ryderbelserion.crazyenchantments.loader;
 
 import com.ryderbelserion.crazyenchantments.CrazyEnchantments;
-import com.ryderbelserion.crazyenchantments.enchants.ViperEnchantment;
-import com.ryderbelserion.crazyenchantments.enchants.interfaces.CustomEnchantment;
+import com.ryderbelserion.crazyenchantments.enchants.EnchantmentRegistry;
 import com.ryderbelserion.vital.paper.VitalPaper;
 import com.ryderbelserion.vital.paper.api.files.FileManager;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.plugin.bootstrap.PluginProviderContext;
-import io.papermc.paper.registry.RegistryKey;
-import io.papermc.paper.registry.TypedKey;
-import io.papermc.paper.registry.data.EnchantmentRegistryEntry;
-import io.papermc.paper.registry.event.RegistryEvents;
-import io.papermc.paper.registry.event.WritableRegistry;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-import java.util.HashSet;
-import java.util.Set;
 
 public class CrazyLoader implements PluginBootstrap {
 
+    private EnchantmentRegistry registry;
     private VitalPaper vital;
 
     @Override
     public void bootstrap(@NotNull BootstrapContext context) {
         this.vital = new VitalPaper(context);
 
-        final Set<CustomEnchantment> enchants = getCustomEnchantments();
+        final FileManager fileManager = this.vital.getFileManager();
+
+        fileManager.addFile("curses.yml", "types")
+                .addFile("enchants.yml", "types")
+                .init();
+
+        this.registry = new EnchantmentRegistry(fileManager);
+
+        this.registry.populateEnchantments();
+        this.registry.populateCurses();
+
+        /*final Set<CustomEnchantment> enchants = getCustomEnchantments();
 
         // Register a new handled for the freeze lifecycle event on the enchantment registry
         context.getLifecycleManager().registerEventHandler(RegistryEvents.ENCHANTMENT.freeze().newHandler(event -> {
@@ -59,46 +60,11 @@ public class CrazyLoader implements PluginBootstrap {
                     builder.minimumCost(enchantment.getMinimumCost());
                 });
             }
-        }));
+        }));*/
     }
 
     @Override
     public @NotNull JavaPlugin createPlugin(@NotNull PluginProviderContext context) {
-        return new CrazyEnchantments(this.vital);
-    }
-
-    private @NotNull Set<CustomEnchantment> getCustomEnchantments() {
-        final FileManager fileManager = this.vital.getFileManager();
-
-        fileManager.addFile("enchantments.yml");
-
-        final YamlConfiguration file = fileManager.getFile("enchantments.yml").getConfiguration();
-
-        final Set<CustomEnchantment> enchants = new HashSet<>();
-
-        if (file != null) {
-            final ConfigurationSection section = file.getConfigurationSection("enchantments");
-
-            if (section != null) {
-                for (final String key : section.getKeys(false)) {
-                    final ConfigurationSection enchantmentSection = section.getConfigurationSection(key);
-
-                    if (enchantmentSection == null) continue;
-
-                    CustomEnchantment enchantment = null;
-
-                    switch (key) {
-                        case "viper" -> {
-                            enchantment = new ViperEnchantment(enchantmentSection);
-                        }
-                    }
-
-                    if (enchantment == null) continue;
-
-                    enchants.add(enchantment);
-                }
-            }
-        }
-        return enchants;
+        return new CrazyEnchantments(this.vital, this.registry);
     }
 }

@@ -1,0 +1,34 @@
+enchantments:
+  disorder: # Do not change this
+    # Should this enchant be enabled?
+    enabled: true
+    # The cosmetic look of the enchantment
+    display:
+      # The name of the enchantment
+      name: '<red>Disorder'
+    # The max level
+    max-level: 3
+    # The weight
+    weight: 10
+    # A list of items, supporting applying the enchantment directly.
+    supported-items:
+      - 'swords'
+    # Should this be in the enchantment table?
+    enchantment-table: false
+    # The cost to apply/repair an item with this enchant in the anvil.
+    anvil-cost: 1
+    # The minimum cost settings
+    minimum-cost:
+      # The extra cost per level
+      extra-per-level: 1
+      # The minimum base cost
+      base: 15
+    # The maximum cost settings
+    maximum-cost:
+      # The extra cost per level
+      extra-per-level: 1
+      # The maximum base cost
+      base: 65
+    # Each level increases the chance to activate by this much.
+    # Not all enchantments have this, if you don't see it in some enchantments. They don't have an activation chance.
+    chance-to-activate-per-level: 0.025
