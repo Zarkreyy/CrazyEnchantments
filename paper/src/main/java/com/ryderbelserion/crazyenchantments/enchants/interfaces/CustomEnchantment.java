@@ -3,6 +3,7 @@ package com.ryderbelserion.crazyenchantments.enchants.interfaces;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry;
+import io.papermc.paper.registry.tag.TagKey;
 import io.papermc.paper.tag.TagEntry;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
@@ -29,15 +30,17 @@ public interface CustomEnchantment {
 
     Iterable<EquipmentSlotGroup> getActiveSlots();
 
-    boolean canGetFromEnchantingTable();
-
     boolean isEnabled();
+
+    boolean isCurse();
 
     Set<TagEntry<ItemType>> getSupportedItems();
 
-    //TagKey<ItemType> getTagForSupportedItems();
+    Set<TagKey<Enchantment>> getEnchantTagKeys();
 
-    Set<TagEntry<ItemType>> getPrimaryItems();
+    default TagKey<ItemType> getTagForSupportedItems() {
+        return TagKey.create(RegistryKey.ITEM, Key.key( getKey().asString() + "_enchantable"));
+    }
 
     default TagEntry<Enchantment> getTagEntry() {
         return TagEntry.valueEntry(TypedKey.create(RegistryKey.ENCHANTMENT, getKey()));

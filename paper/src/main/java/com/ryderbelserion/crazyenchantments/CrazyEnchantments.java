@@ -10,8 +10,8 @@ public class CrazyEnchantments extends JavaPlugin {
     private final VitalPaper vital;
 
     public CrazyEnchantments(final VitalPaper vital, final EnchantmentRegistry registry) {
-        this.vital = vital;
         this.registry = registry;
+        this.vital = vital;
     }
 
     @Override
