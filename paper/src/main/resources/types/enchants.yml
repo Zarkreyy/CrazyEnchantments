@@ -29,6 +29,7 @@ enchantments:
       extra-per-level: 1
       # The maximum base cost
       base: 65
-    # Each level increases the chance to activate by this much.
-    # Not all enchantments have this, if you don't see it in some enchantments. They don't have an activation chance.
-    chance-to-activate-per-level: 0.025
+    # Enchant specific settings
+    settings:
+      # Each level increases the chance to activate by this much.
+      chance-to-activate-per-level: 0.025
