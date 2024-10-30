@@ -6,6 +6,8 @@ import com.ryderbelserion.crazyenchantments.enchants.types.ViperEnchant;
 import com.ryderbelserion.crazyenchantments.utils.Methods;
 import com.ryderbelserion.vital.paper.api.files.CustomFile;
 import com.ryderbelserion.vital.paper.api.files.FileManager;
+import io.papermc.paper.registry.RegistryKey;
+import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.registry.data.EnchantmentRegistryEntry;
 import io.papermc.paper.registry.keys.tags.ItemTypeTagKeys;
 import io.papermc.paper.registry.tag.TagKey;
@@ -92,7 +94,7 @@ public class EnchantmentRegistry {
                                     enchant,
                                     "supported-items",
                                     List.of(
-                                            "#minecraft:enchantable/armor"
+                                            "#minecraft:enchantable/sword"
                                     )
                             )),
                             enchant
@@ -148,7 +150,7 @@ public class EnchantmentRegistry {
                                     enchant,
                                     "supported-items",
                                     List.of(
-                                            "#minecraft:enchantable/armor"
+                                            "#minecraft:enchantable/sword"
                                     )
                             )),
                             enchant
@@ -174,8 +176,18 @@ public class EnchantmentRegistry {
 
             if (itemTag.startsWith("#")) {
                 itemTag = itemTag.substring(1);
-            } else {
-                this.logger.warn("Only item tags are supported for now, item tags need to begin with #");
+
+                try {
+                    Key key = Key.key(itemTag);
+
+                    TagKey<ItemType> tagKey = ItemTypeTagKeys.create(key);
+
+                    TagEntry<ItemType> tagEntry = TagEntry.tagEntry(tagKey);
+
+                    supportedItemTags.add(tagEntry);
+                } catch (IllegalArgumentException e) {
+                    this.logger.warn("Failed to create tag entry for {}", itemTag);
+                }
 
                 continue;
             }
@@ -183,12 +195,13 @@ public class EnchantmentRegistry {
             try {
                 Key key = Key.key(itemTag);
 
-                TagKey<ItemType> tagKey = ItemTypeTagKeys.create(key);
+                TypedKey<ItemType> typedKey = TypedKey.create(RegistryKey.ITEM, key);
 
-                TagEntry<ItemType> tagEntry = TagEntry.tagEntry(tagKey);
+                TagEntry<ItemType> tagEntry = TagEntry.valueEntry(typedKey);
 
                 supportedItemTags.add(tagEntry);
-            } catch (IllegalArgumentException e) {
+
+            } catch (IllegalArgumentException | NullPointerException e) {
                 this.logger.warn("Failed to create tag entry for {}", itemTag);
             }
         }
