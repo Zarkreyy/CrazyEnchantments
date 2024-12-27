@@ -28,7 +28,7 @@ repositories {
     maven("https://ci.ender.zone/plugin/repository/everything/")
 
     /**
-     * NBT API
+     * NBT API & Spartan
      */
     maven("https://repo.codemc.io/repository/maven-public/")
 
@@ -90,7 +90,8 @@ dependencies {
     compileOnly("com.palmergames.bukkit.towny", "towny", "0.98.3.10")
 
     compileOnly("fr.neatmonster", "nocheatplus", "3.16.1-SNAPSHOT")
-    compileOnly("me.vagdedes.spartan", "SpartanAPI", "9.1")
+//    compileOnly("me.vagdedes.spartan", "SpartanAPI", "9.1")
+    compileOnly("me.vagdedes", "spartan", "Universal")
 
     compileOnly("com.github.MilkBowl", "VaultAPI", "1.7")
 }
@@ -125,12 +126,14 @@ tasks {
         loaders.addAll(listOf("spigot", "paper"))
 
         //<h3>The first release for CrazyCrates on Modrinth! 🎉🎉🎉🎉🎉<h3><br> If we want a header.
-        changelog.set("""
+        changelog.set(
+            """
                 <h4>Notice:</h4>
                  <p>This is only for Legacy ( 1.8 - 1.16.5 ) Support, No new features will be added.</p>
                 <h4>Bug Fixes:</h4>
                  <p>Fixed a bug potentially with using a method that doesn't exist on 1.8</p>
-            """.trimIndent())
+            """.trimIndent()
+        )
     }
 
     processResources {

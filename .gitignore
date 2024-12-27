@@ -2,5 +2,6 @@ api/build
 plugin/build
 v1_12_2_down/build
 v1_13_up/build
+build
 .gradle
 .idea
