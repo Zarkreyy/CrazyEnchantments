@@ -25,11 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Boots implements Listener {
-    
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private Support support = Support.getInstance();
-    private static WingsManager manager = ce.getWingsManager();
-    
+
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final Support support = Support.getInstance();
+    private static final WingsManager manager = ce.getWingsManager();
+
     public static void startWings() {
         if (manager.isCloudsEnabled() && manager.isWingsEnabled()) {
             manager.setWingsTask(new BukkitRunnable() {
@@ -51,7 +51,7 @@ public class Boots implements Listener {
             manager.endWingsTask();
         }
     }
-    
+
     @EventHandler
     public void onEquip(ArmorEquipEvent e) {
         Player player = e.getPlayer();
@@ -64,7 +64,7 @@ public class Boots implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onFly(PlayerToggleFlightEvent e) {
         Player player = e.getPlayer();
@@ -83,7 +83,7 @@ public class Boots implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onMove(PlayerMoveEvent e) {
         if ((e.getFrom().getBlockX() != e.getTo().getBlockX()) || (e.getFrom().getBlockY() != e.getTo().getBlockY()) || (e.getFrom().getBlockZ() != e.getTo().getBlockZ())) {
@@ -113,7 +113,7 @@ public class Boots implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
@@ -125,7 +125,7 @@ public class Boots implements Listener {
             manager.addFlyingPlayer(player);
         }
     }
-    
+
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         Player player = e.getPlayer();
@@ -135,15 +135,15 @@ public class Boots implements Listener {
             manager.removeFlyingPlayer(player);
         }
     }
-    
+
     private boolean gamemodeCheck(Player player) {
         return player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.ADVENTURE;
     }
-    
+
     private boolean regionCheck(Player player) {
         return manager.inLimitlessFlightWorld(player) || (!manager.inBlacklistedWorld(player) && (support.inTerritory(player) || support.inWingsRegion(player) || manager.inWhitelistedWorld(player)));
     }
-    
+
     private boolean areEnemiesNearby(Player player) {
         if (manager.isEnemeyCheckEnabled() && !manager.inLimitlessFlightWorld(player)) {
             for (Player otherPlayer : getNearByPlayers(player, manager.getEnemyRadius())) {
@@ -154,7 +154,7 @@ public class Boots implements Listener {
         }
         return false;
     }
-    
+
     private List<Player> getNearByPlayers(Player player, int radius) {
         List<Player> players = new ArrayList<>();
         for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {
@@ -164,5 +164,5 @@ public class Boots implements Listener {
         }
         return players;
     }
-    
+
 }

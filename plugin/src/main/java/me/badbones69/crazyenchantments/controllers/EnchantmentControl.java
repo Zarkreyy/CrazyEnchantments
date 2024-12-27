@@ -31,11 +31,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 
 public class EnchantmentControl implements Listener {
-    
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    
-    private static HashMap<String, String> enchants = new HashMap<>();
-    
+
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+
+    private static final HashMap<String, String> enchants = new HashMap<>();
+
     @EventHandler
     public void addEnchantment(InventoryClickEvent e) {
         if (e.getCursor() != null && e.getCurrentItem() != null) {
@@ -172,7 +172,7 @@ public class EnchantmentControl implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onDescriptionSend(PlayerInteractEvent e) {
         if (Version.isNewer(Version.v1_8_R3) && e.getHand() != EquipmentSlot.HAND) {
@@ -184,7 +184,7 @@ public class EnchantmentControl implements Listener {
                 e.setCancelled(true);
                 CEnchantment enchantment = ce.getCEBook(item).getEnchantment();
                 Player player = e.getPlayer();
-                if (enchantment.getInfoName().length() > 0) {
+                if (!enchantment.getInfoName().isEmpty()) {
                     player.sendMessage(enchantment.getInfoName());
                 }
                 for (String descriptionLine : enchantment.getInfoDescription()) {
@@ -193,7 +193,7 @@ public class EnchantmentControl implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onMilkDrink(PlayerItemConsumeEvent e) {
         Player player = e.getPlayer();
@@ -206,5 +206,5 @@ public class EnchantmentControl implements Listener {
             }.runTaskLater(ce.getPlugin(), 5);
         }
     }
-    
+
 }

@@ -29,12 +29,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.*;
 
 public class Tools implements Listener {
-    
-    private static Random random = new Random();
-    private int potionTime = 5 * 20;
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private static List<String> ignoreBlockTypes = Arrays.asList("air", "shulker_box", "chest", "head", "skull");
-    
+
+    private static final Random random = new Random();
+    private final int potionTime = 5 * 20;
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private static final List<String> ignoreBlockTypes = Arrays.asList("air", "shulker_box", "chest", "head", "skull");
+
     @EventHandler
     public void onPlayerClick(PlayerInteractEvent e) {
         new BukkitRunnable() {
@@ -44,7 +44,7 @@ public class Tools implements Listener {
             }
         }.runTaskAsynchronously(ce.getPlugin());
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent e) {
         Block block = e.getBlock();
@@ -64,11 +64,11 @@ public class Tools implements Listener {
             if (enchantments.contains(CEnchantments.TELEPATHY.getEnchantment()) && !enchantments.contains(CEnchantments.BLAST.getEnchantment())) {
                 //This checks if the player is breaking a crop with harvester one. The harvester enchantment will control what happens with telepathy here.
                 if ((Hoes.getHarvesterCrops().contains(block.getType()) && enchantments.contains(CEnchantments.HARVESTER.getEnchantment())) ||
-                //This checks if the block is a spawner and if so the spawner classes will take care of this.
-                //If Epic Spawners is enabled then telepathy will give the item from the API.
-                //Otherwise CE will ignore the spawner in this event.
-                // Epic Spawners removed for now.
-                (block.getType() == ce.getMaterial("SPAWNER", "MOB_SPAWNER"))) {
+                        //This checks if the block is a spawner and if so the spawner classes will take care of this.
+                        //If Epic Spawners is enabled then telepathy will give the item from the API.
+                        //Otherwise CE will ignore the spawner in this event.
+                        // Epic Spawners removed for now.
+                        (block.getType() == ce.getMaterial("SPAWNER", "MOB_SPAWNER"))) {
                     return;
                 }
                 EnchantmentUseEvent event = new EnchantmentUseEvent(player, CEnchantments.TELEPATHY, item);
@@ -97,7 +97,7 @@ public class Tools implements Listener {
             }
         }
     }
-    
+
     @SuppressWarnings("squid:CallToDeprecatedMethod")
     public static TelepathyDrop getTelepathyDrops(BlockProcessInfo processInfo) {
         ItemStack item = processInfo.getItem();
@@ -172,7 +172,7 @@ public class Tools implements Listener {
         }
         return new TelepathyDrop(itemDrop.build(), xp, sugarCaneBlocks);
     }
-    
+
     private static List<Block> getSugarCaneBlocks(Block block) {
         List<Block> sugarCaneBlocks = new ArrayList<>();
         Block cane = block;
@@ -180,11 +180,11 @@ public class Tools implements Listener {
             sugarCaneBlocks.add(cane);
             cane = cane.getLocation().add(0, 1, 0).getBlock();
         }
-        
+
         Collections.reverse(sugarCaneBlocks);
         return sugarCaneBlocks;
     }
-    
+
     private void updateEffects(Player player) {
         ItemStack item = Methods.getItemInHand(player);
         if (ce.hasEnchantments(item)) {
@@ -218,7 +218,7 @@ public class Tools implements Listener {
             }
         }
     }
-    
+
     private static boolean ignoreBlockTypes(Block block) {
         for (String name : ignoreBlockTypes) {
             if (block.getType().name().toLowerCase().contains(name)) {
@@ -227,7 +227,7 @@ public class Tools implements Listener {
         }
         return false;
     }
-    
+
     private static boolean hasOreXP(Block block) {
         switch (block.getType()) {
             case COAL_ORE:
@@ -240,7 +240,7 @@ public class Tools implements Listener {
                 return false;
         }
     }
-    
+
     private static boolean isOre(Block block) {
         if (block.getType() == ce.getMaterial("NETHER_QUARTZ_ORE", "QUARTZ_ORE")) {
             return true;
@@ -258,7 +258,7 @@ public class Tools implements Listener {
                 return false;
         }
     }
-    
+
     private static ItemStack getOreDrop(Block block) {
         ItemBuilder dropItem = new ItemBuilder();
         if (block.getType() == ce.getMaterial("NETHER_QUARTZ_ORE", "QUARTZ_ORE")) {
@@ -293,5 +293,5 @@ public class Tools implements Listener {
         }
         return dropItem.build();
     }
-    
+
 }

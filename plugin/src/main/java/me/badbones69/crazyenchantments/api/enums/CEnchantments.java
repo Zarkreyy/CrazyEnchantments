@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 public enum CEnchantments {
-    
+
     //	----------------Boots----------------  \\
     GEARS("Gears", "Boots"),
     WINGS("Wings", "Boots"),
@@ -119,53 +119,52 @@ public enum CEnchantments {
     PLANTER("Planter", "Hoe"),
     //	----------------All----------------  \\
     HELLFORGED("HellForged", "Damaged-Items", 5, 5);
-    
-    private String name;
-    private String typeName;
-    private boolean hasChanceSystem;
-    private int chance;
-    private int chanceIncrease;
-    
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    
+
+    private final String name;
+    private final String typeName;
+    private final boolean hasChanceSystem;
+    private final int chance;
+    private final int chanceIncrease;
+
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+
     private CEnchantment cachedEnchantment = null;
-    
+
     public static void invalidateCachedEnchants() {
         for (CEnchantments value : values()) {
             value.cachedEnchantment = null;
         }
     }
-    
+
     /**
-     *
-     * @param name Name of the enchantment.
+     * @param name     Name of the enchantment.
      * @param typeName Type of items it goes on.
      */
-    private CEnchantments(String name, String typeName) {
+    CEnchantments(String name, String typeName) {
         this.name = name;
         this.typeName = typeName;
         this.chance = 0;
         this.chanceIncrease = 0;
         this.hasChanceSystem = false;
     }
-    
+
     /**
-     *
-     * @param name Name of the enchantment.
-     * @param typeName Type of items it goes on.
-     * @param chance The chance the enchantment has to active.
+     * @param name           Name of the enchantment.
+     * @param typeName       Type of items it goes on.
+     * @param chance         The chance the enchantment has to active.
      * @param chanceIncrease The amount the chance increases by every level.
      */
-    private CEnchantments(String name, String typeName, int chance, int chanceIncrease) {
+    CEnchantments(String name, String typeName, int chance, int chanceIncrease) {
         this.name = name;
         this.typeName = typeName;
         this.chance = chance;
         this.chanceIncrease = chanceIncrease;
         this.hasChanceSystem = true;
     }
-    
+
     /**
      * Get a CEnchantments from the enchantment name.
+     *
      * @param enchant The name of the enchantment.
      * @return Returns the CEnchantments but if not found it will be null.
      */
@@ -177,7 +176,7 @@ public enum CEnchantments {
         }
         return null;
     }
-    
+
     public static List<CEnchantments> getFromeNames(List<CEnchantment> enchantments) {
         List<CEnchantments> cEnchantments = new ArrayList<>();
         for (CEnchantment cEnchantment : enchantments) {
@@ -188,26 +187,24 @@ public enum CEnchantments {
         }
         return cEnchantments;
     }
-    
+
     /**
-     *
      * @return The name of the enchantment.
      */
     public String getName() {
         return name;
     }
-    
+
     /**
-     *
      * @return The custom name in the Enchantment.yml.
      */
     public String getCustomName() {
         return getEnchantment().getCustomName();
     }
-    
+
     /**
      * Get the chance the enchantment will activate.
-     *
+     * <p>
      * Not all enchantments have a chance to activate.
      *
      * @return The chance of the enchantment activating.
@@ -215,10 +212,10 @@ public enum CEnchantments {
     public int getChance() {
         return chance;
     }
-    
+
     /**
      * Get the amount the enchantment chance increases by every level.
-     *
+     * <p>
      * Not all enchantments have a chance to activate.
      *
      * @return The amount the chance increases by every level.
@@ -226,33 +223,29 @@ public enum CEnchantments {
     public int getChanceIncrease() {
         return chanceIncrease;
     }
-    
+
     /**
-     *
      * @return The description of the enchantment in the Enchantments.yml.
      */
     public List<String> getDiscription() {
         return getEnchantment().getInfoDescription();
     }
-    
+
     /**
-     *
      * @return Return the color that goes on the Enchantment Book.
      */
     public String getBookColor() {
         return Methods.color(getEnchantment().getBookColor());
     }
-    
+
     /**
-     *
      * @return Returns the color that goes on the Enchanted Item.
      */
     public String getEnchantmentColor() {
         return Methods.color(getEnchantment().getColor());
     }
-    
+
     /**
-     *
      * @return The type the enchantment is.
      */
     public EnchantmentType getType() {
@@ -262,17 +255,17 @@ public enum CEnchantments {
             return getEnchantment().getEnchantmentType();
         }
     }
-    
+
     /**
-     *
      * @return True if the enchantment is enabled and false if not.
      */
     public boolean isActivated() {
         return getEnchantment() != null && getEnchantment().isActivated();
     }
-    
+
     /**
      * Get the enchantment that this is tied to.
+     *
      * @return The enchantment this is tied to.
      */
     public CEnchantment getEnchantment() {
@@ -281,38 +274,41 @@ public enum CEnchantments {
         }
         return cachedEnchantment;
     }
-    
+
     /**
      * Get the level of the enchantment on an item.
+     *
      * @param item The item that is being checked.
      * @return The level of the enchantment that is on the item.
      */
     public int getLevel(ItemStack item) {
         return getEnchantment().getLevel(item);
     }
-    
+
     /**
      * Check to see if the enchantment's chance is successful.
+     *
      * @return True if the chance was successful and false if not.
      */
     public boolean chanceSuccessful() {
         return chance >= 100 || chance <= 0 || (new Random().nextInt(100) + 1) <= chance;
     }
-    
+
     /**
      * Check to see if the enchantment's chance is successful.
+     *
      * @param item The item being checked.
      * @return True if the chance was successful and false if not.
      */
     public boolean chanceSuccessful(ItemStack item) {
         return ce.getEnchantmentFromName(name).chanceSuccesful(getLevel(item));
     }
-    
+
     /**
      * Check if the CEnchantments uses a chance system.
      */
     public boolean hasChanceSystem() {
         return hasChanceSystem;
     }
-    
+
 }

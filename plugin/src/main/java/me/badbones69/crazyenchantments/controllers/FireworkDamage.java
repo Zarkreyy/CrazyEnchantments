@@ -12,41 +12,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FireworkDamage implements Listener {
-    
-    private static List<Entity> fireworks = new ArrayList<>();
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    
+
+    private static final List<Entity> fireworks = new ArrayList<>();
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+
     /**
-     *
      * @return All the active fireworks.
      */
     public static List<Entity> getFireworks() {
         return fireworks;
     }
-    
+
     /**
-     *
      * @param firework The firework you want to add.
      */
     public static void addFirework(Entity firework) {
         fireworks.add(firework);
     }
-    
+
     /**
-     *
      * @param firework The firework you are removing.
      */
     public static void removeFirework(Entity firework) {
         fireworks.remove(firework);
     }
-    
+
     @EventHandler
     public void onFireworkDamage(EntityDamageByEntityEvent e) {
         if (fireworks.contains(e.getDamager())) {
             e.setCancelled(true);
         }
     }
-    
+
     @EventHandler
     public void onFireworkExplode(FireworkExplodeEvent e) {
         final Entity firework = e.getEntity();
@@ -59,5 +56,5 @@ public class FireworkDamage implements Listener {
             }.runTaskLater(ce.getPlugin(), 5);
         }
     }
-    
+
 }

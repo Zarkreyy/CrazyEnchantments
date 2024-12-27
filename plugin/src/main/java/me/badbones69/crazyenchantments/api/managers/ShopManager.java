@@ -18,19 +18,19 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class ShopManager {
-    
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private static ShopManager instance = new ShopManager();
+
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private static final ShopManager instance = new ShopManager();
     private String inventoryName;
     private int inventorySize;
     private boolean enchantmentTableShop;
-    private HashMap<ItemBuilder, Integer> customizerItems = new HashMap<>();
-    private HashMap<ItemBuilder, Integer> shopItems = new HashMap<>();
-    
+    private final HashMap<ItemBuilder, Integer> customizerItems = new HashMap<>();
+    private final HashMap<ItemBuilder, Integer> shopItems = new HashMap<>();
+
     public static ShopManager getInstance() {
         return instance;
     }
-    
+
     public void load() {
         customizerItems.clear();
         shopItems.clear();
@@ -77,7 +77,7 @@ public class ShopManager {
             }
         }
     }
-    
+
     public Inventory getShopInventory(Player player) {
         HashMap<String, String> placeholders = new HashMap<>();
         for (Currency currency : Currency.values()) {
@@ -86,23 +86,23 @@ public class ShopManager {
         Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
         for (Entry<ItemBuilder, Integer> itemBuilders : customizerItems.entrySet()) {
             itemBuilders.getKey().setNamePlaceholders(placeholders)
-            .setLorePlaceholders(placeholders);
+                    .setLorePlaceholders(placeholders);
             inventory.setItem(itemBuilders.getValue(), itemBuilders.getKey().build());
         }
         shopItems.keySet().forEach(itemBuilder -> inventory.setItem(shopItems.get(itemBuilder), itemBuilder.build()));
         return inventory;
     }
-    
+
     public String getInventoryName() {
         return inventoryName;
     }
-    
+
     public int getInventorySize() {
         return inventorySize;
     }
-    
+
     public boolean isEnchantmentTableShop() {
         return enchantmentTableShop;
     }
-    
+
 }

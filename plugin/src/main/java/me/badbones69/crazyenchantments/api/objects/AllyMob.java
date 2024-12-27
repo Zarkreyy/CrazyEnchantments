@@ -14,39 +14,39 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.HashMap;
 
 public class AllyMob {
-    
-    private AllyType type;
-    private Player owner;
+
+    private final AllyType type;
+    private final Player owner;
     private LivingEntity ally;
     private long spawnTime;
     private BukkitTask runnable;
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private Support support = Support.getInstance();
-    private AllyMob instance;
-    private static AllyManager allyManager = AllyManager.getInstance();
-    
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final Support support = Support.getInstance();
+    private final AllyMob instance;
+    private static final AllyManager allyManager = AllyManager.getInstance();
+
     public AllyMob(Player owner, AllyType type) {
         this.type = type;
         this.owner = owner;
         instance = this;
     }
-    
+
     public AllyType getType() {
         return type;
     }
-    
+
     public Player getOwner() {
         return owner;
     }
-    
+
     public LivingEntity getAlly() {
         return ally;
     }
-    
+
     public void spawnAlly(long spawnTime) {
         spawnAlly(owner.getLocation(), spawnTime);
     }
-    
+
     public void spawnAlly(Location location, long spawnTime) {
         this.spawnTime = spawnTime;
         ally = (LivingEntity) location.getWorld().spawnEntity(location, type.entityType);
@@ -65,13 +65,13 @@ public class AllyMob {
         startSpawnTimer();
         allyManager.addAllyMob(instance);
     }
-    
+
     public void forceRemoveAlly() {
         runnable.cancel();
         allyManager.removeAllyMob(instance);
         ally.remove();
     }
-    
+
     public void attackEnemy(LivingEntity enemy) {
         switch (ally.getType()) {
             case WOLF:
@@ -100,7 +100,7 @@ public class AllyMob {
                 break;
         }
     }
-    
+
     private void startSpawnTimer() {
         runnable = new BukkitRunnable() {
             @Override
@@ -110,47 +110,47 @@ public class AllyMob {
             }
         }.runTaskLater(ce.getPlugin(), spawnTime * 20);
     }
-    
+
     public enum AllyType {
-        
+
         WOLF("Wolf", "&b%player%'s Saberwolf", EntityType.WOLF, 16),
         IRON_GOLEM("Iron-Golem", "&6%player%'s Golem", EntityType.IRON_GOLEM, 200),
         ZOMBIE("Zombie", "&2%player%'s Undead", EntityType.ZOMBIE, 45),
         ENDERMITE("Endermite", "&5%player%'s Endermite", EntityType.ENDERMITE, 10),
         SILVERFISH("Silverfish", "&7%player%'s Silverfish", EntityType.SILVERFISH, 10),
         BEE("Bee", "&e%player%'s Bee", Version.isNewer(Version.v1_14_R1) ? EntityType.valueOf("BEE") : EntityType.WOLF, 10);
-        
-        private String configName;
-        private String defaultName;
-        private EntityType entityType;
-        private int maxHealth;
-        
-        private AllyType(String configName, String defaultName, EntityType entityType, int maxHealth) {
+
+        private final String configName;
+        private final String defaultName;
+        private final EntityType entityType;
+        private final int maxHealth;
+
+        AllyType(String configName, String defaultName, EntityType entityType, int maxHealth) {
             this.configName = configName;
             this.defaultName = defaultName;
             this.entityType = entityType;
             this.maxHealth = maxHealth;
         }
-        
+
         public String getConfigName() {
             return configName;
         }
-        
+
         public String getDefaultName() {
             return defaultName;
         }
-        
+
         public String getName() {
             return allyManager.getAllyTypeNameCache().get(this);
         }
-        
+
         public EntityType getEntityType() {
             return entityType;
         }
-        
+
         public int getMaxHealth() {
             return maxHealth;
         }
     }
-    
+
 }

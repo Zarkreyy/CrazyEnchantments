@@ -25,18 +25,18 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BlackSmith implements Listener {
-    
-    private static BlackSmithManager blackSmithManager = BlackSmithManager.getInstance();
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private int mainSlot = 10;
-    private int subSlot = 13;
-    private static int resultSlot = 16;
-    private static List<Integer> resultBoarder = Arrays.asList(7, 8, 9, 16, 18, 25, 26, 27);
-    private static List<Integer> otherBoarder = Arrays.asList(1, 2, 3, 4, 5, 6, 10, 12, 13, 15, 19, 20, 21, 22, 23, 24);
-    private Sound click = ce.getSound("UI_BUTTON_CLICK", "CLICK");
-    private Sound levelUp = ce.getSound("ENTITY_PLAYER_LEVELUP", "LEVEL_UP");
-    private Sound villagerNo = ce.getSound("ENTITY_VILLAGER_NO", "VILLAGER_NO");
-    
+
+    private static final BlackSmithManager blackSmithManager = BlackSmithManager.getInstance();
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final int mainSlot = 10;
+    private final int subSlot = 13;
+    private static final int resultSlot = 16;
+    private static final List<Integer> resultBoarder = Arrays.asList(7, 8, 9, 16, 18, 25, 26, 27);
+    private static final List<Integer> otherBoarder = Arrays.asList(1, 2, 3, 4, 5, 6, 10, 12, 13, 15, 19, 20, 21, 22, 23, 24);
+    private final Sound click = ce.getSound("UI_BUTTON_CLICK", "CLICK");
+    private final Sound levelUp = ce.getSound("ENTITY_PLAYER_LEVELUP", "LEVEL_UP");
+    private final Sound villagerNo = ce.getSound("ENTITY_VILLAGER_NO", "VILLAGER_NO");
+
     public static void openBlackSmith(Player player) {
         Inventory inventory = Bukkit.createInventory(null, 27, blackSmithManager.getMenuName());
         otherBoarder.forEach(slot -> inventory.setItem(slot - 1, blackSmithManager.getGrayGlass()));
@@ -44,7 +44,7 @@ public class BlackSmith implements Listener {
         inventory.setItem(resultSlot, blackSmithManager.getDenyBarrier());
         player.openInventory(inventory);
     }
-    
+
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
@@ -129,7 +129,7 @@ public class BlackSmith implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onInvClose(InventoryCloseEvent e) {
         new BukkitRunnable() {
@@ -148,7 +148,7 @@ public class BlackSmith implements Listener {
             }
         }.runTaskLater(ce.getPlugin(), 0);
     }
-    
+
     private void setResultBoarder(BlackSmithResult resultItem, Inventory inventory) {
         if (resultItem.getCost() > 0) {//Items are upgradable
             inventory.setItem(resultSlot, Methods.addLore(resultItem.getResultItem(), getFoundString(resultItem)));
@@ -158,7 +158,7 @@ public class BlackSmith implements Listener {
             resultBoarder.forEach(slot -> inventory.setItem(slot - 1, blackSmithManager.getRedGlass()));
         }
     }
-    
+
     private void givePlayerItem(Player player, ItemStack item) {
         if (Methods.isInventoryFull(player) || player.isDead()) {
             player.getWorld().dropItem(player.getLocation(), item);
@@ -166,13 +166,13 @@ public class BlackSmith implements Listener {
             player.getInventory().addItem(item);
         }
     }
-    
+
     private String getFoundString(BlackSmithResult resultItem) {
         return Messages.replacePlaceholders("%Cost%", resultItem.getCost() + "", blackSmithManager.getFoundString());
     }
-    
+
     private void playSound(Player player, Sound sound) {
         player.playSound(player.getLocation(), sound, 1, 1);
     }
-    
+
 }

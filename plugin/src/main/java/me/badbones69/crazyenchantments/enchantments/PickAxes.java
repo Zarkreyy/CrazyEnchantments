@@ -2,6 +2,7 @@ package me.badbones69.crazyenchantments.enchantments;
 
 import me.badbones69.crazyenchantments.Methods;
 import me.badbones69.crazyenchantments.api.CrazyEnchantments;
+import me.badbones69.crazyenchantments.api.FileManager;
 import me.badbones69.crazyenchantments.api.enums.CEnchantments;
 import me.badbones69.crazyenchantments.api.events.BlastUseEvent;
 import me.badbones69.crazyenchantments.api.events.EnchantmentUseEvent;
@@ -9,11 +10,10 @@ import me.badbones69.crazyenchantments.api.objects.BlockProcessInfo;
 import me.badbones69.crazyenchantments.api.objects.CEnchantment;
 import me.badbones69.crazyenchantments.api.objects.ItemBuilder;
 import me.badbones69.crazyenchantments.api.objects.TelepathyDrop;
+import me.badbones69.crazyenchantments.multisupport.Support;
 import me.badbones69.crazyenchantments.multisupport.Version;
 import me.badbones69.crazyenchantments.multisupport.anticheats.NoCheatPlusSupport;
 import me.badbones69.crazyenchantments.multisupport.anticheats.SpartanSupport;
-import me.badbones69.crazyenchantments.api.FileManager;
-import me.badbones69.crazyenchantments.multisupport.Support;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -39,11 +39,11 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 public class PickAxes implements Listener {
-    
-    private Random random = new Random();
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private HashMap<Player, HashMap<Block, BlockFace>> blocks = new HashMap<>();
-    
+
+    private final Random random = new Random();
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final HashMap<Player, HashMap<Block, BlockFace>> blocks = new HashMap<>();
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBlockClick(PlayerInteractEvent e) {
         Player player = e.getPlayer();
@@ -57,7 +57,7 @@ public class PickAxes implements Listener {
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlastBreak(BlockBreakEvent e) {
         if (e.isCancelled() || ce.isIgnoredEvent(e) || !CEnchantments.BLAST.isActivated()) return;
@@ -236,7 +236,7 @@ public class PickAxes implements Listener {
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent e) {
         if (e.isCancelled() || ce.isIgnoredEvent(e)) return;
@@ -247,8 +247,8 @@ public class PickAxes implements Listener {
         boolean isOre = isOre(block.getType());
         if (player.getGameMode() != GameMode.CREATIVE) {
             if (CEnchantments.AUTOSMELT.isActivated() && isOre &&
-            (enchantments.contains(CEnchantments.AUTOSMELT.getEnchantment()) && !(enchantments.contains(CEnchantments.BLAST.getEnchantment()) || enchantments.contains(CEnchantments.FURNACE.getEnchantment()) || enchantments.contains(CEnchantments.TELEPATHY.getEnchantment()))) &&
-            CEnchantments.AUTOSMELT.chanceSuccessful(item)) {
+                    (enchantments.contains(CEnchantments.AUTOSMELT.getEnchantment()) && !(enchantments.contains(CEnchantments.BLAST.getEnchantment()) || enchantments.contains(CEnchantments.FURNACE.getEnchantment()) || enchantments.contains(CEnchantments.TELEPATHY.getEnchantment()))) &&
+                    CEnchantments.AUTOSMELT.chanceSuccessful(item)) {
                 EnchantmentUseEvent event = new EnchantmentUseEvent(player, CEnchantments.AUTOSMELT, item);
                 Bukkit.getPluginManager().callEvent(event);
                 if (!event.isCancelled()) {
@@ -318,11 +318,11 @@ public class PickAxes implements Listener {
             }
         }
     }
-    
+
     private boolean hasSilkTouch(ItemStack item) {
         return item.hasItemMeta() && item.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH);
     }
-    
+
     private List<Block> getBlocks(Location loc, BlockFace blockFace, Integer depth) {
         Location loc2 = loc.clone();
         switch (blockFace) {
@@ -369,7 +369,7 @@ public class PickAxes implements Listener {
         }
         return blockList;
     }
-    
+
     private boolean isOre(Material material) {
         if (material == ce.getMaterial("NETHER_QUARTZ_ORE", "QUARTZ_ORE")) {
             return true;
@@ -397,11 +397,11 @@ public class PickAxes implements Listener {
                 return false;
         }
     }
-    
+
     private ItemStack getOreDrop(Material material) {
         return getOreDrop(material, 1);
     }
-    
+
     private ItemStack getOreDrop(Material material, int amount) {
         ItemBuilder dropItem = new ItemBuilder().setAmount(amount);
         if (material == ce.getMaterial("NETHER_QUARTZ_ORE", "QUARTZ_ORE")) {
@@ -448,9 +448,9 @@ public class PickAxes implements Listener {
         }
         return dropItem.build();
     }
-    
+
     private int getRandomNumber(int range) {
-        return range > 1 ? random.nextInt(range > 0 ? (range) : 1) : 1;
+        return range > 1 ? random.nextInt(range) : 1;
     }
-    
+
 }

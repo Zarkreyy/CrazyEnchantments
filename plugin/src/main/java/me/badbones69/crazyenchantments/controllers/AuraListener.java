@@ -21,26 +21,26 @@ import java.util.List;
 import java.util.Map;
 
 public class AuraListener implements Listener {
-    
+
     private final static CEnchantments[] AURA_ENCHANTMENTS = {
-    CEnchantments.BLIZZARD,
-    CEnchantments.ACIDRAIN,
-    CEnchantments.SANDSTORM,
-    CEnchantments.RADIANT,
-    CEnchantments.INTIMIDATE
+            CEnchantments.BLIZZARD,
+            CEnchantments.ACIDRAIN,
+            CEnchantments.SANDSTORM,
+            CEnchantments.RADIANT,
+            CEnchantments.INTIMIDATE
     };
-    
+
     private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    
+
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerMoveEvent(PlayerMoveEvent event) {
         Player player = event.getPlayer();
         Location from = event.getFrom();
         Location to = event.getTo();
         if (to == null ||
-        from.getBlockX() == to.getBlockX()
-        && from.getBlockY() == to.getBlockY()
-        && from.getBlockZ() == to.getBlockZ()) {
+                from.getBlockX() == to.getBlockX()
+                        && from.getBlockY() == to.getBlockY()
+                        && from.getBlockZ() == to.getBlockZ()) {
             return;
         }
         List<Player> players = getNearbyPlayers(player, 3);
@@ -82,11 +82,11 @@ public class AuraListener implements Listener {
             }
         }
     }
-    
+
     private static CEnchantments getAuraEnchantmentEnum(CEnchantment enchantment) {
         return Arrays.stream(AURA_ENCHANTMENTS).filter(enchantmentEnum -> enchantmentEnum.getName().equals(enchantment.getName())).findFirst().orElse(null);
     }
-    
+
     // TODO: move into utils?
     private static List<Player> getNearbyPlayers(Player player, int radius) {
         List<Player> players = new ArrayList<>();
@@ -98,5 +98,5 @@ public class AuraListener implements Listener {
         }
         return players;
     }
-    
+
 }

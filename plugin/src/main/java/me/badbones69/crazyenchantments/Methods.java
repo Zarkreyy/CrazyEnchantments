@@ -1,16 +1,16 @@
 package me.badbones69.crazyenchantments;
 
-import me.badbones69.crazyenchantments.multisupport.anticheats.SpartanSupport;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.badbones69.crazyenchantments.api.CrazyEnchantments;
+import me.badbones69.crazyenchantments.api.FileManager;
 import me.badbones69.crazyenchantments.api.enums.Messages;
 import me.badbones69.crazyenchantments.api.objects.ItemBuilder;
 import me.badbones69.crazyenchantments.controllers.FireworkDamage;
 import me.badbones69.crazyenchantments.multisupport.Support;
 import me.badbones69.crazyenchantments.multisupport.Support.SupportedPlugins;
 import me.badbones69.crazyenchantments.multisupport.Version;
+import me.badbones69.crazyenchantments.multisupport.anticheats.SpartanSupport;
 import me.badbones69.crazyenchantments.multisupport.particles.ParticleEffect;
-import me.badbones69.crazyenchantments.api.FileManager;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.ItemMeta;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -29,13 +30,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Methods {
-    
-    private static Random random = new Random();
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private static Support support = Support.getInstance();
-    private static boolean isV1_13_Up = Version.isNewer(Version.v1_12_R1);
+
+    private static final Random random = new Random();
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private static final Support support = Support.getInstance();
+    private static final boolean isV1_13_Up = Version.isNewer(Version.v1_12_R1);
     public final static Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F\\d]{6}");
-    
+
     public static String color(String message) {
         if (Version.isNewer(Version.v1_15_R1)) {
             Matcher matcher = HEX_PATTERN.matcher(message);
@@ -47,11 +48,11 @@ public class Methods {
         }
         return ChatColor.translateAlternateColorCodes('&', message);
     }
-    
+
     public static String removeColor(String msg) {
         return ChatColor.stripColor(msg);
     }
-    
+
     public static int getRandomNumber(String range) {
         int number = 1;
         String[] split = range.split("-");
@@ -62,7 +63,7 @@ public class Methods {
         }
         return number;
     }
-    
+
     public static boolean hasPermission(CommandSender sender, String perm, boolean toggle) {
         if (sender instanceof Player) {
             return hasPermission((Player) sender, perm, toggle);
@@ -70,7 +71,7 @@ public class Methods {
             return true;
         }
     }
-    
+
     public static boolean hasPermission(Player player, String perm, boolean toggle) {
         if (player.hasPermission("crazyenchantments." + perm) || player.hasPermission("crazyenchantments.admin")) {
             return true;
@@ -81,11 +82,11 @@ public class Methods {
             return false;
         }
     }
-    
+
     public static ItemStack addGlow(ItemStack item) {
         return addGlow(item, true);
     }
-    
+
     public static ItemStack addGlow(ItemStack item, boolean toggle) {
         ItemStack it = item.clone();
         try {
@@ -105,7 +106,7 @@ public class Methods {
             return it;
         }
     }
-    
+
     public static ItemStack getItemInHand(Player player) {
         if (Version.isNewer(Version.v1_8_R3)) {
             return player.getInventory().getItemInMainHand();
@@ -113,7 +114,7 @@ public class Methods {
             return player.getItemInHand();
         }
     }
-    
+
     public static void setItemInHand(Player player, ItemStack item) {
         if (Version.isNewer(Version.v1_8_R3)) {
             player.getInventory().setItemInMainHand(item);
@@ -121,15 +122,15 @@ public class Methods {
             player.setItemInHand(item);
         }
     }
-    
+
     public static String getPrefix() {
         return getPrefix("");
     }
-    
+
     public static String getPrefix(String string) {
         return color(FileManager.Files.CONFIG.getFile().getString("Settings.Prefix") + string);
     }
-    
+
     public static boolean isInt(String s) {
         try {
             Integer.parseInt(s);
@@ -138,11 +139,11 @@ public class Methods {
         }
         return true;
     }
-    
+
     public static Player getPlayer(String name) {
         return Bukkit.getServer().getPlayer(name);
     }
-    
+
     public static boolean isPlayerOnline(String playerName, CommandSender sender) {
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             if (player.getName().equalsIgnoreCase(playerName)) {
@@ -152,11 +153,11 @@ public class Methods {
         sender.sendMessage(Messages.NOT_ONLINE.getMessage());
         return false;
     }
-    
+
     public static void removeItem(ItemStack item, Player player) {
         removeItem(item, player, 1);
     }
-    
+
     public static void removeItem(ItemStack item, Player player, int amount) {
         try {
             boolean found = false;
@@ -183,11 +184,11 @@ public class Methods {
         }
         player.updateInventory();
     }
-    
+
     public static ItemStack removeItem(ItemStack item) {
         return removeItem(item, 1);
     }
-    
+
     public static ItemStack removeItem(ItemStack item, int amount) {
         ItemStack itemStack = item.clone();
         if (item.getAmount() <= amount) {
@@ -197,7 +198,7 @@ public class Methods {
         }
         return itemStack;
     }
-    
+
     public static ItemStack addLore(ItemStack item, String i) {
         ArrayList<String> lore = new ArrayList<>();
         ItemMeta m = item.getItemMeta();
@@ -217,11 +218,11 @@ public class Methods {
         item.setItemMeta(m);
         return item;
     }
-    
+
     public static void hasUpdate() {
         hasUpdate(null);
     }
-    
+
     public static void hasUpdate(Player player) {
         try {
             HttpURLConnection c = (HttpURLConnection) new URL("http://www.spigotmc.org/api/general.php").openConnection();
@@ -240,7 +241,7 @@ public class Methods {
         } catch (Exception ignored) {
         }
     }
-    
+
     public static int getPercent(String argument, ItemStack item, List<String> originalLore, int defaultValue) {
         String arg = defaultValue + "";
         for (String originalLine : originalLore) {
@@ -277,7 +278,7 @@ public class Methods {
         }
         return percent;
     }
-    
+
     public static boolean hasArgument(String arg, List<String> message) {
         for (String line : message) {
             line = Methods.color(line).toLowerCase();
@@ -287,7 +288,7 @@ public class Methods {
         }
         return false;
     }
-    
+
     public static boolean randomPicker(int max) {
         if (max <= 0) {
             return true;
@@ -295,15 +296,15 @@ public class Methods {
         int chance = 1 + random.nextInt(max);
         return chance == 1;
     }
-    
+
     public static boolean randomPicker(int min, int max) {
         if (max <= min || max <= 0) {
             return true;
         }
         int chance = 1 + random.nextInt(max);
-        return chance >= 1 && chance <= min;
+        return chance <= min;
     }
-    
+
     public static Integer percentPick(int max, int min) {
         if (max == min) {
             return max;
@@ -311,11 +312,11 @@ public class Methods {
             return min + random.nextInt(max - min);
         }
     }
-    
+
     public static boolean isInventoryFull(Player player) {
         return player.getInventory().firstEmpty() == -1;
     }
-    
+
     public static List<LivingEntity> getNearbyLivingEntities(Location loc, double radius, Entity entity) {
         List<Entity> out = entity.getNearbyEntities(radius, radius, radius);
         List<LivingEntity> entities = new ArrayList<>();
@@ -326,29 +327,29 @@ public class Methods {
         }
         return entities;
     }
-    
+
     public static List<Entity> getNearbyEntitiess(Location loc, double radius, Entity entity) {
         return entity.getNearbyEntities(radius, radius, radius);
     }
-    
+
     public static void fireWork(Location loc, List<Color> colors) {
         fireWork(loc, new ArrayList<>(colors));
     }
-    
+
     public static void fireWork(Location loc, ArrayList<Color> colors) {
         Firework fw = loc.getWorld().spawn(loc, Firework.class);
         FireworkMeta fm = fw.getFireworkMeta();
         fm.addEffects(FireworkEffect.builder().with(FireworkEffect.Type.BALL_LARGE)
-        .withColor(colors)
-        .trail(false)
-        .flicker(false)
-        .build());
+                .withColor(colors)
+                .trail(false)
+                .flicker(false)
+                .build());
         fm.setPower(0);
         fw.setFireworkMeta(fm);
         FireworkDamage.addFirework(fw);
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ce.getPlugin(), fw :: detonate, 2);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(ce.getPlugin(), fw::detonate, 2);
     }
-    
+
     public static Color getColor(String color) {
         switch (color.toUpperCase()) {
             case "AQUA":
@@ -387,11 +388,11 @@ public class Methods {
                 return Color.WHITE;
         }
     }
-    
+
     public static String stripString(String string) {
         return string != null ? string.replace("-", "").replace("_", "").replace(" ", "") : "";
     }
-    
+
     public static Enchantment getEnchantment(String enchantmentName) {
         try {
             HashMap<String, String> enchantments = getEnchantments();
@@ -404,8 +405,8 @@ public class Methods {
                     }
                 } else {
                     if (stripString(enchantment.getName()).equalsIgnoreCase(enchantmentName) ||
-                    (enchantments.get(enchantment.getName()) != null &&
-                    stripString(enchantments.get(enchantment.getName())).equalsIgnoreCase(enchantmentName))) {
+                            (enchantments.get(enchantment.getName()) != null &&
+                                    stripString(enchantments.get(enchantment.getName())).equalsIgnoreCase(enchantmentName))) {
                         return enchantment;
                     }
                 }
@@ -414,16 +415,17 @@ public class Methods {
         }
         return null;
     }
-    
+
     /**
      * Verify the ItemStack has a lore. This checks to make sure everything isn't null because recent minecraft updates cause NPEs.
+     *
      * @param item Itemstack you are checking.
      * @return True if the item has a lore and no null issues.
      */
     public static boolean verifyItemLore(ItemStack item) {
         return item != null && item.getItemMeta() != null && item.hasItemMeta() && item.getItemMeta().getLore() != null && item.getItemMeta().hasLore();
     }
-    
+
     public static HashMap<String, String> getEnchantments() {
         HashMap<String, String> enchantments = new HashMap<>();
         enchantments.put("ARROW_DAMAGE", "Power");
@@ -457,7 +459,7 @@ public class Methods {
         enchantments.put("VANISHING_CURSE", "Curse_Of_Vanishing");
         return enchantments;
     }
-    
+
     public static void removeDurability(ItemStack item, Player player) {
         if (item.getType().getMaxDurability() == 0) {
             return;
@@ -492,7 +494,7 @@ public class Methods {
             item.setDurability((short) (item.getDurability() + 1));
         }
     }
-    
+
     public static boolean isSimilar(ItemStack one, ItemStack two) {
         if (one.getType() == two.getType()) {
             if (one.hasItemMeta() && two.hasItemMeta()) {
@@ -514,7 +516,7 @@ public class Methods {
         }
         return false;
     }
-    
+
     public static void explode(Entity player) {
         if (Version.isNewer(Version.v1_8_R3)) {
             player.getLocation().getWorld().spawnParticle(Particle.FLAME, player.getLocation(), 200);
@@ -553,7 +555,7 @@ public class Methods {
             }
         }
     }
-    
+
     public static void explode(Entity player, Entity arrow) {
         if (Version.isNewer(Version.v1_8_R3)) {
             arrow.getLocation().getWorld().spawnParticle(Particle.FLAME, arrow.getLocation(), 200);
@@ -592,27 +594,27 @@ public class Methods {
             }
         }
     }
-    
+
     public static ItemBuilder getRandomPaneColor() {
         boolean newMaterial = ce.useNewMaterial();
         List<String> colors = Arrays.asList(
-        newMaterial ? "WHITE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:0",// 0
-        newMaterial ? "ORANGE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:1",// 1
-        newMaterial ? "MAGENTA_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:2",// 2
-        newMaterial ? "LIGHT_BLUE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:3",// 3
-        newMaterial ? "YELLOW_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:4",// 4
-        newMaterial ? "LIME_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:5",// 5
-        newMaterial ? "PINK_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:6",// 6
-        newMaterial ? "GRAY_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:7",// 7
-        //Skipped 8 due to it being basically invisible in a GUI.
-        newMaterial ? "CYAN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:9",// 9
-        newMaterial ? "PURPLE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:10",// 10
-        newMaterial ? "BLUE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:11",// 11
-        newMaterial ? "BROWN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:12",// 12
-        newMaterial ? "GREEN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:13",// 13
-        newMaterial ? "RED_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:14",// 14
-        newMaterial ? "BLACK_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:15");// 15
+                newMaterial ? "WHITE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:0",// 0
+                newMaterial ? "ORANGE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:1",// 1
+                newMaterial ? "MAGENTA_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:2",// 2
+                newMaterial ? "LIGHT_BLUE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:3",// 3
+                newMaterial ? "YELLOW_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:4",// 4
+                newMaterial ? "LIME_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:5",// 5
+                newMaterial ? "PINK_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:6",// 6
+                newMaterial ? "GRAY_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:7",// 7
+                //Skipped 8 due to it being basically invisible in a GUI.
+                newMaterial ? "CYAN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:9",// 9
+                newMaterial ? "PURPLE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:10",// 10
+                newMaterial ? "BLUE_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:11",// 11
+                newMaterial ? "BROWN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:12",// 12
+                newMaterial ? "GREEN_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:13",// 13
+                newMaterial ? "RED_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:14",// 14
+                newMaterial ? "BLACK_STAINED_GLASS_PANE" : "STAINED_GLASS_PANE:15");// 15
         return new ItemBuilder().setMaterial(colors.get(random.nextInt(colors.size())));
     }
-    
+
 }

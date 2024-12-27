@@ -2,6 +2,7 @@ package me.badbones69.crazyenchantments.enchantments;
 
 import me.badbones69.crazyenchantments.Methods;
 import me.badbones69.crazyenchantments.api.CrazyEnchantments;
+import me.badbones69.crazyenchantments.api.FileManager;
 import me.badbones69.crazyenchantments.api.currencyapi.Currency;
 import me.badbones69.crazyenchantments.api.currencyapi.CurrencyAPI;
 import me.badbones69.crazyenchantments.api.enums.CEnchantments;
@@ -15,7 +16,6 @@ import me.badbones69.crazyenchantments.api.objects.ItemBuilder;
 import me.badbones69.crazyenchantments.multisupport.Support;
 import me.badbones69.crazyenchantments.multisupport.anticheats.NoCheatPlusSupport;
 import me.badbones69.crazyenchantments.multisupport.anticheats.SpartanSupport;
-import me.badbones69.crazyenchantments.api.FileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -43,10 +43,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Swords implements Listener {
-    
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private Support support = Support.getInstance();
-    
+
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final Support support = Support.getInstance();
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDamage(EntityDamageByEntityEvent e) {
         if (!e.isCancelled() && !ce.isIgnoredEvent(e) && !ce.isIgnoredUUID(e.getDamager().getUniqueId()) && !support.isFriendly(e.getDamager(), e.getEntity())) {
@@ -61,7 +61,7 @@ public class Swords implements Listener {
                         cePlayer.setRageMultiplier(0.0);
                         cePlayer.setRageLevel(0);
                         cePlayer.setRage(false);
-                        if (Messages.RAGE_DAMAGED.getMessage().length() > 0) {
+                        if (!Messages.RAGE_DAMAGED.getMessage().isEmpty()) {
                             e.getEntity().sendMessage(Messages.RAGE_DAMAGED.getMessage());
                         }
                     }
@@ -159,7 +159,7 @@ public class Swords implements Listener {
                                 }
                                 int rageUp = cePlayer.getRageLevel() + 1;
                                 if (cePlayer.getRageMultiplier().intValue() == rageUp) {
-                                    if (Messages.RAGE_RAGE_UP.getMessage().length() > 0) {
+                                    if (!Messages.RAGE_RAGE_UP.getMessage().isEmpty()) {
                                         HashMap<String, String> placeholders = new HashMap<>();
                                         placeholders.put("%Level%", rageUp + "");
                                         damager.sendMessage(Messages.RAGE_RAGE_UP.getMessage(placeholders));
@@ -172,7 +172,7 @@ public class Swords implements Listener {
                                 cePlayer.setRageMultiplier(1.0);
                                 cePlayer.setRage(true);
                                 cePlayer.setRageLevel(1);
-                                if (Messages.RAGE_BUILDING.getMessage().length() > 0) {
+                                if (!Messages.RAGE_BUILDING.getMessage().isEmpty()) {
                                     damager.sendMessage(Messages.RAGE_BUILDING.getMessage());
                                 }
                             }
@@ -182,7 +182,7 @@ public class Swords implements Listener {
                                     cePlayer.setRageMultiplier(0.0);
                                     cePlayer.setRage(false);
                                     cePlayer.setRageLevel(0);
-                                    if (Messages.RAGE_COOLED_DOWN.getMessage().length() > 0) {
+                                    if (!Messages.RAGE_COOLED_DOWN.getMessage().isEmpty()) {
                                         damager.sendMessage(Messages.RAGE_COOLED_DOWN.getMessage());
                                     }
                                 }
@@ -387,10 +387,10 @@ public class Swords implements Listener {
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDeath(PlayerDeathEvent e) {
-        if (e.getEntity().getKiller() instanceof Player) {
+        if (e.getEntity().getKiller() != null) {
             Player damager = e.getEntity().getKiller();
             Player player = e.getEntity();
             ItemStack item = Methods.getItemInHand(damager);
@@ -411,17 +411,17 @@ public class Swords implements Listener {
                             ally.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 5 * 20, 1));
                             ally.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 5 * 20, 0));
                             ally.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 5 * 20, 1));
-                            
+
                         }
                     }
                 }
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDeath(EntityDeathEvent e) {
-        if (e.getEntity().getKiller() instanceof Player) {
+        if (e.getEntity().getKiller() != null) {
             Player damager = e.getEntity().getKiller();
             ItemStack item = Methods.getItemInHand(damager);
             if (ce.hasEnchantments(item)) {
@@ -449,7 +449,7 @@ public class Swords implements Listener {
             }
         }
     }
-    
+
     private EquipmentSlot getSlot(int slot) {
         switch (slot) {
             case 1:
@@ -462,5 +462,5 @@ public class Swords implements Listener {
                 return EquipmentSlot.HEAD;
         }
     }
-    
+
 }

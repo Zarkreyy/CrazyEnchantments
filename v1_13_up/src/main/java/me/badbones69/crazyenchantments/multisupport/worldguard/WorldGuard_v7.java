@@ -11,7 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class WorldGuard_v7 implements WorldGuardVersion {
-    
+
     @Override
     public boolean allowsPVP(Location loc) {
         BukkitWorld world = new BukkitWorld(loc.getWorld());
@@ -23,7 +23,7 @@ public class WorldGuard_v7 implements WorldGuardVersion {
             return true;
         }
     }
-    
+
     @Override
     public boolean allowsBreak(Location loc) {
         BukkitWorld world = new BukkitWorld(loc.getWorld());
@@ -35,7 +35,7 @@ public class WorldGuard_v7 implements WorldGuardVersion {
             return true;
         }
     }
-    
+
     @Override
     public boolean allowsExplosions(Location loc) {
         BukkitWorld world = new BukkitWorld(loc.getWorld());
@@ -47,7 +47,7 @@ public class WorldGuard_v7 implements WorldGuardVersion {
             return true;
         }
     }
-    
+
     @Override
     public boolean inRegion(String regionName, Location loc) {
         BukkitWorld world = new BukkitWorld(loc.getWorld());
@@ -64,7 +64,7 @@ public class WorldGuard_v7 implements WorldGuardVersion {
         }
         return false;
     }
-    
+
     @Override
     public boolean isMember(Player player) {
         BukkitWorld world = new BukkitWorld(player.getLocation().getWorld());
@@ -81,7 +81,7 @@ public class WorldGuard_v7 implements WorldGuardVersion {
         }
         return false;
     }
-    
+
     @Override
     public boolean isOwner(Player player) {
         BukkitWorld world = new BukkitWorld(player.getLocation().getWorld());

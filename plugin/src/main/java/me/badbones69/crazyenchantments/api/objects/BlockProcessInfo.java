@@ -8,33 +8,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BlockProcessInfo {
-    
-    private ItemStack item;
-    private Block block;
-    private List<ItemStack> drops;
-    private boolean isSpawner;
-    
+
+    private final ItemStack item;
+    private final Block block;
+    private final List<ItemStack> drops;
+    private final boolean isSpawner;
+
     public BlockProcessInfo(ItemStack item, Block block) {
         this.item = item;
         this.block = block;
         this.drops = new ArrayList<>(block.getDrops(item));
         isSpawner = block.getType() == CrazyEnchantments.getInstance().getMaterial("SPAWNER", "MOB_SPAWNER");
     }
-    
+
     public ItemStack getItem() {
         return item;
     }
-    
+
     public Block getBlock() {
         return block;
     }
-    
+
     public List<ItemStack> getDrops() {
         return drops;
     }
-    
+
     public boolean isSpawner() {
         return isSpawner;
     }
-    
+
 }

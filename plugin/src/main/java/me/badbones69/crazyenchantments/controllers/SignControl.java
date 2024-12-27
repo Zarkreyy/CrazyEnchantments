@@ -34,9 +34,9 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 public class SignControl implements Listener {
-    
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    
+
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.getClickedBlock() == null) return;
@@ -151,8 +151,8 @@ public class SignControl implements Listener {
                             ItemBuilder itemBuilder = book.getItemBuilder();
                             if (config.contains("Settings.SignOptions.CategoryShopStyle.Buy-Message")) {
                                 player.sendMessage(Methods.color(Methods.getPrefix() + config.getString("Settings.SignOptions.CategoryShopStyle.Buy-Message")
-                                .replace("%BookName%", itemBuilder.getName()).replace("%bookname%", itemBuilder.getName())
-                                .replace("%Category%", category.getName()).replace("%category%", category.getName())));
+                                        .replace("%BookName%", itemBuilder.getName()).replace("%bookname%", itemBuilder.getName())
+                                        .replace("%Category%", category.getName()).replace("%category%", category.getName())));
                             }
                             BuyBookEvent event = new BuyBookEvent(ce.getCEPlayer(player), category.getCurrency(), category.getCost(), book);
                             Bukkit.getPluginManager().callEvent(event);
@@ -166,7 +166,7 @@ public class SignControl implements Listener {
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onBreak(BlockBreakEvent e) {
         if (!e.isCancelled() && !ce.isIgnoredEvent(e)) {
@@ -187,7 +187,7 @@ public class SignControl implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onSignMake(SignChangeEvent e) {
         Player player = e.getPlayer();
@@ -244,12 +244,12 @@ public class SignControl implements Listener {
             }
         }
     }
-    
+
     private String placeHolders(String msg, Category category) {
         return Methods.color(msg
-        .replace("%category%", category.getName()).replace("%Category%", category.getName())
-        .replace("%cost%", category.getCost() + "").replace("%Cost%", category.getCost() + "")
-        .replace("%xp%", category.getCost() + "").replace("%XP%", category.getCost() + ""));
+                .replace("%category%", category.getName()).replace("%Category%", category.getName())
+                .replace("%cost%", category.getCost() + "").replace("%Cost%", category.getCost() + "")
+                .replace("%xp%", category.getCost() + "").replace("%XP%", category.getCost() + ""));
     }
-    
+
 }

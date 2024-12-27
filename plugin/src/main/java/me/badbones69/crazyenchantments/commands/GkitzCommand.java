@@ -10,15 +10,16 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
 public class GkitzCommand implements CommandExecutor {
-    
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    
+
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String commandLable, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String commandLabel, String[] args) {
         boolean isPlayer = sender instanceof Player;
         if (ce.isGkitzEnabled()) {
             if (args.length == 0) {
@@ -32,9 +33,9 @@ public class GkitzCommand implements CommandExecutor {
             } else {
                 if (args[0].equalsIgnoreCase("reset")) {// /GKitz reset <kit> [player]
                     if (hasPermission(sender, "reset")) {
-                        GKitz kit = ce.getGKitFromName(args[1]);
                         Player player;
                         if (args.length >= 2) {
+                            GKitz kit = ce.getGKitFromName(args[1]);
                             if (kit == null) {
                                 HashMap<String, String> placeholders = new HashMap<>();
                                 placeholders.put("%Kit%", args[1]);
@@ -125,9 +126,9 @@ public class GkitzCommand implements CommandExecutor {
         }
         return false;
     }
-    
+
     private boolean hasPermission(CommandSender sender, String permission) {
         return Methods.hasPermission(sender, permission, true);
     }
-    
+
 }

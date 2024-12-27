@@ -29,14 +29,14 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Tinkerer implements Listener {
-    
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    
+
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+
     public static void openTinker(Player player) {
         Inventory inv = Bukkit.createInventory(null, 54, Methods.color(Files.TINKER.getFile().getString("Settings.GUIName")));
         inv.setItem(0, new ItemBuilder().setMaterial("RED_STAINED_GLASS_PANE", "STAINED_GLASS_PANE:14")
-        .setName(Files.TINKER.getFile().getString("Settings.TradeButton"))
-        .setLore(Files.TINKER.getFile().getStringList("Settings.TradeButton-Lore")).build());
+                .setName(Files.TINKER.getFile().getString("Settings.TradeButton"))
+                .setLore(Files.TINKER.getFile().getStringList("Settings.TradeButton-Lore")).build());
         List<Integer> slots = new ArrayList<>();
         slots.add(4);
         slots.add(13);
@@ -48,19 +48,19 @@ public class Tinkerer implements Listener {
             inv.setItem(i, new ItemBuilder().setMaterial("WHITE_STAINED_GLASS_PANE", "STAINED_GLASS_PANE:0").setName(" ").build());
         }
         inv.setItem(8, new ItemBuilder().setMaterial("RED_STAINED_GLASS_PANE", "STAINED_GLASS_PANE:14")
-        .setName(Files.TINKER.getFile().getString("Settings.TradeButton"))
-        .setLore(Files.TINKER.getFile().getStringList("Settings.TradeButton-Lore")).build());
+                .setName(Files.TINKER.getFile().getString("Settings.TradeButton"))
+                .setLore(Files.TINKER.getFile().getStringList("Settings.TradeButton-Lore")).build());
         player.openInventory(inv);
     }
-    
+
     @EventHandler
     public void onXPUse(PlayerInteractEvent e) {
         Player player = e.getPlayer();
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK && Methods.getItemInHand(player) != null) {
             ItemStack item = Methods.getItemInHand(player);
             if (item.getType() == new ItemBuilder().setMaterial(Files.TINKER.getFile().getString("Settings.BottleOptions.Item")).getMaterial() &&
-            item.hasItemMeta() && item.getItemMeta().hasLore() && item.getItemMeta().hasDisplayName() &&
-            item.getItemMeta().getDisplayName().equals(Methods.color(Files.TINKER.getFile().getString("Settings.BottleOptions.Name")))) {
+                    item.hasItemMeta() && item.getItemMeta().hasLore() && item.getItemMeta().hasDisplayName() &&
+                    item.getItemMeta().getDisplayName().equals(Methods.color(Files.TINKER.getFile().getString("Settings.BottleOptions.Name")))) {
                 e.setCancelled(true);
                 Methods.setItemInHand(player, Methods.removeItem(item));
                 if (Currency.isCurrency(Files.TINKER.getFile().getString("Settings.Currency"))) {
@@ -70,7 +70,7 @@ public class Tinkerer implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
         Inventory inv = e.getInventory();
@@ -164,7 +164,7 @@ public class Tinkerer implements Listener {
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onInvClose(final InventoryCloseEvent e) {
         final Inventory inv = e.getInventory();
@@ -188,7 +188,7 @@ public class Tinkerer implements Listener {
             }
         }, 0);
     }
-    
+
     private ItemStack getBottle(ItemStack item) {
         String id = Files.TINKER.getFile().getString("Settings.BottleOptions.Item");
         String name = Files.TINKER.getFile().getString("Settings.BottleOptions.Name");
@@ -202,7 +202,7 @@ public class Tinkerer implements Listener {
         }
         return it;
     }
-    
+
     private HashMap<Integer, Integer> getSlot() {
         HashMap<Integer, Integer> slots = new HashMap<>();
         slots.put(1, 5);
@@ -230,12 +230,12 @@ public class Tinkerer implements Listener {
         slots.put(48, 53);
         return slots;
     }
-    
+
     private boolean inTinker(int slot) {
         //The last slot in the tinker is 54
         return slot < 54;
     }
-    
+
     private int getTotalXP(ItemStack item) {
         int total = 0;
         if (ce.hasEnchantments(item)) {
@@ -250,7 +250,7 @@ public class Tinkerer implements Listener {
         }
         return total;
     }
-    
+
     private Integer getXP(ItemStack item) {
         String arg = "";
         int i = 0;
@@ -271,5 +271,5 @@ public class Tinkerer implements Listener {
         }
         return Integer.parseInt(arg);
     }
-    
+
 }

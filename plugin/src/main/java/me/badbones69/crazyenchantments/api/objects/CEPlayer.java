@@ -15,23 +15,24 @@ import java.util.Calendar;
 import java.util.List;
 
 public class CEPlayer {
-    
+
     private int souls;
-    private Player player;
+    private final Player player;
     private boolean soulsActive;
-    private List<Cooldown> cooldowns;
+    private final List<Cooldown> cooldowns;
     private Double rageMultiplier;
     private boolean hasRage;
     private int rageLevel;
     private BukkitTask rageTask;
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+
     /**
      * Used to make a new CEPlayer.
-     * @param player The player.
-     * @param souls How many souls they have.
+     *
+     * @param player      The player.
+     * @param souls       How many souls they have.
      * @param soulsActive If the soul uses is active.
-     * @param cooldowns The cooldowns the player has.
+     * @param cooldowns   The cooldowns the player has.
      */
     public CEPlayer(Player player, int souls, boolean soulsActive, List<Cooldown> cooldowns) {
         this.souls = souls;
@@ -43,55 +44,60 @@ public class CEPlayer {
         this.rageMultiplier = 0.0;
         this.rageTask = null;
     }
-    
+
     /**
      * Get the player from the CEPlayer.
+     *
      * @return Player from the CEPlayer.
      */
     public Player getPlayer() {
         return this.player;
     }
-    
+
     /**
      * Get how many souls the player has.
+     *
      * @return The amount of souls the player has.
      */
     public int getSouls() {
         return this.souls;
     }
-    
+
     /**
      * Set the amount of souls the player has.
+     *
      * @param souls The new amount of souls the player has.
      */
     public void setSouls(int souls) {
         this.souls = souls;
     }
-    
+
     /**
      * Add 1 soul to the player.
      */
     public void addSoul() {
         this.souls++;
     }
-    
+
     /**
      * Add extra souls to the player.
+     *
      * @param souls Amount of souls you want to add.
      */
     public void addSouls(int souls) {
         this.souls += souls;
     }
-    
+
     /**
      * Take 1 soul from the player.
      */
     public void useSoul() {
         this.souls--;
     }
-    
+
     /**
      * Take souls from the player.
+     *
      * @param souls Amount of souls you are taking.
      */
     public void useSouls(int souls) {
@@ -100,25 +106,28 @@ public class CEPlayer {
             this.souls = 0;
         }
     }
-    
+
     /**
      * Find out if the players souls are active.
+     *
      * @return True if active and false if not.
      */
     public boolean isSoulsActive() {
         return soulsActive;
     }
-    
+
     /**
      * Set if the players souls are active.
+     *
      * @param soulsActive True if you want to activate them and false if not.
      */
     public void setSoulsActive(boolean soulsActive) {
         this.soulsActive = soulsActive;
     }
-    
+
     /**
      * Give a player a gkit.
+     *
      * @param kit The gkit you wish to give them.
      */
     public void giveGKit(GKitz kit) {
@@ -167,24 +176,26 @@ public class CEPlayer {
             }
         }
         for (
-        String cmd : kit.getCommands()) {
+                String cmd : kit.getCommands()) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd
-            .replace("%Player%", player.getName()).replace("%player%", player.getName()));
+                    .replace("%Player%", player.getName()).replace("%player%", player.getName()));
         }
-        
+
     }
-    
+
     /**
      * If the player has permission to use the gkit.
+     *
      * @param kit The gkit you are checking.
      * @return True if they can use it and false if they can't.
      */
     public boolean hasGkitPermission(GKitz kit) {
         return player.hasPermission("crazyenchantments.bypass.gkitz") || player.hasPermission("crazyenchantments.gkitz." + kit.getName().toLowerCase());
     }
-    
+
     /**
      * If the player can use the gkit. Checks their cooldowns and permissions.
+     *
      * @param kit The gkit you want to check.
      * @return True if they don't have a cooldown and they have permission.
      */
@@ -204,17 +215,19 @@ public class CEPlayer {
         }
         return true;
     }
-    
+
     /**
      * Get all the cooldowns the player has.
+     *
      * @return The cooldowns the player has.
      */
     public List<Cooldown> getCooldowns() {
         return this.cooldowns;
     }
-    
+
     /**
      * Get a cooldown of a gkit.
+     *
      * @param kit The gkit you are checking.
      * @return The cooldown object the player has.
      */
@@ -226,9 +239,10 @@ public class CEPlayer {
         }
         return null;
     }
-    
+
     /**
      * Add a cooldown to a player.
+     *
      * @param cooldown The cooldown you are adding.
      */
     public void addCooldown(Cooldown cooldown) {
@@ -241,9 +255,10 @@ public class CEPlayer {
         this.cooldowns.removeAll(playerCooldowns);
         this.cooldowns.add(cooldown);
     }
-    
+
     /**
      * Add a cooldown of a gkit to a player.
+     *
      * @param kit The gkit you want to get the cooldown for.
      */
     public void addCooldown(GKitz kit) {
@@ -264,17 +279,19 @@ public class CEPlayer {
         }
         addCooldown(new Cooldown(kit, cooldown));
     }
-    
+
     /**
      * Remove a cooldown from a player.
+     *
      * @param cooldown The cooldown you want to remove.
      */
     public void removeCooldown(Cooldown cooldown) {
         this.cooldowns.remove(cooldown);
     }
-    
+
     /**
      * Remove a cooldown from a player.
+     *
      * @param kit The gkit cooldown you want to remove.
      */
     public void removeCooldown(GKitz kit) {
@@ -286,65 +303,69 @@ public class CEPlayer {
         }
         this.cooldowns.removeAll(playerCooldowns);
     }
-    
+
     /**
      * Get the player's rage damage multiplier.
      */
     public Double getRageMultiplier() {
         return rageMultiplier;
     }
-    
+
     /**
      * Set the player's rage damage multiplier.
+     *
      * @param rageMultiplier The player's new rage damage multiplier.
      */
     public void setRageMultiplier(Double rageMultiplier) {
         this.rageMultiplier = rageMultiplier;
     }
-    
+
     /**
      * Check if the player is in rage.
      */
     public boolean hasRage() {
         return hasRage;
     }
-    
+
     /**
      * Toggle on/off the player's rage.
+     *
      * @param hasRage If the player has rage.
      */
     public void setRage(boolean hasRage) {
         this.hasRage = hasRage;
     }
-    
+
     /**
      * Get the level of rage the player is in.
      */
     public int getRageLevel() {
         return rageLevel;
     }
-    
+
     /**
      * Set the level of rage the player is in.
+     *
      * @param rageLevel The player's new rage level.
      */
     public void setRageLevel(int rageLevel) {
         this.rageLevel = rageLevel;
     }
-    
+
     /**
      * Get the cooldown task the player's rage has till they calm down.
      */
     public BukkitTask getRageTask() {
         return rageTask;
     }
-    
+
     /**
      * Set the new cooldown task for the player's rage.
+     *
      * @param rageTask The new cooldown task for the player.
      */
     public void setRageTask(BukkitTask rageTask) {
         this.rageTask = rageTask;
     }
-    
+
 }

@@ -19,36 +19,37 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Support {
-    
-    private static Support instance = new Support();
+
+    private static final Support instance = new Support();
     private static FactionPlugin factionPlugin = null;
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
     private WingsManager wingsManager;
     private WorldGuardVersion worldGuardVersion;
     private PlotSquaredVersion plotSquaredVersion;
-    
+
     public static Support getInstance() {
         return instance;
     }
-    
+
     public void load() {
         wingsManager = ce.getWingsManager();
         worldGuardVersion = ce.getWorldGuardSupport();
         plotSquaredVersion = ce.getPlotSquaredSupport();
     }
-    
+
     public boolean inTerritory(Player player) {
         if (factionPlugin != null && factionPlugin.inTerritory(player)) {
             return true;
         }
         return SupportedPlugins.SUPERIOR_SKYBLOCK.isPluginLoaded() && SuperiorSkyblockSupport.inTerritory(player);
     }
-    
+
     public boolean isFriendly(Entity pEntity, Entity oEntity) {
         if (pEntity instanceof Player && oEntity instanceof Player) {
             Player player = (Player) pEntity;
@@ -62,14 +63,14 @@ public class Support {
 
         return false;
     }
-    
+
     public boolean isVanished(Entity p) {
         for (MetadataValue meta : p.getMetadata("vanished")) {
             if (meta.asBoolean()) return true;
         }
         return false;
     }
-    
+
     public boolean canBreakBlock(Player player, Block block) {
         if (player != null) {
             if (factionPlugin != null && !factionPlugin.canBreakBlock(player, block)) {
@@ -80,7 +81,7 @@ public class Support {
 
         return true;
     }
-    
+
     public boolean allowsPVP(Location location) {
         if (SupportedPlugins.TOWNY.isPluginLoaded() && !TownySupport.allowsPvP(location)) {
             return false;
@@ -88,15 +89,15 @@ public class Support {
 
         return !SupportedPlugins.WORLD_EDIT.isPluginLoaded() || !SupportedPlugins.WORLD_GUARD.isPluginLoaded() || worldGuardVersion.allowsPVP(location);
     }
-    
+
     public boolean allowsBreak(Location location) {
         return !SupportedPlugins.WORLD_EDIT.isPluginLoaded() || !SupportedPlugins.WORLD_GUARD.isPluginLoaded() || worldGuardVersion.allowsBreak(location);
     }
-    
+
     public boolean allowsExplotions(Location location) {
         return !SupportedPlugins.WORLD_EDIT.isPluginLoaded() || !SupportedPlugins.WORLD_GUARD.isPluginLoaded() || worldGuardVersion.allowsExplosions(location);
     }
-    
+
     public boolean inWingsRegion(Player player) {
         if (SupportedPlugins.WORLD_EDIT.isPluginLoaded() && SupportedPlugins.WORLD_GUARD.isPluginLoaded()) {
             for (String region : wingsManager.getRegions()) {
@@ -114,7 +115,7 @@ public class Support {
         }
         return false;
     }
-    
+
     public void noStack(Entity entity) {
         if (SupportedPlugins.MOB_STACKER.isPluginLoaded()) {
             MobStacker.noStack(entity);
@@ -126,9 +127,9 @@ public class Support {
             //StackMobSupport.preventStacking(entity);
         }
     }
-    
+
     public enum SupportedPlugins {
-        
+
         MCMMO("mcMMO"),
         GRIEF_PREVENTION("GriefPrevention"),
         TOWNY("Towny"),
@@ -148,26 +149,26 @@ public class Support {
         STACK_MOB("StackMob"),
         MEGA_SKILLS("MegaSkills"),
         PRECIOUS_STONES("PreciousStones");
-        
-        private String name;
-        private static Map<SupportedPlugins, Boolean> cachedPluginState = new HashMap<>();
-        
-        private SupportedPlugins(String name) {
+
+        private final String name;
+        private static final Map<SupportedPlugins, Boolean> cachedPluginState = new HashMap<>();
+
+        SupportedPlugins(String name) {
             this.name = name;
         }
-        
+
         public String getName() {
             return name;
         }
-        
+
         public boolean isPluginLoaded() {
             return cachedPluginState.get(this);
         }
-        
+
         public Plugin getPlugin() {
             return Bukkit.getServer().getPluginManager().getPlugin(name);
         }
-        
+
         /**
          * Used to update the states of plugins CE hooks into.
          */
@@ -205,17 +206,17 @@ public class Support {
             }
             updateFactionPlugin();
         }
-        
+
         public static void printHooks() {
             if (cachedPluginState.isEmpty()) updatePluginStates();
-            Bukkit.getLogger().info(Methods.color("&4&lCrazy Enchantment Hooks"));
+            Bukkit.getLogger().info(Methods.color("Crazy Enchantment Hooks"));
             for (SupportedPlugins plugin : cachedPluginState.keySet()) {
                 if (plugin.isPluginLoaded()) {
-                    Bukkit.getLogger().info(Methods.color("&6&l" + plugin.name() + ": &a&lEnabled"));
+                    Bukkit.getLogger().info(Methods.color(plugin.name() + ": &a&lEnabled"));
                 }
             }
         }
-        
+
         private static void updateFactionPlugin() {
             for (SupportedPlugins supportedPlugin : values()) {
                 if (supportedPlugin.isPluginLoaded()) {
@@ -234,5 +235,5 @@ public class Support {
             }
         }
     }
-    
+
 }

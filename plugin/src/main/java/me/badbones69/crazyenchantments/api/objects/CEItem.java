@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Map;
 
 public class CEItem {
-    
-    private ItemStack item;
-    private List<Enchantment> vanillaEnchantmentRemove;
-    private List<CEnchantment> cEnchantmentRemove;
-    private Map<Enchantment, Integer> vanillaEnchantments;
-    private Map<CEnchantment, Integer> cEnchantments;
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    
+
+    private final ItemStack item;
+    private final List<Enchantment> vanillaEnchantmentRemove;
+    private final List<CEnchantment> cEnchantmentRemove;
+    private final Map<Enchantment, Integer> vanillaEnchantments;
+    private final Map<CEnchantment, Integer> cEnchantments;
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+
     public CEItem(ItemStack item) {
         this.item = item;
         //Has to make a new map as .getEnchantments is a ImmutableMap.
@@ -26,51 +26,51 @@ public class CEItem {
         vanillaEnchantmentRemove = new ArrayList<>();
         cEnchantmentRemove = new ArrayList<>();
     }
-    
+
     public ItemStack getItem() {
         return item;
     }
-    
+
     public boolean hasVanillaEnchantment(Enchantment enchantment) {
         return vanillaEnchantments.containsKey(enchantment);
     }
-    
+
     public int getVanillaEnchantmentLevel(Enchantment enchantment) {
         return vanillaEnchantments.getOrDefault(enchantment, 0);
     }
-    
+
     public Map<Enchantment, Integer> getVanillaEnchantments() {
         return vanillaEnchantments;
     }
-    
+
     public void setVanillaEnchantment(Enchantment enchantmnet, int level) {
         vanillaEnchantments.put(enchantmnet, level);
     }
-    
+
     public void removeVanillaEnchantmnet(Enchantment enchantmnet) {
         vanillaEnchantmentRemove.add(enchantmnet);
     }
-    
+
     public boolean hasCEnchantment(CEnchantment enchantment) {
         return cEnchantments.containsKey(enchantment);
     }
-    
+
     public int getCEnchantmentLevel(CEnchantment enchantment) {
         return cEnchantments.getOrDefault(enchantment, 0);
     }
-    
+
     public Map<CEnchantment, Integer> getCEnchantments() {
         return cEnchantments;
     }
-    
+
     public void setCEnchantment(CEnchantment enchantment, int level) {
         cEnchantments.put(enchantment, level);
     }
-    
+
     public void removeCEnchantment(CEnchantment enchantment) {
         cEnchantmentRemove.add(enchantment);
     }
-    
+
     public ItemStack build() {
         vanillaEnchantmentRemove.forEach(enchantment -> item.removeEnchantment(enchantment));
         vanillaEnchantments.keySet().forEach(enchantment -> item.addUnsafeEnchantment(enchantment, vanillaEnchantments.get(enchantment)));
@@ -78,5 +78,5 @@ public class CEItem {
         ce.addEnchantments(item, cEnchantments);
         return item;
     }
-    
+
 }

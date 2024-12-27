@@ -17,9 +17,9 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 
 public class LostBookController implements Listener {
-    
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    
+
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBookClean(PlayerInteractEvent e) {
         Player player = e.getPlayer();
@@ -55,5 +55,5 @@ public class LostBookController implements Listener {
             }
         }
     }
-    
+
 }

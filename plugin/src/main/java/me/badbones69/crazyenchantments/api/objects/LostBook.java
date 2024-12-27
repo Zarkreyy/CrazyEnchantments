@@ -6,23 +6,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
+
 import java.util.HashMap;
 import java.util.List;
 
 public class LostBook {
-    
-    private int slot;
-    private boolean inGUI;
-    private ItemBuilder displayItem;
-    private int cost;
-    private Currency currency;
-    private boolean useFirework;
-    private List<Color> fireworkColors;
-    private boolean useSound;
+
+    private final int slot;
+    private final boolean inGUI;
+    private final ItemBuilder displayItem;
+    private final int cost;
+    private final Currency currency;
+    private final boolean useFirework;
+    private final List<Color> fireworkColors;
+    private final boolean useSound;
     private Sound sound;
-    
+
     public LostBook(int slot, boolean inGUI, ItemBuilder displayItem, int cost, Currency currency,
-    boolean useFirework, List<Color> fireworkColors, boolean useSound, String sound) {
+                    boolean useFirework, List<Color> fireworkColors, boolean useSound, String sound) {
         this.slot = slot - 1;
         this.inGUI = inGUI;
         this.displayItem = displayItem;
@@ -38,58 +39,59 @@ public class LostBook {
         }
         this.useSound = sound != null && useSound;
     }
-    
+
     public int getSlot() {
         return slot;
     }
-    
+
     public boolean isInGUI() {
         return inGUI;
     }
-    
+
     public ItemBuilder getDisplayItem() {
         return displayItem;
     }
-    
+
     public int getCost() {
         return cost;
     }
-    
+
     public Currency getCurrency() {
         return currency;
     }
-    
+
     public boolean useFirework() {
         return useFirework;
     }
-    
+
     public List<Color> getFireworkColors() {
         return fireworkColors;
     }
-    
+
     public boolean playSound() {
         return useSound;
     }
-    
+
     public Sound getSound() {
         return sound;
     }
-    
+
     public ItemBuilder getLostBook(Category category) {
         return getLostBook(category, 1);
     }
-    
+
     public ItemBuilder getLostBook(Category category, int amount) {
         FileConfiguration file = Files.CONFIG.getFile();
         HashMap<String, String> placeholders = new HashMap<>();
         placeholders.put("%Category%", category.getDisplayItem().getName());
+//        placeholders.put("%Color%", category.getColor());
         return new ItemBuilder()
-        .setMaterial(file.getString("Settings.LostBook.Item"))
-        .setAmount(amount)
-        .setName(file.getString("Settings.LostBook.Name"))
-        .setNamePlaceholders(placeholders)
-        .setLore(file.getStringList("Settings.LostBook.Lore"))
-        .setLorePlaceholders(placeholders);
+                .setMaterial(file.getString("Settings.LostBook.Item"))
+                .setAmount(amount)
+                .setName(file.getString("Settings.LostBook.Name"))
+                .setNamePlaceholders(placeholders)
+                .setLore(file.getStringList("Settings.LostBook.Lore"))
+                .setLorePlaceholders(placeholders);
     }
-    
+
 }

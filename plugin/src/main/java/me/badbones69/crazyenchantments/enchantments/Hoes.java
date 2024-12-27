@@ -22,16 +22,16 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 
 public class Hoes implements Listener {
-    
+
     private static List<Material> harvesterCrops;
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
     private List<Material> seedlings;
-    private Random random = new Random();
-    private Material soilBlock = ce.getMaterial("FARMLAND", "SOIL");
-    private Material grassBlock = ce.getMaterial("GRASS_BLOCK", "GRASS");
+    private final Random random = new Random();
+    private final Material soilBlock = ce.getMaterial("FARMLAND", "SOIL");
+    private final Material grassBlock = ce.getMaterial("GRASS_BLOCK", "GRASS");
     private HashMap<Material, Material> planterSeeds;
-    private HashMap<UUID, HashMap<Block, BlockFace>> blocks = new HashMap<>();
-    
+    private final HashMap<UUID, HashMap<Block, BlockFace>> blocks = new HashMap<>();
+
     /**
      * Only has crop blocks
      */
@@ -44,21 +44,21 @@ public class Hoes implements Listener {
             }
             if (Version.isNewer(Version.v1_12_R1)) {
                 harvesterCrops.addAll(Arrays.asList(Material.WHEAT,
-                Material.matchMaterial("CARROTS"),
-                Material.matchMaterial("BEETROOTS"),
-                Material.matchMaterial("POTATOES"),
-                Material.matchMaterial("NETHER_WART")));
+                        Material.matchMaterial("CARROTS"),
+                        Material.matchMaterial("BEETROOTS"),
+                        Material.matchMaterial("POTATOES"),
+                        Material.matchMaterial("NETHER_WART")));
             } else {
                 harvesterCrops.addAll(Arrays.asList(Material.matchMaterial("CROPS"),
-                Material.matchMaterial("CARROT"),
-                Material.matchMaterial("POTATO"),
-                Material.matchMaterial("NETHER_WARTS")));
+                        Material.matchMaterial("CARROT"),
+                        Material.matchMaterial("POTATO"),
+                        Material.matchMaterial("NETHER_WARTS")));
             }
             harvesterCrops.add(Material.COCOA);
         }
         return harvesterCrops;
     }
-    
+
     @EventHandler
     public void onInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
@@ -71,7 +71,7 @@ public class Hoes implements Listener {
             List<CEnchantment> enchantments = ce.getEnchantmentsOnItem(hoe);
             //Crop is not fully grown
             if (CEnchantments.GREENTHUMB.isActivated() && enchantments.contains(CEnchantments.GREENTHUMB.getEnchantment()) &&
-            getSeedlings().contains(block.getType()) && !ce.getNMSSupport().isFullyGrown(block)) {
+                    getSeedlings().contains(block.getType()) && !ce.getNMSSupport().isFullyGrown(block)) {
                 fullyGrowPlant(hoe, block, player);
                 if (player.getGameMode() != GameMode.CREATIVE) {//Take durability from players not in Creative
                     Methods.removeDurability(hoe, player);
@@ -104,7 +104,7 @@ public class Hoes implements Listener {
                 //Take durability from players not in Creative
                 //Checking else to make sure the item does have Tiller.
                 if (player.getGameMode() != GameMode.CREATIVE && CEnchantments.PLANTER.isActivated() && enchantments.contains(CEnchantments.PLANTER.getEnchantment()) &&
-                !enchantments.contains(CEnchantments.TILLER.getEnchantment()) && plantSeedSuccess(hoe, block, player, hasGreenThumb)) {
+                        !enchantments.contains(CEnchantments.TILLER.getEnchantment()) && plantSeedSuccess(hoe, block, player, hasGreenThumb)) {
                     Methods.removeDurability(hoe, player);
                 }
             }
@@ -114,7 +114,7 @@ public class Hoes implements Listener {
             blocks.put(player.getUniqueId(), blockFace);
         }
     }
-    
+
     @SuppressWarnings("squid:S1192")
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
@@ -171,7 +171,7 @@ public class Hoes implements Listener {
             }
         }
     }
-    
+
     private void fullyGrowPlant(ItemStack hoe, Block block, Player player) {
         if (CEnchantments.GREENTHUMB.chanceSuccessful(hoe) || player.getGameMode() == GameMode.CREATIVE) {
             ce.getNMSSupport().fullyGrowPlant(block);
@@ -182,7 +182,7 @@ public class Hoes implements Listener {
             }
         }
     }
-    
+
     private boolean plantSeedSuccess(ItemStack hoe, Block soil, Player player, boolean hasGreenThumb) {
         boolean isSoulSand = soil.getType() == Material.SOUL_SAND;
         Material seedType = null;
@@ -236,7 +236,7 @@ public class Hoes implements Listener {
         }
         return false;
     }
-    
+
     /**
      * Includes crop blocks and stems
      */
@@ -248,30 +248,30 @@ public class Hoes implements Listener {
             }
             if (Version.isNewer(Version.v1_12_R1)) {
                 seedlings.addAll(Arrays.asList(Material.WHEAT,
-                Material.matchMaterial("CARROTS"),
-                Material.MELON_STEM,
-                Material.PUMPKIN_STEM,
-                Material.COCOA,
-                Material.matchMaterial("BEETROOTS"),
-                Material.matchMaterial("POTATOES"),
-                Material.matchMaterial("NETHER_WART")));
+                        Material.matchMaterial("CARROTS"),
+                        Material.MELON_STEM,
+                        Material.PUMPKIN_STEM,
+                        Material.COCOA,
+                        Material.matchMaterial("BEETROOTS"),
+                        Material.matchMaterial("POTATOES"),
+                        Material.matchMaterial("NETHER_WART")));
             } else {
                 seedlings.addAll(Arrays.asList(Material.matchMaterial("CROPS"),
-                Material.matchMaterial("CARROT"),
-                Material.MELON_STEM,
-                Material.PUMPKIN_STEM,
-                Material.COCOA,
-                Material.matchMaterial("POTATO"),
-                Material.matchMaterial("NETHER_WARTS")));
+                        Material.matchMaterial("CARROT"),
+                        Material.MELON_STEM,
+                        Material.PUMPKIN_STEM,
+                        Material.COCOA,
+                        Material.matchMaterial("POTATO"),
+                        Material.matchMaterial("NETHER_WARTS")));
             }
         }
         return seedlings;
     }
-    
+
     private Material getPlanterSeed(ItemStack item) {
         return item != null ? getPlanterSeed(item.getType()) : null;
     }
-    
+
     private Material getPlanterSeed(Material material) {
         if (planterSeeds == null) {
             planterSeeds = new HashMap<>();//Key == Item : Value == BlockType
@@ -295,7 +295,7 @@ public class Hoes implements Listener {
         }
         return material != null ? planterSeeds.get(material) : null;
     }
-    
+
     private List<Block> getAreaCrops(Player player, Block block, BlockFace blockFace) {
         List<Block> blockList = new ArrayList<>();
         for (Block crop : getAreaBlocks(block, blockFace, 0, 1)) {//Radius of 1 is 3x3
@@ -311,7 +311,7 @@ public class Hoes implements Listener {
         }
         return blockList;
     }
-    
+
     private List<Block> getSoil(Player player, Block block) {
         List<Block> soilBlocks = new ArrayList<>();
         for (Block soil : getAreaBlocks(block)) {
@@ -327,15 +327,15 @@ public class Hoes implements Listener {
         }
         return soilBlocks;
     }
-    
+
     private List<Block> getAreaBlocks(Block block) {
         return getAreaBlocks(block, BlockFace.UP, 0, 1);//Radius of 1 is 3x3
     }
-    
+
     private List<Block> getAreaBlocks(Block block, int radius) {
         return getAreaBlocks(block, BlockFace.UP, 0, radius);
     }
-    
+
     private List<Block> getAreaBlocks(Block block, BlockFace blockFace, int depth, int radius) {
         Location loc = block.getLocation();
         Location loc2 = block.getLocation();
@@ -383,5 +383,5 @@ public class Hoes implements Listener {
         }
         return blockList;
     }
-    
+
 }

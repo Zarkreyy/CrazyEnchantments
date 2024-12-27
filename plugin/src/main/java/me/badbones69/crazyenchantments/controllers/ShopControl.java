@@ -29,15 +29,15 @@ import org.bukkit.inventory.ItemStack;
 import java.util.HashMap;
 
 public class ShopControl implements Listener {
-    
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private static ShopManager shopManager = ce.getShopManager();
-    private Material enchantmentTable = new ItemBuilder().setMaterial("ENCHANTING_TABLE", "ENCHANTMENT_TABLE").getMaterial();
-    
+
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private static final ShopManager shopManager = ce.getShopManager();
+    private final Material enchantmentTable = new ItemBuilder().setMaterial("ENCHANTING_TABLE", "ENCHANTMENT_TABLE").getMaterial();
+
     public static void openGUI(Player player) {
         player.openInventory(shopManager.getShopInventory(player));
     }
-    
+
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
         ItemStack item = e.getCurrentItem();
@@ -192,7 +192,7 @@ public class ShopControl implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onEnchantmentTableClick(PlayerInteractEvent e) {
         if (shopManager.isEnchantmentTableShop()) {
@@ -204,5 +204,5 @@ public class ShopControl implements Listener {
             }
         }
     }
-    
+
 }

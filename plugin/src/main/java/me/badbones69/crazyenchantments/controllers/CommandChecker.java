@@ -14,11 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CommandChecker implements Listener {
-    
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private List<String> clearInventoryCommands = Arrays.asList("/ci", "/clear", "/clearinventory");
-    private ItemStack air = new ItemStack(Material.AIR);
-    
+
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final List<String> clearInventoryCommands = Arrays.asList("/ci", "/clear", "/clearinventory");
+    private final ItemStack air = new ItemStack(Material.AIR);
+
     @EventHandler
     public void onInventoryClear(PlayerCommandPreprocessEvent e) {
         Player player = e.getPlayer();
@@ -27,7 +27,7 @@ public class CommandChecker implements Listener {
                 if (enchantment.isActivated()) {
                     for (ItemStack armor : player.getEquipment().getArmorContents()) {
                         if (armor != null) {
-                            ce.getUpdatedEffects(player, air, air, enchantment).keySet().forEach(player :: removePotionEffect);
+                            ce.getUpdatedEffects(player, air, air, enchantment).keySet().forEach(player::removePotionEffect);
                         }
                     }
                 }
@@ -37,7 +37,7 @@ public class CommandChecker implements Listener {
             updateEffects(player);
         }
     }
-    
+
     private void updateEffects(Player player) {
         new BukkitRunnable() {
             @Override
@@ -46,5 +46,5 @@ public class CommandChecker implements Listener {
             }
         }.runTaskLater(ce.getPlugin(), 5);
     }
-    
+
 }

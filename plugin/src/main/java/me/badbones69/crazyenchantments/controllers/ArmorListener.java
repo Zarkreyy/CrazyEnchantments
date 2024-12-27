@@ -31,14 +31,14 @@ import java.util.List;
  * @since Jul 30, 2015
  */
 public class ArmorListener implements Listener {
-    
+
     private final List<String> blockedMaterials;
-    private Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("CrazyEnchantments");
-    
+    private final Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("CrazyEnchantments");
+
     public ArmorListener() {
         this.blockedMaterials = getBlocks();
     }
-    
+
     @EventHandler
     public final void onInventoryClick(final InventoryClickEvent e) {
         boolean shift = false;
@@ -52,7 +52,7 @@ public class ArmorListener implements Listener {
             numberkey = true;
         }
         if ((e.getSlotType() != SlotType.ARMOR || e.getSlotType() != SlotType.QUICKBAR) &&
-        !(e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.PLAYER))) {
+                !(e.getInventory().getType().equals(InventoryType.CRAFTING) || e.getInventory().getType().equals(InventoryType.PLAYER))) {
             return;
         }
         if (!(e.getWhoClicked() instanceof Player)) {
@@ -75,16 +75,13 @@ public class ArmorListener implements Listener {
         if (shift) {
             newArmorType = ArmorType.matchType(e.getCurrentItem());
             if (newArmorType != null) {
-                boolean equipping = true;
-                if (e.getRawSlot() == newArmorType.getSlot()) {
-                    equipping = false;
-                }
+                boolean equipping = e.getRawSlot() != newArmorType.getSlot();
                 if (newArmorType.equals(ArmorType.HELMET) && (equipping == (e.getWhoClicked().getInventory().getHelmet() == null)) ||
-                newArmorType.equals(ArmorType.CHESTPLATE) && (equipping == (e.getWhoClicked().getInventory().getChestplate() == null)) ||
-                newArmorType.equals(ArmorType.LEGGINGS) && (equipping == (e.getWhoClicked().getInventory().getLeggings() == null)) ||
-                newArmorType.equals(ArmorType.BOOTS) && (equipping == (e.getWhoClicked().getInventory().getBoots() == null))) {
+                        newArmorType.equals(ArmorType.CHESTPLATE) && (equipping == (e.getWhoClicked().getInventory().getChestplate() == null)) ||
+                        newArmorType.equals(ArmorType.LEGGINGS) && (equipping == (e.getWhoClicked().getInventory().getLeggings() == null)) ||
+                        newArmorType.equals(ArmorType.BOOTS) && (equipping == (e.getWhoClicked().getInventory().getBoots() == null))) {
                     ArmorEquipEvent armorEquipEvent = new ArmorEquipEvent(player, ArmorEquipEvent.EquipMethod.SHIFT_CLICK, newArmorType,
-                    equipping ? null : e.getCurrentItem(), equipping ? e.getCurrentItem() : null);
+                            equipping ? null : e.getCurrentItem(), equipping ? e.getCurrentItem() : null);
                     Bukkit.getServer().getPluginManager().callEvent(armorEquipEvent);
                     if (armorEquipEvent.isCancelled()) {
                         e.setCancelled(true);
@@ -191,7 +188,7 @@ public class ArmorListener implements Listener {
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void playerInteractEvent(PlayerInteractEvent e) {
         if (e.getAction() == Action.PHYSICAL) return;
@@ -220,7 +217,7 @@ public class ArmorListener implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void dispenserFireEvent(BlockDispenseEvent e) {
         ArmorType type = ArmorType.matchType(e.getItem());
@@ -248,7 +245,7 @@ public class ArmorListener implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void itemBreakEvent(PlayerItemBreakEvent e) {
         ArmorType type = ArmorType.matchType(e.getBrokenItem());
@@ -272,7 +269,7 @@ public class ArmorListener implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void playerDeathEvent(PlayerDeathEvent e) {
         Player p = e.getEntity();
@@ -283,14 +280,14 @@ public class ArmorListener implements Listener {
             }
         }
     }
-    
+
     /**
      * A utility method to support versions that use null or air ItemStacks.
      */
     public static boolean isAirOrNull(ItemStack item) {
         return item == null || item.getType().equals(Material.AIR);
     }
-    
+
     private List<String> getBlocks() {
         List<String> blocks = new ArrayList<>();
         blocks.add("DAYLIGHT_DETECTOR");
@@ -345,5 +342,5 @@ public class ArmorListener implements Listener {
         blocks.add("SHULKER_BOX");
         return blocks;
     }
-    
+
 }

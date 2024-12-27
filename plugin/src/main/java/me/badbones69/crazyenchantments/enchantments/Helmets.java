@@ -18,10 +18,10 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 
 public class Helmets implements Listener {
-    
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private Support support = Support.getInstance();
-    
+
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final Support support = Support.getInstance();
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onMovment(PlayerMoveEvent e) {
         Player player = e.getPlayer();
@@ -51,5 +51,5 @@ public class Helmets implements Listener {
             }
         }
     }
-    
+
 }

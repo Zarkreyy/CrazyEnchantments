@@ -9,12 +9,12 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Map.Entry;
 
 public class BlackSmithResult {
-    
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private static BlackSmithManager blackSmithManager = BlackSmithManager.getInstance();
+
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private static final BlackSmithManager blackSmithManager = BlackSmithManager.getInstance();
     private int cost = 0;
     private ItemStack resultItem;
-    
+
     public BlackSmithResult(Player player, ItemStack mainItem, ItemStack subItem) {
         resultItem = mainItem.clone();
         if (mainItem.getType() == ce.getEnchantmentBook().getMaterial() && subItem.getType() == ce.getEnchantmentBook().getMaterial()) {
@@ -22,10 +22,10 @@ public class BlackSmithResult {
             CEBook subBook = ce.getCEBook(subItem);
             //Books are the same enchantment.
             if (mainBook.getEnchantment() == subBook.getEnchantment() &&
-            //Books have to be the same level.
-            mainBook.getLevel() == subBook.getLevel() &&
-            //Makes sure level doesn't go passed max.
-            mainBook.getLevel() + 1 <= mainBook.getEnchantment().getMaxLevel()) {
+                    //Books have to be the same level.
+                    mainBook.getLevel() == subBook.getLevel() &&
+                    //Makes sure level doesn't go passed max.
+                    mainBook.getLevel() + 1 <= mainBook.getEnchantment().getMaxLevel()) {
                 resultItem = mainBook.setLevel(mainBook.getLevel() + 1).buildBook();
                 cost += blackSmithManager.getBookUpgrade();
             }
@@ -82,13 +82,13 @@ public class BlackSmithResult {
             }
         }
     }
-    
+
     public int getCost() {
         return cost;
     }
-    
+
     public ItemStack getResultItem() {
         return resultItem;
     }
-    
+
 }

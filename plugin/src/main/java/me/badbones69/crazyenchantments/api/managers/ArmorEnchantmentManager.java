@@ -10,14 +10,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ArmorEnchantmentManager {
-    
-    private static ArmorEnchantmentManager instance = new ArmorEnchantmentManager();
-    private List<ArmorEnchantment> armorEnchantments = new ArrayList<>();
-    
+
+    private static final ArmorEnchantmentManager instance = new ArmorEnchantmentManager();
+    private final List<ArmorEnchantment> armorEnchantments = new ArrayList<>();
+
     public static ArmorEnchantmentManager getInstance() {
         return instance;
     }
-    
+
     public void load() {
         armorEnchantments.clear();
         if (CEnchantments.FORTIFY.isActivated()) {
@@ -36,9 +36,9 @@ public class ArmorEnchantmentManager {
             armorEnchantments.add(new ArmorEnchantment(CEnchantments.VOODOO, new PotionEffects(PotionEffectType.WEAKNESS, 5 * 20, 0), true));
         }
     }
-    
+
     public List<ArmorEnchantment> getArmorEnchantments() {
         return armorEnchantments;
     }
-    
+
 }

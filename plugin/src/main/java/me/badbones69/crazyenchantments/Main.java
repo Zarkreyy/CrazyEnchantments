@@ -4,41 +4,11 @@ import me.badbones69.crazyenchantments.api.CrazyEnchantments;
 import me.badbones69.crazyenchantments.api.FileManager;
 import me.badbones69.crazyenchantments.api.currencyapi.CurrencyAPI;
 import me.badbones69.crazyenchantments.api.objects.CEPlayer;
-import me.badbones69.crazyenchantments.controllers.ArmorListener;
-import me.badbones69.crazyenchantments.controllers.AuraListener;
-import me.badbones69.crazyenchantments.controllers.CommandChecker;
-import me.badbones69.crazyenchantments.controllers.Metrics;
-import me.badbones69.crazyenchantments.controllers.ProtectionCrystal;
-import me.badbones69.crazyenchantments.enchantments.AllyEnchantments;
-import me.badbones69.crazyenchantments.enchantments.Armor;
-import me.badbones69.crazyenchantments.enchantments.Axes;
-import me.badbones69.crazyenchantments.enchantments.Boots;
-import me.badbones69.crazyenchantments.enchantments.Bows;
-import me.badbones69.crazyenchantments.enchantments.Helmets;
-import me.badbones69.crazyenchantments.enchantments.Hoes;
-import me.badbones69.crazyenchantments.enchantments.PickAxes;
-import me.badbones69.crazyenchantments.enchantments.Swords;
-import me.badbones69.crazyenchantments.enchantments.Tools;
+import me.badbones69.crazyenchantments.commands.*;
+import me.badbones69.crazyenchantments.controllers.*;
+import me.badbones69.crazyenchantments.enchantments.*;
 import me.badbones69.crazyenchantments.multisupport.Support.SupportedPlugins;
 import me.badbones69.crazyenchantments.multisupport.spawners.SilkSpawnerSupport;
-import me.badbones69.crazyenchantments.commands.BlackSmithCommand;
-import me.badbones69.crazyenchantments.commands.CECommand;
-import me.badbones69.crazyenchantments.commands.CETab;
-import me.badbones69.crazyenchantments.commands.GkitzCommand;
-import me.badbones69.crazyenchantments.commands.GkitzTab;
-import me.badbones69.crazyenchantments.commands.TinkerCommand;
-import me.badbones69.crazyenchantments.controllers.BlackSmith;
-import me.badbones69.crazyenchantments.controllers.DustControl;
-import me.badbones69.crazyenchantments.controllers.EnchantmentControl;
-import me.badbones69.crazyenchantments.controllers.FireworkDamage;
-import me.badbones69.crazyenchantments.controllers.GKitzController;
-import me.badbones69.crazyenchantments.controllers.InfoGUIControl;
-import me.badbones69.crazyenchantments.controllers.LostBookController;
-import me.badbones69.crazyenchantments.controllers.Scrambler;
-import me.badbones69.crazyenchantments.controllers.ScrollControl;
-import me.badbones69.crazyenchantments.controllers.ShopControl;
-import me.badbones69.crazyenchantments.controllers.SignControl;
-import me.badbones69.crazyenchantments.controllers.Tinkerer;
 import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -51,12 +21,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Main extends JavaPlugin implements Listener {
-    
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private FileManager fileManager = FileManager.getInstance();
+
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final FileManager fileManager = FileManager.getInstance();
     private boolean fixHealth;
     private Armor armor;
-    
+
     @Override
     public void onEnable() {
         fileManager.logInfo(true).setup(this);
@@ -124,17 +94,17 @@ public class Main extends JavaPlugin implements Listener {
             }
         }.runTaskTimerAsynchronously(this, 5 * 20 * 60, 5 * 20 * 60);
     }
-    
+
     @Override
     public void onDisable() {
         armor.stop();
-        
+
         if (ce.getAllyManager() != null) ce.getAllyManager().forceRemoveAllies();
         for (Player player : Bukkit.getOnlinePlayers()) {
             ce.unloadCEPlayer(player);
         }
     }
-    
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         final Player player = e.getPlayer();
@@ -156,7 +126,7 @@ public class Main extends JavaPlugin implements Listener {
             }
         }.runTaskLaterAsynchronously(this, 20);
     }
-    
+
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e) {
         ce.unloadCEPlayer(e.getPlayer());

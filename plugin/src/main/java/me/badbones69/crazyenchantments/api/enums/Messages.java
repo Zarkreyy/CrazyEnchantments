@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public enum Messages {
-    
+
     CONFIG_RELOAD("Config-Reload", "&7You have reloaded the Config.yml"),
     NEED_TO_UNSTACK_ITEM("Need-To-UnStack-Item", "&cYou need to unstack that item before you can use it."),
     NOT_AN_ENCHANTMENT("Not-An-Enchantment", "&cThat is not an enchantment."),
@@ -64,54 +64,54 @@ public enum Messages {
     RAGE_RAGE_UP("Rage.Rage-Up", "&7[&c&lRage&7]: &7You are now doing &a%Level%x &7Damage."),
     RAGE_DAMAGED("Rage.Damaged", "&7[&c&lRage&7]: &cYou have been hurt and it broke your Rage Multiplier!"),
     LIMIT_COMMAND("Limit-Command", Arrays.asList(
-    "&8[&aCrazyEnchants&8]: &bPersonal Enchantment Limit:",
-    "&7Bypass Limit: &6%bypass%",
-    "&7Vanilla Enchantment Check: &6%vanilla%",
-    "&7Max Enchantment Limit: &6%limit%",
-    "&7Current Enchantment amount on item: &6%item%")),
+            "&8[&aCrazyEnchants&8]: &bPersonal Enchantment Limit:",
+            "&7Bypass Limit: &6%bypass%",
+            "&7Vanilla Enchantment Check: &6%vanilla%",
+            "&7Max Enchantment Limit: &6%limit%",
+            "&7Current Enchantment amount on item: &6%item%")),
     HELP("Help", Arrays.asList(
-    "&2&l&nCrazy Enchantments",
-    "&b/ce - &9Opens up the menu.",
-    "&b/tinker - &9Opens up the Tinkerer menu.",
-    "&b/blacksmith - &9Opens up the BlackSmith menu.",
-    "&b/gkitz [kit] [player] - &9Open the gkit menu or get a gkit.",
-    "&b/gkitz reset <kit> [player] - &9Reset a players gkit cooldown.",
-    "&b/ce help - &9Shows all crazy enchantment commands.",
-    "&b/ce debug - &9Does a small debug for some errors.",
-    "&b/ce info [enchantment] - &9Shows info on all enchantments.",
-    "&b/ce reload - &9Reloads all of the configuration files.",
-    "&b/ce remove <enchantment> - &9Removes an enchantment from the item in your hand.",
-    "&b/ce add <enchantment> [level] - &9Adds an enchantment to the item in your hand.",
-    "&b/ce scroll <black/white/transmog> [amount] [player] - &9Gives a player a scroll item.",
-    "&b/ce crystal [amount] [player] - &9Gives a player a Protection Crystal item.",
-    "&b/ce scrambler [amount] [player] - &9Gives a player a Scrambler item.",
-    "&b/ce dust <success/destroy/mystery> [amount] [player] [percent] - &9Give a player a dust item.",
-    "&b/ce book <enchantment> [level/min-max] [amount] [player] - &9Gives a player an enchantment Book.",
-    "&b/ce lostbook <category> [amount] [player] - &9Gives a player a lost book item.",
-    "&b/ce spawn <enchantment/category> [(level:#/min-max)/world:<world>/x:#/y:#/z:#] - &9Drops an enchantment book at the specific coordinates."));
-    
-    private String path;
+            "&2&l&nCrazy Enchantments",
+            "&b/ce - &9Opens up the menu.",
+            "&b/tinker - &9Opens up the Tinkerer menu.",
+            "&b/blacksmith - &9Opens up the BlackSmith menu.",
+            "&b/gkitz [kit] [player] - &9Open the gkit menu or get a gkit.",
+            "&b/gkitz reset <kit> [player] - &9Reset a players gkit cooldown.",
+            "&b/ce help - &9Shows all crazy enchantment commands.",
+            "&b/ce debug - &9Does a small debug for some errors.",
+            "&b/ce info [enchantment] - &9Shows info on all enchantments.",
+            "&b/ce reload - &9Reloads all of the configuration files.",
+            "&b/ce remove <enchantment> - &9Removes an enchantment from the item in your hand.",
+            "&b/ce add <enchantment> [level] - &9Adds an enchantment to the item in your hand.",
+            "&b/ce scroll <black/white/transmog> [amount] [player] - &9Gives a player a scroll item.",
+            "&b/ce crystal [amount] [player] - &9Gives a player a Protection Crystal item.",
+            "&b/ce scrambler [amount] [player] - &9Gives a player a Scrambler item.",
+            "&b/ce dust <success/destroy/mystery> [amount] [player] [percent] - &9Give a player a dust item.",
+            "&b/ce book <enchantment> [level/min-max] [amount] [player] - &9Gives a player an enchantment Book.",
+            "&b/ce lostbook <category> [amount] [player] - &9Gives a player a lost book item.",
+            "&b/ce spawn <enchantment/category> [(level:#/min-max)/world:<world>/x:#/y:#/z:#] - &9Drops an enchantment book at the specific coordinates."));
+
+    private final String path;
     private String defaultMessage;
     private List<String> defaultListMessage;
-    
-    private Messages(String path, String defaultMessage) {
+
+    Messages(String path, String defaultMessage) {
         this.path = path;
         this.defaultMessage = defaultMessage;
     }
-    
-    private Messages(String path, List<String> defaultListMessage) {
+
+    Messages(String path, List<String> defaultListMessage) {
         this.path = path;
         this.defaultListMessage = defaultListMessage;
     }
-    
+
     public static String convertList(List<String> list) {
-        String message = "";
+        StringBuilder message = new StringBuilder();
         for (String line : list) {
-            message += Methods.color(line) + "\n";
+            message.append(Methods.color(line)).append("\n");
         }
-        return message;
+        return message.toString();
     }
-    
+
     public static void addMissingMessages() {
         FileConfiguration messages = FileManager.Files.MESSAGES.getFile();
         boolean saveFile = false;
@@ -129,70 +129,70 @@ public enum Messages {
             FileManager.Files.MESSAGES.saveFile();
         }
     }
-    
+
     public static String replacePlaceholders(String placeholder, String replacement, String message) {
         HashMap<String, String> placeholders = new HashMap<>();
         placeholders.put(placeholder, replacement);
         return replacePlaceholders(placeholders, message);
     }
-    
+
     public static String replacePlaceholders(HashMap<String, String> placeholders, String message) {
         for (String placeholder : placeholders.keySet()) {
             message = message.replaceAll(placeholder, placeholders.get(placeholder))
-            .replaceAll(placeholder.toLowerCase(), placeholders.get(placeholder));
+                    .replaceAll(placeholder.toLowerCase(), placeholders.get(placeholder));
         }
         return message;
     }
-    
+
     public static List<String> replacePlaceholders(String placeholder, String replacement, List<String> messageList) {
         HashMap<String, String> placeholders = new HashMap<>();
         placeholders.put(placeholder, replacement);
         return replacePlaceholders(placeholders, messageList);
     }
-    
+
     public static List<String> replacePlaceholders(HashMap<String, String> placeholders, List<String> messageList) {
         List<String> newMessageList = new ArrayList<>();
         for (String message : messageList) {
             for (String placeholder : placeholders.keySet()) {
                 newMessageList.add(message.replaceAll(placeholder, placeholders.get(placeholder))
-                .replaceAll(placeholder.toLowerCase(), placeholders.get(placeholder)));
+                        .replaceAll(placeholder.toLowerCase(), placeholders.get(placeholder)));
             }
         }
         return newMessageList;
     }
-    
+
     public String getMessage() {
         return getMessage(true);
     }
-    
+
     public String getMessage(String placeholder, String replacement) {
         HashMap<String, String> placeholders = new HashMap<>();
         placeholders.put(placeholder, replacement);
         return getMessage(placeholders, true);
     }
-    
+
     public String getMessage(Map<String, String> placeholders) {
         return getMessage(placeholders, true);
     }
-    
+
     public String getMessageNoPrefix() {
         return getMessage(false);
     }
-    
+
     public String getMessageNoPrefix(String placeholder, String replacement) {
         HashMap<String, String> placeholders = new HashMap<>();
         placeholders.put(placeholder, replacement);
         return getMessage(placeholders, false);
     }
-    
+
     public String getMessageNoPrefix(Map<String, String> placeholders) {
         return getMessage(placeholders, false);
     }
-    
+
     private String getMessage(boolean prefix) {
         return getMessage(new HashMap<>(), prefix);
     }
-    
+
     private String getMessage(Map<String, String> placeholders, boolean prefix) {
         String message;
         boolean isList = isList();
@@ -212,7 +212,7 @@ public enum Messages {
         }
         for (Entry<String, String> placeholder : placeholders.entrySet()) {
             message = message.replaceAll(placeholder.getKey(), placeholder.getValue())
-            .replaceAll(placeholder.getKey().toLowerCase(), placeholder.getValue());
+                    .replaceAll(placeholder.getKey().toLowerCase(), placeholder.getValue());
         }
         if (isList) {//Don't want to add a prefix to a list of messages.
             return Methods.color(message);
@@ -224,11 +224,11 @@ public enum Messages {
             }
         }
     }
-    
+
     private boolean exists() {
         return FileManager.Files.MESSAGES.getFile().contains("Messages." + path);
     }
-    
+
     private boolean isList() {
         if (FileManager.Files.MESSAGES.getFile().contains("Messages." + path)) {
             return !FileManager.Files.MESSAGES.getFile().getStringList("Messages." + path).isEmpty();
@@ -236,17 +236,17 @@ public enum Messages {
             return defaultMessage == null;
         }
     }
-    
+
     private String getPath() {
         return path;
     }
-    
+
     private String getDefaultMessage() {
         return defaultMessage;
     }
-    
+
     private List<String> getDefaultListMessage() {
         return defaultListMessage;
     }
-    
+
 }

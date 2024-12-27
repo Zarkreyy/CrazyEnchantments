@@ -27,10 +27,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GKitzController implements Listener {
-    
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private InfoMenuManager infoManager = ce.getInfoMenuManager();
-    
+
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final InfoMenuManager infoManager = ce.getInfoMenuManager();
+
     public static void openGUI(Player player) {
         FileConfiguration gkitz = Files.GKITZ.getFile();
         Inventory inventory = Bukkit.createInventory(null, gkitz.getInt("Settings.GUI-Size"), Methods.color(gkitz.getString("Settings.Inventory-Name")));
@@ -63,7 +63,7 @@ public class GKitzController implements Listener {
         }
         player.openInventory(inventory);
     }
-    
+
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
         Inventory inventory = e.getInventory();
@@ -114,5 +114,5 @@ public class GKitzController implements Listener {
             }
         }
     }
-    
+
 }

@@ -7,10 +7,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class BlackSmithCompare {
-    
-    private Map<Enchantment, Integer> newVanillaEnchantments = new HashMap<>();
-    private Map<CEnchantment, Integer> newCEnchantments = new HashMap<>();
-    
+
+    private final Map<Enchantment, Integer> newVanillaEnchantments = new HashMap<>();
+    private final Map<CEnchantment, Integer> newCEnchantments = new HashMap<>();
+
     public BlackSmithCompare(CEItem mainCE, CEItem subCE) {
         for (Entry<Enchantment, Integer> entry : subCE.getVanillaEnchantments().entrySet()) {
             Enchantment enchantment = entry.getKey();
@@ -25,13 +25,13 @@ public class BlackSmithCompare {
             }
         }
     }
-    
+
     public Map<Enchantment, Integer> getNewVanillaEnchantments() {
         return newVanillaEnchantments;
     }
-    
+
     public Map<CEnchantment, Integer> getNewCEnchantments() {
         return newCEnchantments;
     }
-    
+
 }

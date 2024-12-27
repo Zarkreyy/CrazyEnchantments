@@ -22,15 +22,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 public class ScrollControl implements Listener {
-    
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private Random random = new Random();
+
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final Random random = new Random();
     private static String suffix;
     private static boolean countVanillaEnchantments;
     private static boolean useSuffix;
     private static boolean blackScrollChanceToggle;
     private static int blackScrollChance;
-    
+
     public static void loadScrollControl() {
         FileConfiguration config = Files.CONFIG.getFile();
         suffix = Methods.color(config.getString("Settings.TransmogScroll.Amount-of-Enchantments", " &7[&6&n%amount%&7]"));
@@ -39,7 +39,7 @@ public class ScrollControl implements Listener {
         blackScrollChance = config.getInt("Settings.BlackScroll.Chance", 75);
         blackScrollChanceToggle = config.getBoolean("Settings.BlackScroll.Chance-Toggle");
     }
-    
+
     @EventHandler
     public void onScrollUse(InventoryClickEvent e) {
         Player player = (Player) e.getWhoClicked();
@@ -105,7 +105,7 @@ public class ScrollControl implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onClick(PlayerInteractEvent e) {
         Player player = e.getPlayer();
@@ -119,7 +119,7 @@ public class ScrollControl implements Listener {
             }
         }
     }
-    
+
     public static ItemStack orderEnchantments(ItemStack item) {
         HashMap<CEnchantment, Integer> enchantmentLevels = new HashMap<>();
         HashMap<CEnchantment, Integer> categories = new HashMap<>();
@@ -162,7 +162,7 @@ public class ScrollControl implements Listener {
         item.setItemMeta(itemMeta);
         return item;
     }
-    
+
     private static List<CEnchantment> orderInts(List<CEnchantment> list, final Map<CEnchantment, Integer> map) {
         list.sort((a1, a2) -> {
             Integer string1 = map.get(a1);
@@ -171,5 +171,5 @@ public class ScrollControl implements Listener {
         });
         return list;
     }
-    
+
 }

@@ -24,10 +24,10 @@ import java.util.List;
 import java.util.Random;
 
 public class DustControl implements Listener {
-    
-    private static CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private Random random = new Random();
-    
+
+    private static final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final Random random = new Random();
+
     private static void setLore(ItemStack item, int percent, String rate) {
         ItemMeta m = item.getItemMeta();
         ArrayList<String> lore = new ArrayList<>();
@@ -50,12 +50,12 @@ public class DustControl implements Listener {
             }
             if (rate.equalsIgnoreCase("Success")) {
                 l = l.replace("%Success_Rate%", percent + "").replace("%success_rate%", percent + "")
-                .replace("%Destroy_Rate%", Methods.getPercent("%Destroy_Rate%", item, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 0) + "")
-                .replace("%destroy_rate%", Methods.getPercent("%destroy_rate%", item, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 0) + "");
+                        .replace("%Destroy_Rate%", Methods.getPercent("%Destroy_Rate%", item, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 0) + "")
+                        .replace("%destroy_rate%", Methods.getPercent("%destroy_rate%", item, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 0) + "");
             } else {
                 l = l.replace("%Destroy_Rate%", percent + "").replace("%destroy_rate%", percent + "")
-                .replace("%Success_Rate%", Methods.getPercent("%Success_Rate%", item, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 100) + "")
-                .replace("%success_rate%", Methods.getPercent("%success_rate%", item, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 100) + "");
+                        .replace("%Success_Rate%", Methods.getPercent("%Success_Rate%", item, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 100) + "")
+                        .replace("%success_rate%", Methods.getPercent("%success_rate%", item, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 100) + "");
             }
             if (line) {
                 lore.add(Methods.color(l));
@@ -64,7 +64,7 @@ public class DustControl implements Listener {
         m.setLore(lore);
         item.setItemMeta(m);
     }
-    
+
     public static boolean hasPercent(Dust dust, ItemStack item) {
         String arg = "";
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
@@ -93,7 +93,7 @@ public class DustControl implements Listener {
         }
         return Methods.isInt(arg);
     }
-    
+
     public static Integer getPercent(Dust dust, ItemStack item) {
         String arg = "";
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
@@ -126,7 +126,7 @@ public class DustControl implements Listener {
             return 0;
         }
     }
-    
+
     @EventHandler
     public void onInvClick(InventoryClickEvent e) {
         Inventory inv = e.getInventory();
@@ -135,7 +135,7 @@ public class DustControl implements Listener {
             ItemStack book = e.getCurrentItem();
             ItemStack dust = e.getCursor();
             if (book.getAmount() == 1 && book.hasItemMeta() && dust.hasItemMeta() && book.getItemMeta().hasLore() && dust.getItemMeta().hasLore() && book.getItemMeta().hasDisplayName() &&
-            dust.getItemMeta().hasDisplayName() && book.getType() == ce.getEnchantmentBookItem().getType()) {
+                    dust.getItemMeta().hasDisplayName() && book.getType() == ce.getEnchantmentBookItem().getType()) {
                 boolean toggle = false;
                 String name = book.getItemMeta().getDisplayName();
                 for (CEnchantment en : ce.getRegisteredEnchantments()) {
@@ -147,7 +147,7 @@ public class DustControl implements Listener {
                     return;
                 }
                 if (dust.getItemMeta().getDisplayName().equals(Methods.color(Files.CONFIG.getFile().getString("Settings.Dust.SuccessDust.Name"))) &&
-                dust.getType() == new ItemBuilder().setMaterial(Files.CONFIG.getFile().getString("Settings.Dust.SuccessDust.Item")).getMaterial()) {
+                        dust.getType() == new ItemBuilder().setMaterial(Files.CONFIG.getFile().getString("Settings.Dust.SuccessDust.Item")).getMaterial()) {
                     int per = getPercent(Dust.SUCCESS_DUST, dust);
                     if (Methods.hasArgument("%success_rate%", Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"))) {
                         int total = Methods.getPercent("%success_rate%", book, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 100);
@@ -167,7 +167,7 @@ public class DustControl implements Listener {
                     return;
                 }
                 if (dust.getItemMeta().getDisplayName().equals(Methods.color(Files.CONFIG.getFile().getString("Settings.Dust.DestroyDust.Name"))) &&
-                dust.getType() == new ItemBuilder().setMaterial(Files.CONFIG.getFile().getString("Settings.Dust.DestroyDust.Item")).getMaterial()) {
+                        dust.getType() == new ItemBuilder().setMaterial(Files.CONFIG.getFile().getString("Settings.Dust.DestroyDust.Item")).getMaterial()) {
                     int per = getPercent(Dust.DESTROY_DUST, dust);
                     if (Methods.hasArgument("%destroy_rate%", Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"))) {
                         int total = Methods.getPercent("%destroy_rate%", book, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 0);
@@ -188,7 +188,7 @@ public class DustControl implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void openDust(PlayerInteractEvent e) {
         Player player = e.getPlayer();
@@ -232,7 +232,7 @@ public class DustControl implements Listener {
             }
         }
     }
-    
+
     private Dust pickDust() {
         List<Dust> dusts = new ArrayList<>();
         if (Files.CONFIG.getFile().getBoolean("Settings.Dust.MysteryDust.Dust-Toggle.Success")) {
@@ -246,5 +246,5 @@ public class DustControl implements Listener {
         }
         return dusts.get(random.nextInt(dusts.size()));
     }
-    
+
 }

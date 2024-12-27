@@ -1,12 +1,12 @@
 package me.badbones69.crazyenchantments.multisupport.spawners;
 
 
+import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerBreakEvent;
+import de.dustplanet.util.SilkUtil;
 import me.badbones69.crazyenchantments.Methods;
 import me.badbones69.crazyenchantments.api.CrazyEnchantments;
 import me.badbones69.crazyenchantments.api.enums.CEnchantments;
 import me.badbones69.crazyenchantments.api.events.EnchantmentUseEvent;
-import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerBreakEvent;
-import de.dustplanet.util.SilkUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -18,10 +18,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 public class SilkSpawnerSupport implements Listener {
-    
-    private SilkUtil api = SilkUtil.hookIntoSilkSpanwers();
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    
+
+    private final SilkUtil api = SilkUtil.hookIntoSilkSpanwers();
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBreak(SilkSpawnersSpawnerBreakEvent e) {
         if (e.isCancelled()) return;

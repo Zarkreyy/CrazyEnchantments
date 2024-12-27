@@ -8,15 +8,15 @@ import org.bukkit.inventory.ItemStack;
  * @since Jul 30, 2015
  */
 public enum ArmorType {
-    
+
     HELMET(5), CHESTPLATE(6), LEGGINGS(7), BOOTS(8);
-    
+
     private final int slot;
-    
-    private ArmorType(int slot) {
+
+    ArmorType(int slot) {
         this.slot = slot;
     }
-    
+
     /**
      * Attempts to match the ArmorType for the specified ItemStack.
      *
@@ -32,9 +32,9 @@ public enum ArmorType {
         else if (type.endsWith("_BOOTS")) return BOOTS;
         else return null;
     }
-    
+
     public int getSlot() {
         return slot;
     }
-    
+
 }

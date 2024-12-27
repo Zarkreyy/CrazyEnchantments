@@ -2,6 +2,7 @@ package me.badbones69.crazyenchantments.enchantments;
 
 import me.badbones69.crazyenchantments.Methods;
 import me.badbones69.crazyenchantments.api.CrazyEnchantments;
+import me.badbones69.crazyenchantments.api.FileManager;
 import me.badbones69.crazyenchantments.api.enums.ArmorType;
 import me.badbones69.crazyenchantments.api.enums.CEnchantments;
 import me.badbones69.crazyenchantments.api.events.ArmorEquipEvent;
@@ -17,7 +18,6 @@ import me.badbones69.crazyenchantments.multisupport.anticheats.SpartanSupport;
 import me.badbones69.crazyenchantments.multisupport.particles.ParticleEffect;
 import me.badbones69.crazyenchantments.processors.ArmorMoveProcessor;
 import me.badbones69.crazyenchantments.processors.Processor;
-import me.badbones69.crazyenchantments.api.FileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,21 +45,21 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public class Armor implements Listener {
-    
-    private List<Player> fall = new ArrayList<>();
-    private HashMap<Player, HashMap<CEnchantments, Calendar>> timer = new HashMap<>();
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private Support support = Support.getInstance();
+
+    private final List<Player> fall = new ArrayList<>();
+    private final HashMap<Player, HashMap<CEnchantments, Calendar>> timer = new HashMap<>();
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final Support support = Support.getInstance();
     private final Processor<PlayerMoveEvent> armorMoveProcessor = new ArmorMoveProcessor();
-    
+
     public Armor() {
         armorMoveProcessor.start();
     }
-    
+
     public void stop() {
         armorMoveProcessor.stop();
     }
-    
+
     @EventHandler
     public void onEquip(ArmorEquipEvent e) {
         Player player = e.getPlayer();
@@ -338,7 +338,7 @@ public class Armor implements Listener {
             }
         }.runTaskAsynchronously(ce.getPlugin());
     }
-    
+
     @EventHandler
     public void onAura(AuraActiveEvent e) {
         Player player = e.getPlayer();
@@ -377,10 +377,10 @@ public class Armor implements Listener {
                                     break;
                                 case ACIDRAIN:
                                     if (CEnchantments.ACIDRAIN.isActivated() && (!timer.containsKey(other) ||
-                                    (timer.containsKey(other) && !timer.get(other).containsKey(enchant)) ||
-                                    (timer.containsKey(other) && timer.get(other).containsKey(enchant) &&
-                                    cal.after(timer.get(other).get(enchant))
-                                    && CEnchantments.ACIDRAIN.chanceSuccessful()))) {
+                                            (timer.containsKey(other) && !timer.get(other).containsKey(enchant)) ||
+                                            (timer.containsKey(other) && timer.get(other).containsKey(enchant) &&
+                                                    cal.after(timer.get(other).get(enchant))
+                                                    && CEnchantments.ACIDRAIN.chanceSuccessful()))) {
                                         other.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 4 * 20, 1));
                                         int time = 35 - (level * 5);
                                         cal.add(Calendar.SECOND, time > 0 ? time : 5);
@@ -389,10 +389,10 @@ public class Armor implements Listener {
                                     break;
                                 case SANDSTORM:
                                     if (CEnchantments.SANDSTORM.isActivated() && (!timer.containsKey(other) ||
-                                    (timer.containsKey(other) && !timer.get(other).containsKey(enchant)) ||
-                                    (timer.containsKey(other) && timer.get(other).containsKey(enchant) &&
-                                    cal.after(timer.get(other).get(enchant))
-                                    && CEnchantments.SANDSTORM.chanceSuccessful()))) {
+                                            (timer.containsKey(other) && !timer.get(other).containsKey(enchant)) ||
+                                            (timer.containsKey(other) && timer.get(other).containsKey(enchant) &&
+                                                    cal.after(timer.get(other).get(enchant))
+                                                    && CEnchantments.SANDSTORM.chanceSuccessful()))) {
                                         other.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10 * 20, 0));
                                         int time = 35 - (level * 5);
                                         cal.add(Calendar.SECOND, time > 0 ? time : 5);
@@ -401,10 +401,10 @@ public class Armor implements Listener {
                                     break;
                                 case RADIANT:
                                     if (CEnchantments.RADIANT.isActivated() && (!timer.containsKey(other) ||
-                                    (timer.containsKey(other) && !timer.get(other).containsKey(enchant)) ||
-                                    (timer.containsKey(other) && timer.get(other).containsKey(enchant) &&
-                                    cal.after(timer.get(other).get(enchant))
-                                    && CEnchantments.RADIANT.chanceSuccessful()))) {
+                                            (timer.containsKey(other) && !timer.get(other).containsKey(enchant)) ||
+                                            (timer.containsKey(other) && timer.get(other).containsKey(enchant) &&
+                                                    cal.after(timer.get(other).get(enchant))
+                                                    && CEnchantments.RADIANT.chanceSuccessful()))) {
                                         other.setFireTicks(5 * 20);
                                         int time = 20 - (level * 5);
                                         cal.add(Calendar.SECOND, Math.max(time, 0));
@@ -421,24 +421,25 @@ public class Armor implements Listener {
             }
         }.runTaskAsynchronously(ce.getPlugin());
     }
-    
-    @SuppressWarnings({"deprecation", "squid:CallToDeprecatedMethod"})
+
+    @SuppressWarnings({"squid:CallToDeprecatedMethod"})
     @EventHandler
     public void onMovement(PlayerMoveEvent e) {
         Location from = e.getFrom();
         Location to = e.getTo();
-        if (Objects.requireNonNull(to).getBlockX() == from.getBlockX() && to.getBlockY() == from.getBlockY() && to.getBlockZ() == from.getBlockZ()) return;
-        
+        if (Objects.requireNonNull(to).getBlockX() == from.getBlockX() && to.getBlockY() == from.getBlockY() && to.getBlockZ() == from.getBlockZ())
+            return;
+
         armorMoveProcessor.add(e);
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDeath(PlayerDeathEvent e) {
         Player player = e.getEntity();
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (!(player.getKiller() instanceof Player)) return;
+                if (player.getKiller() == null) return;
                 Player killer = player.getKiller();
                 if (!support.allowsPVP(player.getLocation())) return;
                 if (CEnchantments.SELFDESTRUCT.isActivated()) {
@@ -485,12 +486,12 @@ public class Armor implements Listener {
             }
         }.runTaskAsynchronously(ce.getPlugin());
     }
-    
+
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerFallDamage(EntityDamageEvent e) {
         if (fall.contains(e.getEntity()) && e.getCause() == DamageCause.FALL) {
             e.setCancelled(true);
         }
     }
-    
+
 }

@@ -12,19 +12,20 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class CETab implements TabCompleter {
-    
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private boolean isV1_13_Up = Version.isNewer(Version.v1_12_R1);
-    
+
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final boolean isV1_13_Up = Version.isNewer(Version.v1_12_R1);
+
     @Override
     @SuppressWarnings({"deprecation", "squid:CallToDeprecatedMethod"})
-    public List<String> onTabComplete(CommandSender sender, Command command, String commandLable, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandLabel, String[] args) {
         List<String> completions = new ArrayList<>();
         if (args.length == 1) {// /ce
             if (hasPermission(sender, "access")) completions.add("help");
@@ -183,9 +184,9 @@ public class CETab implements TabCompleter {
         }
         return completions;
     }
-    
+
     private boolean hasPermission(CommandSender sender, String node) {
         return sender.hasPermission("crazyenchantments." + node) || sender.hasPermission("crazyenchantments.admin");
     }
-    
+
 }

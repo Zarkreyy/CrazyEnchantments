@@ -2,19 +2,15 @@ package me.badbones69.crazyenchantments.enchantments;
 
 import me.badbones69.crazyenchantments.Methods;
 import me.badbones69.crazyenchantments.api.CrazyEnchantments;
+import me.badbones69.crazyenchantments.api.FileManager;
 import me.badbones69.crazyenchantments.api.enums.CEnchantments;
 import me.badbones69.crazyenchantments.api.events.EnchantmentUseEvent;
 import me.badbones69.crazyenchantments.api.managers.BowEnchantmentManager;
+import me.badbones69.crazyenchantments.api.objects.*;
 import me.badbones69.crazyenchantments.multisupport.Support;
 import me.badbones69.crazyenchantments.multisupport.Version;
 import me.badbones69.crazyenchantments.multisupport.anticheats.NoCheatPlusSupport;
 import me.badbones69.crazyenchantments.multisupport.anticheats.SpartanSupport;
-import me.badbones69.crazyenchantments.api.FileManager;
-import me.badbones69.crazyenchantments.api.objects.BowEnchantment;
-import me.badbones69.crazyenchantments.api.objects.CEnchantment;
-import me.badbones69.crazyenchantments.api.objects.EnchantedArrow;
-import me.badbones69.crazyenchantments.api.objects.ItemBuilder;
-import me.badbones69.crazyenchantments.api.objects.PotionEffects;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -41,15 +37,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bows implements Listener {
-    
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private Support support = Support.getInstance();
-    private List<EnchantedArrow> enchantedArrows = new ArrayList<>();
-    private Material web = new ItemBuilder().setMaterial("COBWEB", "WEB").getMaterial();
-    private List<Block> webBlocks = new ArrayList<>();
-    private boolean isv1_14_Up = Version.isNewer(Version.v1_13_R2);
-    private BowEnchantmentManager manager = ce.getBowManager();
-    
+
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final Support support = Support.getInstance();
+    private final List<EnchantedArrow> enchantedArrows = new ArrayList<>();
+    private final Material web = new ItemBuilder().setMaterial("COBWEB", "WEB").getMaterial();
+    private final List<Block> webBlocks = new ArrayList<>();
+    private final boolean isv1_14_Up = Version.isNewer(Version.v1_13_R2);
+    private final BowEnchantmentManager manager = ce.getBowManager();
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onBowShoot(final EntityShootBowEvent e) {
         if (e.isCancelled() || ce.isIgnoredEvent(e) || ce.isIgnoredUUID(e.getEntity().getUniqueId())) return;
@@ -105,7 +101,7 @@ public class Bows implements Listener {
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onland(ProjectileHitEvent e) {
         if (e.getEntity() instanceof Arrow) {
@@ -210,7 +206,7 @@ public class Bows implements Listener {
             }
         }
     }
-    
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onArrowDamage(EntityDamageByEntityEvent e) {
         if (!ce.isIgnoredEvent(e) && e.getDamager() instanceof Arrow && e.getEntity() instanceof LivingEntity) {
@@ -317,14 +313,14 @@ public class Bows implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onWebBreak(BlockBreakEvent e) {
         if (!ce.isIgnoredEvent(e) && webBlocks.contains(e.getBlock())) {
             e.setCancelled(true);
         }
     }
-    
+
     private EnchantedArrow getEnchantedArrow(Arrow arrow) {
         for (EnchantedArrow enchantedArrow : enchantedArrows) {
             if (enchantedArrow != null && enchantedArrow.getArrow() != null && enchantedArrow.getArrow().equals(arrow)) {
@@ -333,7 +329,7 @@ public class Bows implements Listener {
         }
         return null;
     }
-    
+
     private List<Location> getSquareArea(Location location) {
         List<Location> locations = new ArrayList<>();
         locations.add(location.clone().add(1, 0, 1));//Top Left
@@ -347,10 +343,10 @@ public class Bows implements Listener {
         locations.add(location.clone().add(-1, 0, -1));//Bottom Right
         return locations;
     }
-    
+
     private float randomSpred() {
         float spread = (float) .2;
-        return -spread + (float) (Math.random() * (spread - -spread));
+        return -spread + (float) (Math.random() * (spread + spread));
     }
-    
+
 }

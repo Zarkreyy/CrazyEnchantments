@@ -6,7 +6,7 @@ import org.bukkit.block.Block;
 import org.bukkit.material.Crops;
 
 public class NMS_v1_12_2_Down implements NMSSupport {
-    
+
     @Override
     public void fullyGrowPlant(Block block) {
         if (Version.isNewer(Version.v1_8_R3)) {
@@ -18,7 +18,7 @@ public class NMS_v1_12_2_Down implements NMSSupport {
                     block.setData(crop.getData());
                 }
             } else if (block.getType() == Material.MELON_STEM || block.getType() == Material.PUMPKIN_STEM ||
-            block.getType() == Material.BEETROOT_BLOCK) {
+                    block.getType() == Material.BEETROOT_BLOCK) {
                 block.setData((byte) 7);
             } else if (block.getType() == Material.NETHER_WARTS) {
                 block.setData((byte) 3);
@@ -27,8 +27,8 @@ public class NMS_v1_12_2_Down implements NMSSupport {
             }
         } else {
             if (block.getType() == Material.POTATO || block.getType() == Material.CARROT ||
-            block.getType() == Material.MELON_STEM || block.getType() == Material.PUMPKIN_STEM ||
-            block.getType() == Material.CROPS) {
+                    block.getType() == Material.MELON_STEM || block.getType() == Material.PUMPKIN_STEM ||
+                    block.getType() == Material.CROPS) {
                 block.setData((byte) 7);
             } else if (block.getType() == Material.NETHER_WARTS) {
                 block.setData((byte) 3);
@@ -37,14 +37,14 @@ public class NMS_v1_12_2_Down implements NMSSupport {
             }
         }
     }
-    
+
     @Override
     public boolean isFullyGrown(Block block) {
         if (Version.isNewer(Version.v1_8_R3)) {
             if (block.getState().getData() instanceof Crops) {
                 return ((Crops) block.getState().getData()).getState() == CropState.RIPE;
             } else if (block.getType() == Material.MELON_STEM || block.getType() == Material.PUMPKIN_STEM ||
-            block.getType() == Material.BEETROOT_BLOCK) {
+                    block.getType() == Material.BEETROOT_BLOCK) {
                 return block.getData() == 7;
             } else if (block.getType() == Material.NETHER_WARTS) {
                 return block.getData() == 3;
@@ -53,8 +53,8 @@ public class NMS_v1_12_2_Down implements NMSSupport {
             }
         } else {
             if (block.getType() == Material.POTATO || block.getType() == Material.CARROT ||
-            block.getType() == Material.MELON_STEM || block.getType() == Material.PUMPKIN_STEM ||
-            block.getType() == Material.CROPS) {
+                    block.getType() == Material.MELON_STEM || block.getType() == Material.PUMPKIN_STEM ||
+                    block.getType() == Material.CROPS) {
                 return block.getData() == 7;
             } else if (block.getType() == Material.NETHER_WARTS) {
                 return block.getData() == 3;
@@ -64,12 +64,12 @@ public class NMS_v1_12_2_Down implements NMSSupport {
         }
         return true;
     }
-    
+
     @Override
     public void hydrateSoil(Block soil) {
         if (soil.getType() == Material.SOIL) {
             soil.setData((byte) 7);
         }
     }
-    
+
 }

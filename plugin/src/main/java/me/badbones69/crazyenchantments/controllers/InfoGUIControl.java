@@ -10,10 +10,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class InfoGUIControl implements Listener {
-    
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private InfoMenuManager manager = ce.getInfoMenuManager();
-    
+
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final InfoMenuManager manager = ce.getInfoMenuManager();
+
     @EventHandler
     public void infoClick(InventoryClickEvent e) {
         if (e.getInventory() != null && e.getView().getTitle().equals(manager.getInventoryName())) {
@@ -36,5 +36,5 @@ public class InfoGUIControl implements Listener {
             }
         }
     }
-    
+
 }

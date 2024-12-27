@@ -5,7 +5,7 @@ import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.type.Farmland;
 
 public class NMS_v1_13_Up implements NMSSupport {
-    
+
     @Override
     public void fullyGrowPlant(Block block) {
         if (block.getBlockData() instanceof Ageable) {
@@ -16,7 +16,7 @@ public class NMS_v1_13_Up implements NMSSupport {
             }
         }
     }
-    
+
     @Override
     public boolean isFullyGrown(Block block) {
         if (block.getBlockData() instanceof Ageable) {
@@ -25,7 +25,7 @@ public class NMS_v1_13_Up implements NMSSupport {
         }
         return false;
     }
-    
+
     @Override
     public void hydrateSoil(Block soil) {
         Farmland farmland = (Farmland) soil.getBlockData();

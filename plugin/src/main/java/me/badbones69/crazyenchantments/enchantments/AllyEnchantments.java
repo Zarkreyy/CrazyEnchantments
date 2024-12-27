@@ -22,11 +22,11 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class AllyEnchantments implements Listener {
-    
-    private static AllyManager allyManager = AllyManager.getInstance();
-    private CrazyEnchantments ce = CrazyEnchantments.getInstance();
-    private HashMap<UUID, Calendar> allyCooldown = new HashMap<>();
-    
+
+    private static final AllyManager allyManager = AllyManager.getInstance();
+    private final CrazyEnchantments ce = CrazyEnchantments.getInstance();
+    private final HashMap<UUID, Calendar> allyCooldown = new HashMap<>();
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onAllySpawn(EntityDamageByEntityEvent e) {
         if (!e.isCancelled() && !ce.isIgnoredEvent(e)) {
@@ -106,7 +106,7 @@ public class AllyEnchantments implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onAllyTarget(EntityTargetEvent e) {
         if (e.getTarget() instanceof Player && e.getEntity() instanceof LivingEntity) {
@@ -115,7 +115,7 @@ public class AllyEnchantments implements Listener {
             }
         }
     }
-    
+
     @EventHandler
     public void onAllyDeath(EntityDeathEvent e) {
         if (allyManager.isAllyMob(e.getEntity())) {
@@ -123,26 +123,25 @@ public class AllyEnchantments implements Listener {
             e.getDrops().clear();
         }
     }
-    
+
     @EventHandler
     public void onAllyDespawn(ChunkUnloadEvent e) {
-        if (e.getChunk().getEntities().length > 0) {
-            for (Entity entity : e.getChunk().getEntities()) {
-                if (entity instanceof LivingEntity) {
-                    LivingEntity livingEntity = (LivingEntity) entity;
-                    if (allyManager.isAllyMob(livingEntity)) {
-                        allyManager.getAllyMob(livingEntity).forceRemoveAlly();
-                    }
+        e.getChunk().getEntities();
+        for (Entity entity : e.getChunk().getEntities()) {
+            if (entity instanceof LivingEntity) {
+                LivingEntity livingEntity = (LivingEntity) entity;
+                if (allyManager.isAllyMob(livingEntity)) {
+                    allyManager.getAllyMob(livingEntity).forceRemoveAlly();
                 }
             }
         }
     }
-    
+
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent e) {
         allyManager.forceRemoveAllies(e.getPlayer());
     }
-    
+
     private void spawnAllies(Player player, LivingEntity enemy, AllyMob.AllyType allyType, int amount) {
         Calendar cooldown = Calendar.getInstance();
         cooldown.add(Calendar.MINUTE, 2);
@@ -153,7 +152,7 @@ public class AllyEnchantments implements Listener {
             ally.attackEnemy(enemy);
         }
     }
-    
+
     private boolean inCooldown(Player player) {
         if (allyCooldown.containsKey(player.getUniqueId())) {
             //Right now is before the player's cooldown ends.
@@ -165,5 +164,5 @@ public class AllyEnchantments implements Listener {
         }
         return false;
     }
-    
+
 }
