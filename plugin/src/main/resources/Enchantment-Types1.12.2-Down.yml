@@ -1,6 +1,6 @@
 Info-GUI-Settings:
   Inventory:
-    Name: '&c&lEnchantment Info'
+    Name: '&8Enchantment Info'
     Size: 18
   Back-Item:
     Right:
@@ -13,6 +13,7 @@ Info-GUI-Settings:
       Lore: [ ]
 Types:
   Helmet:
+    Name: 'Casque'
     Display-Item:
       Item: 'GOLD_HELMET'
       Slot: 1
@@ -31,6 +32,7 @@ Types:
       - 'IRON_HELMET'
       - 'DIAMOND_HELMET'
   Boots:
+    Name: 'Bottes'
     Display-Item:
       Item: 'GOLD_BOOTS'
       Slot: 2
@@ -49,6 +51,7 @@ Types:
       - 'IRON_BOOTS'
       - 'DIAMOND_BOOTS'
   Armor:
+    Name: 'Armure'
     Display-Item:
       Item: 'GOLD_CHESTPLATE'
       Slot: 3
@@ -82,6 +85,7 @@ Types:
       - 'IRON_BOOTS'
       - 'DIAMOND_BOOTS'
   Bow:
+    Name: 'Arc'
     Display-Item:
       Item: 'BOW'
       Slot: 4
@@ -92,6 +96,7 @@ Types:
     Enchantable-Items:
       - 'BOW'
   Sword:
+    Name: 'Épée'
     Display-Item:
       Item: 'GOLD_SWORD'
       Slot: 5
@@ -110,6 +115,7 @@ Types:
       - 'GOLD_SWORD'
       - 'DIAMOND_SWORD'
   Axe:
+    Name: 'Hache'
     Display-Item:
       Slot: 6
       Item: 'GOLD_AXE'
@@ -128,6 +134,7 @@ Types:
       - 'GOLD_AXE'
       - 'DIAMOND_AXE'
   Hoe:
+    Name: 'Houe'
     Display-Item:
       Item: 'GOLD_HOE'
       Slot: 7
@@ -146,6 +153,7 @@ Types:
       - 'GOLD_HOE'
       - 'DIAMOND_HOE'
   Pickaxe:
+    Name: 'Pioche'
     Display-Item:
       Item: 'GOLD_PICKAXE'
       Slot: 8
@@ -164,6 +172,7 @@ Types:
       - 'GOLD_PICKAXE'
       - 'DIAMOND_PICKAXE'
   Tool:
+    Name: 'Outil'
     Display-Item:
       Item: 'GOLD_SPADE'
       Slot: 9
@@ -198,6 +207,7 @@ Types:
       - 'DIAMOND_HOE'
       - 'SHEARS'
   Damaged-Items:
+    Name: 'Objet endommagé'
     Display-Item:
       Item: 'ANVIL:2'
       Slot: 14

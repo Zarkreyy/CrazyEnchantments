@@ -516,11 +516,11 @@ public class ItemBuilder implements Cloneable {
      */
     public List<String> getUpdatedLore() {
         List<String> newLore = new ArrayList<>();
-        for (String i : lore) {
+        for (String line : lore) {
             for (Entry<String, String> placeholder : lorePlaceholders.entrySet()) {
-                i = i.replace(placeholder.getKey(), placeholder.getValue()).replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
+                line = line.replace(placeholder.getKey(), placeholder.getValue()).replace(placeholder.getKey().toLowerCase(), placeholder.getValue());
             }
-            newLore.add(i);
+            newLore.add(line);
         }
         return newLore;
     }

@@ -8,6 +8,8 @@ import java.util.List;
 public class Category {
 
     private final String name;
+    private final String color;
+    private final String customName;
     private final int slot;
     private final boolean inGUI;
     private final ItemBuilder displayItem;
@@ -25,9 +27,11 @@ public class Category {
     private final List<CEnchantment> enchantmentList;
     private final List<CEnchantment> enabledEnchantments;
 
-    public Category(String name, int slot, boolean inGUI, ItemBuilder displayItem, int cost, Currency currency, int rarity, LostBook lostBook,
+    public Category(String name, String color, String customName, int slot, boolean inGUI, ItemBuilder displayItem, int cost, Currency currency, int rarity, LostBook lostBook,
                     int maxSuccessRate, int minSuccessRate, int maxDestroyRate, int minDestroyRate, boolean useMaxLevel, int maxLevel, int minLevel) {
         this.name = name;
+        this.color = color;
+        this.customName = customName;
         this.slot = slot - 1;
         this.inGUI = inGUI;
         this.displayItem = displayItem;
@@ -48,6 +52,14 @@ public class Category {
 
     public String getName() {
         return name;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public String getCustomName() {
+        return customName;
     }
 
     public int getSlot() {

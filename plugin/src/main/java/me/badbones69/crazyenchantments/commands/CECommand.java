@@ -346,7 +346,7 @@ public class CECommand implements CommandExecutor {
                         player.sendMessage(Messages.GET_PROTECTION_CRYSTAL.getMessage(placeholders));
                     }
                     return true;
-                case "dust":// /ce Dust <Success/Destroy/Mystery> [Amount] [Player] [Percent]
+                case "dust":// /ce dust <success/destroy/mystery/failed> [amount] [player] [percent]
                     if (hasPermission(sender, "dust")) {
                         if (args.length >= 2) {
                             Player player;
@@ -412,7 +412,7 @@ public class CECommand implements CommandExecutor {
                                 return true;
                             }
                         }
-                        sender.sendMessage(Methods.getPrefix() + Methods.color("&c/ce Dust <Success/Destroy/Mystery> <Amount> [Player] [Percent]"));
+                        sender.sendMessage(Methods.getPrefix() + Methods.color("&c/ce dust <success/destroy/mystery/failed> <amount> [player] [percent]"));
                     }
                     return true;
                 case "scroll":// /ce scroll <scroll> [amount] [player]

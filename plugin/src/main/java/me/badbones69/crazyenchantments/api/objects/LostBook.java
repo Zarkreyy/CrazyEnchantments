@@ -83,14 +83,14 @@ public class LostBook {
     public ItemBuilder getLostBook(Category category, int amount) {
         FileConfiguration file = Files.CONFIG.getFile();
         HashMap<String, String> placeholders = new HashMap<>();
-        placeholders.put("%Category%", category.getDisplayItem().getName());
-//        placeholders.put("%Color%", category.getColor());
+        placeholders.put("%Category%", category.getCustomName());
+        placeholders.put("%Color%", category.getColor());
         return new ItemBuilder()
                 .setMaterial(file.getString("Settings.LostBook.Item"))
                 .setAmount(amount)
                 .setName(file.getString("Settings.LostBook.Name"))
-                .setNamePlaceholders(placeholders)
                 .setLore(file.getStringList("Settings.LostBook.Lore"))
+                .setNamePlaceholders(placeholders)
                 .setLorePlaceholders(placeholders);
     }
 

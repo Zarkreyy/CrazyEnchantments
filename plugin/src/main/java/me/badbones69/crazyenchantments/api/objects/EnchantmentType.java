@@ -12,6 +12,7 @@ import java.util.List;
 public class EnchantmentType {
 
     private final String name;
+    private final String customName;
     private final int slot;
     private final ItemStack displayItem;
     private final List<CEnchantment> enchantments = new ArrayList<>();
@@ -21,6 +22,7 @@ public class EnchantmentType {
         FileConfiguration file = Files.ENCHANTMENT_TYPES.getFile();
         String path = "Types." + name;
         this.name = name;
+        this.customName = file.getString(path + ".Name", name);
         this.slot = file.getInt(path + ".Display-Item.Slot", 1) - 1;
         this.displayItem = new ItemBuilder()
                 .setMaterial(file.getString(path + ".Display-Item.Item"))
@@ -40,6 +42,10 @@ public class EnchantmentType {
 
     public String getName() {
         return name;
+    }
+
+    public String getCustomName() {
+        return customName;
     }
 
     public int getSlot() {

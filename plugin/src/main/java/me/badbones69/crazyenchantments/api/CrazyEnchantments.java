@@ -126,19 +126,23 @@ public class CrazyEnchantments {
                             .setLore(config.getStringList(path + ".LostBook.Lore"))
                             .setGlowing(config.getBoolean(path + ".LostBook.Glowing")),
                     config.getInt(path + ".LostBook.Cost"),
-                    me.badbones69.crazyenchantments.api.currencyapi.Currency.getCurrency(config.getString(path + ".LostBook.Currency")),
+                    Currency.getCurrency(config.getString(path + ".LostBook.Currency")),
                     config.getBoolean(path + ".LostBook.FireworkToggle"),
                     getColors(config.getString(path + ".LostBook.FireworkColors")),
                     config.getBoolean(path + ".LostBook.Sound-Toggle"),
                     config.getString(path + ".LostBook.Sound"));
+            String color = Methods.color(config.getString(path + ".Color", ""));
+            String customName = config.getString(path + ".Name", category);
             categories.add(new Category(
                     category,
+                    color,
+                    customName,
                     config.getInt(path + ".Slot"),
                     config.getBoolean(path + ".InGUI"),
                     new ItemBuilder()
                             .setMaterial(config.getString(path + ".Item"))
                             .setPlayer(config.getString(path + ".Player"))
-                            .setName(config.getString(path + ".Name"))
+                            .setName(color + customName)
                             .setLore(config.getStringList(path + ".Lore"))
                             .setGlowing(config.getBoolean(path + ".Glowing")),
                     config.getInt(path + ".Cost"),
@@ -1140,9 +1144,13 @@ public class CrazyEnchantments {
      */
     public CEBook getCEBook(ItemStack book) {
         try {
-            return new CEBook(getEnchantmentBookEnchantment(book), getBookLevel(book, getEnchantmentBookEnchantment(book)), book.getAmount())
-                    .setSuccessRate(Methods.getPercent("%success_rate%", book, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 100))
-                    .setDestroyRate(Methods.getPercent("%destroy_rate%", book, Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore"), 0));
+            List<String> bookLore = Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore");
+            return new CEBook(
+                    getEnchantmentBookEnchantment(book),
+                    getBookLevel(book, getEnchantmentBookEnchantment(book)),
+                    book.getAmount(),
+                    Methods.getPercent("%destroy_rate%", book, bookLore, 0),
+                    Methods.getPercent("%success_rate%", book, bookLore, 100));
         } catch (Exception e) {
             return null;
         }
@@ -1512,7 +1520,7 @@ public class CrazyEnchantments {
         return min + random.nextInt((max + 1) - min);
     }
 
-    private List<Color> getColors(String string) {
+    public List<Color> getColors(String string) {
         List<Color> colors = new ArrayList<>();
         if (string.contains(", ")) {
             for (String name : string.split(", ")) {

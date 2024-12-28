@@ -412,6 +412,7 @@ Settings:
 Categories: #You can make as many different categories as you want
   Common: #Name of the category
     Name: '&a&l&nCommon' #Name in the GUI
+    Color: '&a' #Color of category
     Slot: 31 #The Slot number the item will be in
     InGUI: true #Toggle if it's in the GUI or not.
     Lore: #The lore of the Item
@@ -453,6 +454,7 @@ Categories: #You can make as many different categories as you want
         Min: 1
   Rare:
     Name: '&9&l&nRare'
+    Color: '&9'
     Slot: 32
     InGUI: true
     Lore:
@@ -494,6 +496,7 @@ Categories: #You can make as many different categories as you want
         Min: 2
   Legendary:
     Name: '&4&l&nLegendary'
+    Color: '&4'
     Slot: 33
     InGUI: true
     Lore:

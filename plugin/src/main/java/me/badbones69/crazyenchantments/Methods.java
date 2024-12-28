@@ -244,21 +244,23 @@ public class Methods {
 
     public static int getPercent(String argument, ItemStack item, List<String> originalLore, int defaultValue) {
         String arg = defaultValue + "";
+        argument = argument.toLowerCase();
         for (String originalLine : originalLore) {
             originalLine = Methods.color(originalLine).toLowerCase();
-            if (originalLine.contains(argument.toLowerCase())) {
-                String[] b = originalLine.split(argument.toLowerCase());
+            if (originalLine.contains(argument)) {
+                String[] b = originalLine.split(argument);
                 for (String itemLine : item.getItemMeta().getLore()) {
+                    itemLine = itemLine.toLowerCase();
                     boolean toggle = false;// Checks to make sure the lore is the same.
                     if (b.length >= 1) {
-                        if (itemLine.toLowerCase().startsWith(b[0])) {
-                            arg = itemLine.toLowerCase().replace(b[0], "");
+                        if (itemLine.startsWith(b[0])) {
+                            arg = itemLine.replace(b[0], "");
                             toggle = true;
                         }
                     }
                     if (b.length >= 2) {
-                        if (itemLine.toLowerCase().endsWith(b[1])) {
-                            arg = arg.toLowerCase().replace(b[1], "");
+                        if (itemLine.endsWith(b[1])) {
+                            arg = arg.replace(b[1], "");
                         } else {
                             toggle = false;
                         }
@@ -280,9 +282,10 @@ public class Methods {
     }
 
     public static boolean hasArgument(String arg, List<String> message) {
+        arg = arg.toLowerCase();
         for (String line : message) {
             line = Methods.color(line).toLowerCase();
-            if (line.contains(arg.toLowerCase())) {
+            if (line.contains(arg)) {
                 return true;
             }
         }

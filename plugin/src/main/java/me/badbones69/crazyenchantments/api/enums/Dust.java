@@ -28,7 +28,7 @@ public enum Dust {
         this.name = name;
         this.knownNames = knowNames;
         this.configName = configName;
-        this.max = FileManager.Files.CONFIG.getFile().getInt("Settings.Dust." + configName + ".PercentRange.Max", 100);
+        this.max = FileManager.Files.CONFIG.getFile().getInt("Settings.Dust." + configName + ".PercentRange.Max", 100) + 1; // +1 to include the max value
         this.min = FileManager.Files.CONFIG.getFile().getInt("Settings.Dust." + configName + ".PercentRange.Min", max);
     }
 
@@ -40,7 +40,8 @@ public enum Dust {
             Dust.itemBuilderDust.put(dust, new ItemBuilder()
                     .setName(config.getString(path + "Name"))
                     .setLore(config.getStringList(path + "Lore"))
-                    .setMaterial(config.getString(path + "Item")));
+                    .setMaterial(config.getString(path + "Item"))
+                    .setGlowing(config.getBoolean(path + "Glowing")));
         }
     }
 

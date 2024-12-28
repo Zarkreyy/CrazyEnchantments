@@ -6,6 +6,7 @@ import me.badbones69.crazyenchantments.api.FileManager.Files;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -202,8 +203,8 @@ public class CEBook {
         List<String> lore = new ArrayList<>();
         for (String bookLine : Files.CONFIG.getFile().getStringList("Settings.EnchantmentBookLore")) {
             if (bookLine.contains("%Description%") || bookLine.contains("%description%")) {
-                for (String enchantmentLine : enchantment.getInfoDescription()) {
-                    lore.add(Methods.color(enchantmentLine));
+                for (String enchantDescLine : enchantment.getInfoDescription()) {
+                    lore.add(Methods.color(enchantDescLine));
                 }
             } else {
                 lore.add(Methods.color(bookLine)
@@ -211,7 +212,17 @@ public class CEBook {
                         .replace("%Success_Rate%", successRate + "").replace("%success_rate%", successRate + ""));
             }
         }
-        return ce.getEnchantmentBook().setAmount(amount).setName(name).setLore(lore).setGlowing(glowing);
+        HashMap<String, String> placeholders = new HashMap<>();
+        placeholders.put("%Category%", enchantment.getCategories().isEmpty() ? "None" : enchantment.getCategories().get(0).getCustomName());
+        placeholders.put("%Color%", enchantment.getBookColor());
+        placeholders.put("%Type%", enchantment.getEnchantmentType().getCustomName());
+        return ce.getEnchantmentBook()
+                .setAmount(amount)
+                .setName(name)
+                .setLore(lore)
+                .setGlowing(glowing)
+                .setNamePlaceholders(placeholders)
+                .setLorePlaceholders(placeholders);
     }
 
     /**

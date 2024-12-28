@@ -77,7 +77,7 @@ Messages:
     - '&b/ce scroll <black/white/transmog> [amount] [player] - &9Gives a player a scroll item.'
     - '&b/ce crystal [amount] [player] - &9Gives a player a Protection Crystal item.'
     - '&b/ce scrambler [amount] [player] - &9Gives a player a Scrambler item.'
-    - '&b/ce dust <success/destroy/mystery> [amount] [player] [percent] - &9Give a player a dust item.'
+    - '&b/ce dust <success/destroy/mystery/failed> [amount] [player] [percent] - &9Give a player a dust item.'
     - '&b/ce book <enchantment> [level/min-max] [amount] [player] - &9Gives a player an enchantment Book.'
     - '&b/ce lostbook <category> [amount] [player] - &9Gives a player a lost book item.'
     - '&b/ce spawn <enchantment/category> [(level:#/min-max)/world:<world>/x:#/y:#/z:#] - &9Drops an enchantment book at the specific coordinates.'

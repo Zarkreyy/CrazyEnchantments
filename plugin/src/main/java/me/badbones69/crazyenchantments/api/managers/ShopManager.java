@@ -85,8 +85,7 @@ public class ShopManager {
         }
         Inventory inventory = Bukkit.createInventory(null, inventorySize, inventoryName);
         for (Entry<ItemBuilder, Integer> itemBuilders : customizerItems.entrySet()) {
-            itemBuilders.getKey().setNamePlaceholders(placeholders)
-                    .setLorePlaceholders(placeholders);
+            itemBuilders.getKey().setNamePlaceholders(placeholders).setLorePlaceholders(placeholders);
             inventory.setItem(itemBuilders.getValue(), itemBuilders.getKey().build());
         }
         shopItems.keySet().forEach(itemBuilder -> inventory.setItem(shopItems.get(itemBuilder), itemBuilder.build()));
