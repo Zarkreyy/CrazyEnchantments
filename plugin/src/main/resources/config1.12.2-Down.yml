@@ -57,8 +57,6 @@ Settings:
       - '&7you to re-roll the destroy and success rates.'
       - '&7Drag and drop it on an enchantment book'
       - '&7to get a new destroy and success rate.'
-      - ''
-      - '&eCost: &e&l$800'
   GKitz: #GKitz GUI option.
     InGUI: true #If you can open the GKitz GUI from the main /ce gui.
     Enabled: true #If the GKitz option is enabled on the server.
@@ -90,8 +88,6 @@ Settings:
       - '&7A rare crystal that is said to'
       - '&7protect items from getting lost'
       - '&7while the owners away in the after life.'
-      - ''
-      - '&eCost: &e&l$500'
   BlackSmith: #Options for the Black Smith
     InGUI: true #In the GUI.
     Slot: 12 #Slot it is in.
@@ -135,61 +131,64 @@ Settings:
   Dust: #Settings for the Magical Dust
     MysteryDust:
       Item: 'SULPHUR' #Item mystery dust is
-      Name: '&7Mystery Dust' #Name of the dust
+      Name: '&e&lPoudre magique aléatoire' #Name of the dust
       Glowing: true #If it has a glowing effect.
       Lore: #Use %percent% to set the percent
         - '&a1-%percent%% &7will be on a'
         - '&aMagical AngelDust &7or &eMagical Fixing &7Dust'
-        - '&7&l(&6&l!&7&l) &7Right click'
+        - ''
+        - '&e&lClique droit pour utiliser'
       Firework:
         Toggle: true #Toggle if the firework happens on open.
-        Colors: 'Black, Gray, Lime' #The colors the firework will be.
+        Colors: 'Yellow, White' #The colors the firework will be.
       Dust-Toggle:
         Success: true #Toggle whether you can get success dust from Mystery Dust.
         Destroy: true #Toggle whether you can get destroy dust from Mystery Dust.
         Failed: true #Toggle whether you can get failed dust from Mystery Dust.
       PercentRange: #Range the mystery rate will be.
-        Max: 30 #Max percent
+        Max: 5 #Max percent
         #Min will always be 1.
     SuccessDust:
       InGUI: true #If you can buy it in the /CE GUI
-      GUIName: '&aMagical Angel Dust' #Name of the item in the GUI
+      GUIName: '&a&lPoudre magique' #Name of the item in the GUI
       GUILore: #Lore in the GUI.
-        - '&eCost: &a&l$500'
         - '&7Dust allows you to bring'
         - '&7up your &aSuccess Rate&7.'
       Slot: 16 #Slot number it is on
       Item: 'SUGAR' #Item the dust is
-      Name: '&aMagical Angel Dust' #Name of the dust
+      Name: '&a&lPoudre magique' #Name of the dust
       Glowing: true #If it has a glowing effect.
       Lore: #Lore for the dust
         - '&a+%percent%% Success Rate'
         - '&7Apply to an Enchantment Book to'
         - '&7Increase the Success Rate by &e%percent%%'
+        - ''
+        - '&a&lClique droit pour utiliser'
       PercentRange: #Range the success rate will be.
         Max: 5 #Max percent
         Min: 1 #Minimum percent
     DestroyDust:
       InGUI: true #If you can buy it in the /CE GUI
-      GUIName: '&eMagical Fixing Dust' #Name of the item in the GUI
+      GUIName: '&c&lPoudre magique' #Name of the item in the GUI
       GUILore: #Lore in the GUI.
-        - '&eCost: &a&l$500'
         - '&7Dust allows you to bring'
         - '&7down your &4Destroy Rate&7.'
       Slot: 17 #Slot number it is on
       Item: 'REDSTONE' #Item the dust is
-      Name: '&eMagical Fixing Dust' #Name of the dust
+      Name: '&c&lPoudre magique' #Name of the dust
       Glowing: true #If it has a glowing effect.
       Lore: #Lore for the dust
         - '&c-%percent%% Destroy Rate'
         - '&7Apply to an Enchantment Book to'
         - '&7Decrease the Destroy Rate by &e%percent%%'
+        - ''
+        - '&c&lClique droit pour utiliser'
       PercentRange: #Range the destroy rate will be.
         Max: 5 #Max percent
         Min: 1 #Minimum percent
     FailedDust:
       Item: 'SULPHUR' #Item the dust is
-      Name: '&7Failed Dust' #Name of the dust
+      Name: '&7&lPoudre magique défaillante' #Name of the dust
       Glowing: true #If it has a glowing effect.
       Lore: #Lore for the dust
         - '&7This dust has failed.'
@@ -210,7 +209,6 @@ Settings:
     Glowing: true #If it has a glowing effect.
     Slot: 22 #Slot you can buy the scroll at
     Lore: #Lore of the item in the GUI
-      - '&eCost: &a&l$1000'
       - '&7Black Scrolls allow you to'
       - '&7take off random enchantments.'
     SuccessChance: #Controls what the success chance will be when they get the book from the Black Scroll
@@ -231,7 +229,6 @@ Settings:
     Glowing: true #If the item is glowing.
     Slot: 23 #Slot you can buy the scroll at
     Lore: #Lore of the scroll in the GUI
-      - '&eCost: &a&l$2000'
       - '&7White Scrolls allow you to'
       - '&7protect items from breaking.'
     ProtectedName: '&b&lPROTECTED' #The lore that is added to protect an item.
@@ -247,7 +244,6 @@ Settings:
     Glowing: true #If it has a glowing effect.
     Slot: 24 #Slot you can buy the scroll at
     Lore: #Lore of the scroll in the GUI
-      - '&eCost: &a&l$200'
       - '&7This scroll allows you to organize'
       - '&7your enchantments and tell you how many'
       - '&7enchantments you currently have on the item.'
@@ -294,26 +290,26 @@ Settings:
           - 'SkyBlock_Example'
   Costs: #This is where you set the cost of stuff in the shop GUI.
     Scrambler: #The item that is being bought.
-      Cost: 800 #How much the item will cost.
-      Currency: Vault #The currency that will be taken when bought.
+      Cost: 0 #How much the item will cost.
+      Currency: XP_Level #The currency that will be taken when bought.
     ProtectionCrystal:
-      Cost: 500
-      Currency: Vault
+      Cost: 0
+      Currency: XP_Level
     TransmogScroll:
-      Cost: 200
-      Currency: Vault
+      Cost: 0
+      Currency: XP_Level
     BlackScroll:
-      Cost: 1000
-      Currency: Vault
+      Cost: 0
+      Currency: XP_Level
     WhiteScroll:
-      Cost: 2000
-      Currency: Vault
+      Cost: 0
+      Currency: XP_Level
     SuccessDust:
-      Cost: 500
-      Currency: Vault
+      Cost: 0
+      Currency: XP_Level
     DestroyDust:
-      Cost: 500
-      Currency: Vault
+      Cost: 0
+      Currency: XP_Level
   SignOptions: #Options for the Signs.
     CategoryShopStyle: #What the sign will look like. The price will be determined by the category you pick
       Line1: '&b&lCrazy Enchant' #Line 1 of the sign
@@ -405,10 +401,10 @@ Categories: #You can make as many different categories as you want
     Slot: 38 #The Slot number the item will be in
     InGUI: true #Toggle if it's in the GUI or not.
     Lore: #The lore of the Item
-      - '&eCost: &6&l20 &6XP Levels'
+      - 'blabla'
     Item: 'STAINED_GLASS_PANE:15' #The id for the item
     Glowing: true #If the item has a glowing effect.
-    Cost: 20 #How much each book will cost to buy.
+    Cost: 0 #How much each book will cost to buy.
     Currency: XP_Level #The currency you wish to use. https://github.com/kicjow/Crazy-Enchantments/wiki/Currency-Types
     Rarity: 1 #This allows the enchantments to be ordered with the Transmog Scrolls. The higher the number the rarer it is. Try and have each category have different rarities.
     LostBook: #Controls the Lost Book shop for this tier
@@ -422,9 +418,7 @@ Categories: #You can make as many different categories as you want
         - '&7Said to be &8&lCommun &7Enchantment books.'
         - '&7But no one has tried to clean the books yet.'
         - '&7Will you be the one to clean the books?'
-        - ''
-        - '&eCost: &6&l20 &6XP Levels'
-      Cost: 20
+      Cost: 0
       Currency: XP_Level
       FireworkToggle: true #Toggle on and off if when opening a lost book a firework effect happens
       FireworkColors: 'Gray, White' #The colors of the firework
@@ -447,10 +441,10 @@ Categories: #You can make as many different categories as you want
     Slot: 39
     InGUI: true
     Lore:
-      - '&eCost: &6&l30 &6XP Levels'
+      - 'blabla'
     Item: 'STAINED_GLASS_PANE:5'
     Glowing: true
-    Cost: 30
+    Cost: 0
     Currency: XP_Level
     Rarity: 2
     LostBook:
@@ -464,9 +458,7 @@ Categories: #You can make as many different categories as you want
         - '&7Said to be &2&lAtypique &7Enchantment books.'
         - '&7But no one has tried to clean the books yet.'
         - '&7Will you be the one to clean the books?'
-        - ''
-        - '&eCost: &6&l30 &6XP Levels'
-      Cost: 30
+      Cost: 0
       Currency: XP_Level
       FireworkToggle: true
       FireworkColors: 'Green, White'
@@ -489,10 +481,10 @@ Categories: #You can make as many different categories as you want
     Slot: 40
     InGUI: true
     Lore:
-      - '&eCost: &6&l40 &6XP Levels'
+      - 'blabla'
     Item: 'STAINED_GLASS_PANE:11'
     Glowing: true
-    Cost: 40
+    Cost: 0
     Currency: XP_Level
     Rarity: 3
     LostBook:
@@ -506,9 +498,7 @@ Categories: #You can make as many different categories as you want
         - '&7Said to be &9&lRare &7Enchantment books.'
         - '&7But no one has tried to clean the books yet.'
         - '&7Will you be the one to clean the books?'
-        - ''
-        - '&eCost: &6&l40 &6XP Levels'
-      Cost: 40
+      Cost: 0
       Currency: XP_Level
       FireworkToggle: true
       FireworkColors: 'Blue, White'
@@ -531,10 +521,10 @@ Categories: #You can make as many different categories as you want
     Slot: 41
     InGUI: true
     Lore:
-      - '&eCost: &6&l50 &6XP Levels'
+      - 'blabla'
     Item: 'STAINED_GLASS_PANE:10'
     Glowing: true
-    Cost: 50
+    Cost: 0
     Currency: XP_Level
     Rarity: 4
     LostBook:
@@ -548,9 +538,7 @@ Categories: #You can make as many different categories as you want
         - '&7Said to be &5&lEpique &7Enchantment books.'
         - '&7But no one has tried to clean the books yet.'
         - '&7Will you be the one to clean the books?'
-        - ''
-        - '&eCost: &6&l50 &6XP Levels'
-      Cost: 50
+      Cost: 0
       Currency: XP_Level
       FireworkToggle: true
       FireworkColors: 'Purple, White'
@@ -573,10 +561,10 @@ Categories: #You can make as many different categories as you want
     Slot: 42
     InGUI: true
     Lore:
-      - '&eCost: &6&l60 &6XP Levels'
+      - 'blabla'
     Item: 'STAINED_GLASS_PANE:14'
     Glowing: true
-    Cost: 60
+    Cost: 0
     Currency: XP_Level
     Rarity: 5
     LostBook:
@@ -590,9 +578,7 @@ Categories: #You can make as many different categories as you want
         - '&7Said to be &4&lLégendaire &7Enchantment books.'
         - '&7But no one has tried to clean the books yet.'
         - '&7Will you be the one to clean the books?'
-        - ''
-        - '&eCost: &6&l60 &6XP Levels'
-      Cost: 60
+      Cost: 0
       Currency: XP_Level
       FireworkToggle: true
       FireworkColors: 'Red, White'
@@ -615,10 +601,10 @@ Categories: #You can make as many different categories as you want
     Slot: 43
     InGUI: true
     Lore:
-      - '&eCost: &6&l70 &6XP Levels'
+      - 'blabla'
     Item: 'STAINED_GLASS_PANE:3'
     Glowing: true
-    Cost: 70
+    Cost: 0
     Currency: XP_Level
     Rarity: 6
     LostBook:
@@ -632,9 +618,7 @@ Categories: #You can make as many different categories as you want
         - '&7Said to be &b&lMythique &7Enchantment books.'
         - '&7But no one has tried to clean the books yet.'
         - '&7Will you be the one to clean the books?'
-        - ''
-        - '&eCost: &6&l70 &6XP Levels'
-      Cost: 70
+      Cost: 0
       Currency: XP_Level
       FireworkToggle: true
       FireworkColors: 'Aqua, White'

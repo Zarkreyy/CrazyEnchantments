@@ -28,7 +28,7 @@ public enum Dust {
         this.name = name;
         this.knownNames = knowNames;
         this.configName = configName;
-        this.max = FileManager.Files.CONFIG.getFile().getInt("Settings.Dust." + configName + ".PercentRange.Max", 100) + 1; // +1 to include the max value
+        this.max = FileManager.Files.CONFIG.getFile().getInt("Settings.Dust." + configName + ".PercentRange.Max", 100);
         this.min = FileManager.Files.CONFIG.getFile().getInt("Settings.Dust." + configName + ".PercentRange.Min", max);
     }
 
@@ -71,7 +71,7 @@ public enum Dust {
     }
 
     public ItemStack getDust(int amount) {
-        return getDust(Methods.percentPick(max, min), amount);
+        return getDust(Methods.percentPick(max + 1, min), amount); // +1 to include the max value
     }
 
     public ItemStack getDust(int percent, int amount) {
